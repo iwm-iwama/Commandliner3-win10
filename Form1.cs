@@ -23,7 +23,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200303_1245 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200304_1947 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 
@@ -32,8 +32,9 @@ namespace iwm_commandliner3
 		private readonly string[] GblASTextCode = { "Shift_JIS", "UTF-8" };
 
 		private readonly object[,] GblAOCmd = {
-			// [コマンド]   [説明]                                          [引数]
+			// [マクロ]     [説明]                                         [引数]
 			{ "#clear",     "出力消去      #clear",                           0 },
+			{ "#cd",        "フォルダ変更  #cd \"..\"",                       1 },
 			{ "#code",      "文字コード    #code \"UTF-8\"",                  1 },
 			{ "#grep",      "検索          #grep \"2018\"",                   1 },
 			{ "#except",    "不一致検索    #except \"2018\"",                 1 },
@@ -54,7 +55,6 @@ namespace iwm_commandliner3
 			{ "#getLn",     "指定行取得    #getLn \"2\" \"0\"",               2 },
 			{ "#rmBlankLn", "空白行削除",                                     0 },
 			{ "#addLnNum",  "行番号付与",                                     0 },
-			{ "#cd",        "フォルダ変更  #cd \"..\"",                       1 },
 			{ "#wget",      "ファイル取得  #wget \"http://.../index.html\"",  1 },
 			{ "#stream",    "行毎に処理    #stream \"wget\" \"-q\"",          2 },
 			{ "#msgbox",    "MsgBox        #msgbox \"本文\"",                 1 },
@@ -149,7 +149,8 @@ namespace iwm_commandliner3
 				Description = "フォルダを指定してください。",
 				SelectedPath = Environment.CurrentDirectory,
 				ShowNewFolderButton = false
-			})
+			}
+			)
 			{
 				if (fbd.ShowDialog(this) == DialogResult.OK)
 				{
@@ -171,6 +172,7 @@ namespace iwm_commandliner3
 		private void TbCmd_Enter(object sender, EventArgs e)
 		{
 			BtnCmdBackColor.BackColor = BtnCmdBackColor.ForeColor = Color.RoyalBlue;
+			LstTbCmd.Visible = false;
 		}
 
 		private void TbCmd_Leave(object sender, EventArgs e)
@@ -201,7 +203,6 @@ namespace iwm_commandliner3
 			}
 
 			int iLen = TbCmd.TextLength;
-			int i1;
 
 			switch (e.KeyCode)
 			{
@@ -216,11 +217,39 @@ namespace iwm_commandliner3
 					break;
 
 				case Keys.Up:
-					TbCmd.Select(0, 0);
+					if (TbCmd.SelectionStart == 0)
+					{
+						TbCmd.Select(TbCmd.TextLength, 0);
+					}
+					else
+					{
+						char[] ac1 = TbCmd.Text.ToCharArray();
+						int iPos = TbCmd.SelectionStart - 1;
+						for (; iPos > 0; iPos--)
+						{
+							if (ac1[iPos] == ' ')
+							{
+								break;
+							}
+						}
+						TbCmd.SelectionStart = iPos;
+					}
 					break;
 
 				case Keys.Down:
-					TbCmd.Select(iLen, 0);
+					LstTbCmd.Items.Clear();
+					_ = LstTbCmd.Items.Add("[×]");
+					foreach (string fn in Directory.GetDirectories(TbCurDir.Text, "*"))
+					{
+						_ = LstTbCmd.Items.Add(@".\" + Path.GetFileName(fn));
+					}
+					foreach (string fn in Directory.GetFiles(TbCurDir.Text, "*"))
+					{
+						_ = LstTbCmd.Items.Add(Path.GetFileName(fn));
+					}
+					LstTbCmd.Visible = true;
+					_ = LstTbCmd.Focus();
+					LstTbCmd.SetSelected(0, true);
 					break;
 
 				case Keys.Right:
@@ -228,32 +257,21 @@ namespace iwm_commandliner3
 					{
 						TbCmd.Text += " ";
 						TbCmd.Select(TbCmd.TextLength, 0);
-						// 後段で補完
+						// 後段で補完(*)
 					}
 					break;
 
 				case Keys.PageUp:
-					i1 = TbCmd.SelectionStart - 10;
-					if (i1 < 0)
-					{
-						i1 = 0;
-					}
-					TbCmd.Select(i1, 0);
+					TbCmd.Text = TbCmd.Text.Substring(TbCmd.SelectionStart);
 					break;
 
 				case Keys.PageDown:
-					i1 = TbCmd.SelectionStart + 10;
-					if (i1 > iLen)
-					{
-						i1 = iLen;
-					}
-					TbCmd.Select(i1, 0);
+					TbCmd.Text = TbCmd.Text.Substring(0, TbCmd.SelectionStart);
+					SubTbCmdFocus(-1);
 					break;
 			}
 
-			TbCmd.ScrollToCaret();
-
-			// 補完
+			// 補完(*)
 			if ((e.KeyCode == Keys.Down || e.KeyCode == Keys.Right || e.KeyCode == Keys.Space) && TbCmd.TextLength == TbCmd.SelectionStart && Regex.IsMatch(TbCmd.Text, @".*#"))
 			{
 				TbCmd.ForeColor = Color.Red;
@@ -264,6 +282,8 @@ namespace iwm_commandliner3
 			{
 				TbCmd.ForeColor = Color.Black;
 			}
+
+			TbCmd.ScrollToCaret();
 		}
 
 		private void TbCmd_MouseHover(object sender, EventArgs e)
@@ -290,10 +310,57 @@ namespace iwm_commandliner3
 			e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : DragDropEffects.None;
 		}
 
+		//-----------
+		// LstTbCmd
+		//-----------
+		private void LstTbCmd_Click(object sender, EventArgs e)
+		{
+			string s1 = LstTbCmd.SelectedItem.ToString();
+
+			if (s1 != "[×]")
+			{
+				TbCmd.Text = TbCmd.Text.Substring(0, TbCmd.SelectionStart) + s1 + TbCmd.Text.Substring(TbCmd.SelectionStart);
+			}
+
+			LstTbCmd.Visible = false;
+			SubTbCmdFocus(-1);
+
+			TbCmd.ScrollToCaret();
+		}
+
+		private void LstTbCmd_KeyUp(object sender, KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.Escape:
+				case Keys.Tab:
+					LstTbCmd.Visible = false;
+					SubTbCmdFocus(-1);
+					break;
+
+				case Keys.Enter:
+				case Keys.Space:
+					LstTbCmd_Click(sender, e);
+					break;
+			}
+		}
+
 		//---------
 		// CmsCmd
 		//---------
 		private string GblCmsCmdBatch = null;
+
+		private void CmsCmd_左へ_Click(object sender, EventArgs e)
+		{
+			TbCmd.SelectionStart = 0;
+			TbCmd.ScrollToCaret();
+		}
+
+		private void CmsCmd_右へ_Click(object sender, EventArgs e)
+		{
+			TbCmd.SelectionStart = TbCmd.TextLength;
+			TbCmd.ScrollToCaret();
+		}
 
 		private void CmsCmd_コマンドをグループ化_追加_Click(object sender, EventArgs e)
 		{
@@ -769,6 +836,15 @@ namespace iwm_commandliner3
 
 			Cursor.Current = Cursors.WaitCursor;
 
+			// 変数
+			Regex rgx = null;
+			Match match = null;
+			string s1 = null;
+			int i1 = 0;
+
+			// 変換 コマンド => マクロ
+			cmd = Regex.Replace(cmd, @"^#*(cd|chdir)\s+", "#cd ", RegexOptions.IgnoreCase);
+
 			// コメント行
 			if (cmd.Substring(0, 2) == "//")
 			{
@@ -782,26 +858,23 @@ namespace iwm_commandliner3
 
 				cmd += " "; // 検索用フラグ " " 付与
  
-				Regex rgx = null;
-				Match mth = null;
-
 				// #command 取得
 				rgx = new Regex("^(?<pattern>.+?)\\s", RegexOptions.None);
-				mth = rgx.Match(cmd);
-				aOp[0] = mth.Groups["pattern"].Value;
+				match = rgx.Match(cmd);
+				aOp[0] = match.Groups["pattern"].Value;
 
 				// option[n] 取得
 				// "\"" 対応
-				int i1 = 0;
+				i1 = 0;
 				rgx = new Regex("\"(?<pattern>.*?)\"\\s+", RegexOptions.None);
-				for (mth = rgx.Match(cmd); mth.Success; mth = mth.NextMatch())
+				for (match = rgx.Match(cmd); match.Success; match = match.NextMatch())
 				{
 					++i1;
 					if (i1 >= aOpMax)
 					{
 						break;
 					}
-					aOp[i1] = mth.Groups["pattern"].Value;
+					aOp[i1] = match.Groups["pattern"].Value;
 				}
 
 				List<string> lTmp = new List<string>();
@@ -812,6 +885,27 @@ namespace iwm_commandliner3
 					// 出力消去
 					case "#clear":
 						TbResult.Text = null;
+						break;
+
+					// フォルダ変更
+					case "#cd":
+						if (aOp[1].Length == 0)
+						{
+							SubCmdSubAddText("(例１) #cd \"..\"" + NL + "(例２) #cd \"NewDir\"");
+							break;
+						}
+						string sCd = Path.GetFullPath(aOp[1]);
+						try
+						{
+							Directory.SetCurrentDirectory(sCd);
+						}
+						catch
+						{
+							SubCmdSubAddText("Dir \"" + aOp[1] + "\" は存在しない");
+							break;
+						}
+						TbCurDir.Text = Path.GetFullPath(sCd);
+						SubCmdSubAddText("\"" + aOp[1] + "\" へ移動 => \"" + TbCurDir.Text + "\"");
 						break;
 
 					// 文字コード（Batchで使用）
@@ -916,7 +1010,7 @@ namespace iwm_commandliner3
 						}
 						catch
 						{
-							SubCmdSubAddText("引数：\"開始行\" \"終了行\"" + NL + "※終了行\"0\"のときは最終行まで");
+							SubCmdSubAddText("引数：\"開始行\" \"終了行\"" + NL + "※終了行 \"0\" のときは最終行まで");
 							break;
 						}
 
@@ -963,16 +1057,6 @@ namespace iwm_commandliner3
 						TbResult.Text = SB.ToString();
 						break;
 
-					// フォルダ変更
-					case "#cd":
-						if (aOp[1].Length == 0)
-						{
-							break;
-						}
-						TbCurDir.Text = Path.GetFullPath(aOp[1]);
-						Directory.SetCurrentDirectory(TbCurDir.Text);
-						break;
-
 					// ファイル取得
 					case "#wget":
 						System.Net.WebClient wc = new System.Net.WebClient();
@@ -982,7 +1066,7 @@ namespace iwm_commandliner3
 							byte[] data = wc.DownloadData(url);
 							if (Regex.IsMatch(url, "^(http|ftp)"))
 							{
-								string s1 = Encoding.GetEncoding(CbTextCode.Text.ToString()).GetString(data);
+								s1 = Encoding.GetEncoding(CbTextCode.Text.ToString()).GetString(data);
 								if (Regex.IsMatch(s1, "charset.*=.*UTF-8", RegexOptions.IgnoreCase))
 								{
 									CbTextCode.Text = GblASTextCode[1];
