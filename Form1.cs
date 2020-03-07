@@ -23,7 +23,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200304_1947 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200307_1408 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 
@@ -63,11 +63,13 @@ namespace iwm_commandliner3
 			{ "#version",   "バージョン",                                     0 }
 		};
 
+		private readonly string GblFileFilter = "All files (*.*)|*.*|Command (*.iwmcmd)|*.iwmcmd|Text (*.txt)|*.txt|Tab-Separated (*.tsv)|*.tsv|Comma-Separated (*.csv)|*.csv|HTML (*.html,*.htm)|*.html,*.htm";
+
 		//-----------
 		// 大域変数
 		//-----------
 		// CurDir
-		private string CurDir = null;
+		private string CurDir = "";
 
 		// 文字列
 		private readonly StringBuilder SB = new StringBuilder();
@@ -110,16 +112,19 @@ namespace iwm_commandliner3
 			CurDir = TbCurDir.Text = Directory.GetCurrentDirectory();
 			Directory.SetCurrentDirectory(CurDir);
 
+			// LstTbCmd に着色
+			LstTbCmd.DrawMode = DrawMode.OwnerDrawFixed;
+
 			// DgvMacro／DgvCmd 表示
 			for (int _i1 = 0; _i1 < GblAOCmd.GetLength(0); _i1++)
 			{
 				_ = DgvMacro.Rows.Add(GblAOCmd[_i1, 0], GblAOCmd[_i1, 1]);
 			}
 
-			GblBDgvMacro = true;
+			GblDgvMacroOpen = true;
 			BtnDgvMacro_Click(sender, e);
 
-			GblBDgvCmd = true;
+			GblDgvCmdOpen = true;
 			BtnDgvCmd_Click(sender, e);
 
 			// Encode
@@ -148,7 +153,7 @@ namespace iwm_commandliner3
 			{
 				Description = "フォルダを指定してください。",
 				SelectedPath = Environment.CurrentDirectory,
-				ShowNewFolderButton = false
+				ShowNewFolderButton = true
 			}
 			)
 			{
@@ -169,15 +174,20 @@ namespace iwm_commandliner3
 		//--------
 		// TbCmd
 		//--------
+		private int GblTbCmdPos = 0;
+
 		private void TbCmd_Enter(object sender, EventArgs e)
 		{
-			BtnCmdBackColor.BackColor = BtnCmdBackColor.ForeColor = Color.RoyalBlue;
 			LstTbCmd.Visible = false;
+			BtnCmdBackColor.BackColor = BtnCmdBackColor.ForeColor = Color.RoyalBlue;
+			Lbl_F1.ForeColor = Lbl_F2.ForeColor = Lbl_F3.ForeColor = Lbl_F4.ForeColor = Lbl_F5.ForeColor = Lbl_F6.ForeColor = Lbl_F7.ForeColor = Lbl_F8.ForeColor = Lbl_F9.ForeColor = Color.White;
 		}
 
 		private void TbCmd_Leave(object sender, EventArgs e)
 		{
+			GblTbCmdPos = TbCmd.SelectionStart;
 			BtnCmdBackColor.BackColor = BtnCmdBackColor.ForeColor = Color.Crimson;
+			Lbl_F1.ForeColor = Lbl_F2.ForeColor = Lbl_F3.ForeColor = Lbl_F4.ForeColor = Lbl_F5.ForeColor = Lbl_F6.ForeColor = Lbl_F7.ForeColor = Lbl_F8.ForeColor = Lbl_F9.ForeColor = Color.Gray;
 		}
 
 		private void TbCmd_KeyPress(object sender, KeyPressEventArgs e)
@@ -186,6 +196,7 @@ namespace iwm_commandliner3
 			{
 				// IME入力対策
 				case (char)Keys.Enter:
+					GblTbCmdPos = TbCmd.SelectionStart;
 					BtnCmdExec_Click(sender, null);
 					break;
 			}
@@ -207,13 +218,54 @@ namespace iwm_commandliner3
 			switch (e.KeyCode)
 			{
 				case Keys.Escape:
-					TbResult.Focus();
+					_ = TbResult.Focus();
+					break;
+
+				case Keys.F1:
+					CbCmdHistory.DroppedDown = true;
+					_ = CbCmdHistory.Focus();
+					break;
+
+				case Keys.F2:
+					BtnDgvMacro_Click(sender, e);
+					_ = DgvMacro.Focus();
+					break;
+
+				case Keys.F3:
+					BtnDgvCmd_Click(sender, e);
+					_ = DgvCmd.Focus();
+					break;
+
+				case Keys.F4:
+					CbTextCode.DroppedDown = true;
+					_ = CbTextCode.Focus();
+					break;
+
+				case Keys.F5:
+					BtnCmdExec_Click(sender, e);
+					break;
+
+				case Keys.F6:
+					BtnAllClear_Click(sender, e);
+					break;
+
+				case Keys.F7:
+					CbResultHistory.DroppedDown = true;
+					_ = CbResultHistory.Focus();
+					break;
+
+				case Keys.F8:
+					BtnResultMem_Click(sender, e);
+					break;
+
+				case Keys.F9:
+					NumericUpDown1.Focus();
 					break;
 
 				case Keys.Enter:
 					// KeyPressと連動
-					TbCmd.Text = TbCmd.Text.Replace(NL, null);
-					SubTbCmdFocus(-1);
+					TbCmd.Text = TbCmd.Text.Replace(NL, "");
+					SubTbCmdFocus(GblTbCmdPos);
 					break;
 
 				case Keys.Up:
@@ -232,16 +284,17 @@ namespace iwm_commandliner3
 								break;
 							}
 						}
-						TbCmd.SelectionStart = iPos;
+						TbCmd.Select(iPos, 0);
 					}
 					break;
 
 				case Keys.Down:
 					LstTbCmd.Items.Clear();
 					_ = LstTbCmd.Items.Add("[×]");
+					_ = LstTbCmd.Items.Add(@"..\");
 					foreach (string fn in Directory.GetDirectories(TbCurDir.Text, "*"))
 					{
-						_ = LstTbCmd.Items.Add(@".\" + Path.GetFileName(fn));
+						_ = LstTbCmd.Items.Add(Path.GetFileName(fn) + @"\");
 					}
 					foreach (string fn in Directory.GetFiles(TbCurDir.Text, "*"))
 					{
@@ -272,7 +325,7 @@ namespace iwm_commandliner3
 			}
 
 			// 補完(*)
-			if ((e.KeyCode == Keys.Down || e.KeyCode == Keys.Right || e.KeyCode == Keys.Space) && TbCmd.TextLength == TbCmd.SelectionStart && Regex.IsMatch(TbCmd.Text, @".*#"))
+			if ((e.KeyCode == Keys.Right || e.KeyCode == Keys.Space) && TbCmd.TextLength == TbCmd.SelectionStart && Regex.IsMatch(TbCmd.Text, @"^.+\s+"))
 			{
 				TbCmd.ForeColor = Color.Red;
 				TbCmd.Text = Regex.Replace(TbCmd.Text, @"\s$", " \"\"").Trim();
@@ -315,15 +368,15 @@ namespace iwm_commandliner3
 		//-----------
 		private void LstTbCmd_Click(object sender, EventArgs e)
 		{
-			string s1 = LstTbCmd.SelectedItem.ToString();
+			LstTbCmd.Visible = false;
 
+			string s1 = LstTbCmd.SelectedItem.ToString();
 			if (s1 != "[×]")
 			{
+				GblTbCmdPos += s1.Length;
 				TbCmd.Text = TbCmd.Text.Substring(0, TbCmd.SelectionStart) + s1 + TbCmd.Text.Substring(TbCmd.SelectionStart);
 			}
-
-			LstTbCmd.Visible = false;
-			SubTbCmdFocus(-1);
+			SubTbCmdFocus(GblTbCmdPos);
 
 			TbCmd.ScrollToCaret();
 		}
@@ -333,11 +386,6 @@ namespace iwm_commandliner3
 			switch (e.KeyCode)
 			{
 				case Keys.Escape:
-				case Keys.Tab:
-					LstTbCmd.Visible = false;
-					SubTbCmdFocus(-1);
-					break;
-
 				case Keys.Enter:
 				case Keys.Space:
 					LstTbCmd_Click(sender, e);
@@ -345,10 +393,31 @@ namespace iwm_commandliner3
 			}
 		}
 
+		private void LstTbCmd_DrawItem(object sender, DrawItemEventArgs e)
+		{
+			e.DrawBackground();
+
+			if (e.Index > -1)
+			{
+				string s1 = LstTbCmd.Items[e.Index].ToString();
+				Brush brsh = (e.State & DrawItemState.Selected) != DrawItemState.Selected
+					? s1 == "[×]"
+						? new SolidBrush(Color.Red)
+						: s1.Substring(s1.Length - 1, 1) == @"\"
+							? new SolidBrush(Color.Cyan)
+							: new SolidBrush(Color.Lime)
+					: new SolidBrush(e.ForeColor);
+				e.Graphics.DrawString(s1, e.Font, brsh, e.Bounds);
+				brsh.Dispose();
+			}
+
+			e.DrawFocusRectangle();
+		}
+
 		//---------
 		// CmsCmd
 		//---------
-		private string GblCmsCmdBatch = null;
+		private string GblCmsCmdBatch = "";
 
 		private void CmsCmd_左へ_Click(object sender, EventArgs e)
 		{
@@ -362,51 +431,9 @@ namespace iwm_commandliner3
 			TbCmd.ScrollToCaret();
 		}
 
-		private void CmsCmd_コマンドをグループ化_追加_Click(object sender, EventArgs e)
-		{
-			string s1 = TbCmd.Text.Trim();
-			if (s1.Length == 0)
-			{
-				return;
-			}
-			GblCmsCmdBatch += s1 + "; ";
-			CmsCmd_コマンドをグループ化_追加.ToolTipText = CmsCmd_コマンドをグループ化_出力.ToolTipText = GblCmsCmdBatch;
-		}
-
-		private void CmsCmd_コマンドをグループ化_出力_Click(object sender, EventArgs e)
-		{
-			TbCmd.Text = GblCmsCmdBatch.Trim();
-			SubTbCmdFocus(-1);
-		}
-
-		private void CmsCmd_コマンドをグループ化_消去_Click(object sender, EventArgs e)
-		{
-			GblCmsCmdBatch = CmsCmd_コマンドをグループ化_追加.ToolTipText = CmsCmd_コマンドをグループ化_出力.ToolTipText = null;
-		}
-
-		private void CmsCmd_コマンドをグループ化_簡単な説明_Click(object sender, EventArgs e)
-		{
-			_ = NativeMethods.SendMessage(
-				TbResult.Handle, EM_REPLACESEL, 1,
-				NL +
-				"・\"//\" から始まる行はコメント" + NL +
-				"・行末には \";\" を記述" + NL +
-				NL +
-				"【記述例】" + NL +
-				"  // サンプル;" + NL +
-				"  dir /s;" + NL +
-				"  #grep \"2020\";" + NL +
-				"  #replace \"20(20)\" \"$1\";" + NL +
-				NL +
-				"【コマンド欄には以下のように入力】" + NL +
-				"  // サンプル; dir /s; #grep \"2020\"; #replace \"20(20)\" \"$1\";" + NL +
-				NL
-			);
-		}
-
 		private void CmsCmd_全クリア_Click(object sender, EventArgs e)
 		{
-			TbCmd.Text = null;
+			TbCmd.Text = "";
 		}
 
 		private void CmsCmd_全コピー_Click(object sender, EventArgs e)
@@ -431,6 +458,56 @@ namespace iwm_commandliner3
 			TbCmd.Text = Regex.Replace(TbCmd.Text, "\r*\n", " ");
 		}
 
+		private void CmsCmd_DQで囲む_Click(object sender, EventArgs e)
+		{
+			TbCmd.SelectedText = "\"" + TbCmd.SelectedText.Trim('\"') + "\"";
+		}
+
+		private void CmsCmd_コマンドをグループ化_追加_Click(object sender, EventArgs e)
+		{
+			string s1 = TbCmd.Text.Trim();
+			if (s1.Length == 0)
+			{
+				return;
+			}
+			GblCmsCmdBatch += s1 + "; ";
+			CmsCmd_コマンドをグループ化_追加.ToolTipText = CmsCmd_コマンドをグループ化_出力.ToolTipText = GblCmsCmdBatch;
+		}
+
+		private void CmsCmd_コマンドをグループ化_出力_Click(object sender, EventArgs e)
+		{
+			TbCmd.Text = GblCmsCmdBatch.Trim();
+			SubTbCmdFocus(-1);
+		}
+
+		private void CmsCmd_コマンドをグループ化_消去_Click(object sender, EventArgs e)
+		{
+			GblCmsCmdBatch = CmsCmd_コマンドをグループ化_追加.ToolTipText = CmsCmd_コマンドをグループ化_出力.ToolTipText = "";
+		}
+
+		private void CmsCmd_コマンドをグループ化_簡単な説明_Click(object sender, EventArgs e)
+		{
+			_ = NativeMethods.SendMessage(
+				TbResult.Handle, EM_REPLACESEL, 1,
+				NL +
+				"--------------" + NL +
+				"> 簡単な説明 <" + NL +
+				"--------------" + NL +
+				"・\"//\" から始まる行はコメント" + NL +
+				"・行末には \";\" を記述" + NL +
+				NL +
+				"【記述例】" + NL +
+				"  // サンプル;" + NL +
+				"  dir /s;" + NL +
+				"  #grep \"2020\";" + NL +
+				"  #replace \"20(20)\" \"$1\";" + NL +
+				NL +
+				"【コマンド欄には以下のように入力】" + NL +
+				"  // サンプル; dir /s; #grep \"2020\"; #replace \"20(20)\" \"$1\";" + NL +
+				NL
+			);
+		}
+
 		private void CmsCmd_コマンドを保存_Click(object sender, EventArgs e)
 		{
 			SubTextToSaveFile(string.Join(";" + NL, RtnCmdFormat(TbCmd.Text).ToArray()) + NL, "Shift_JIS");
@@ -441,6 +518,7 @@ namespace iwm_commandliner3
 			using (OpenFileDialog openFileDialog1 = new OpenFileDialog()
 			{
 				InitialDirectory = ".",
+				Filter = GblFileFilter,
 				FilterIndex = 1
 			}
 			)
@@ -455,6 +533,24 @@ namespace iwm_commandliner3
 					SubTbCmdFocus(-1);
 				}
 			}
+		}
+
+		private void CmsCmd_キー操作_Click(object sender, EventArgs e)
+		{
+			_ = NativeMethods.SendMessage(
+				TbResult.Handle, EM_REPLACESEL, 1,
+				NL +
+				"--------------------" + NL +
+				"> キー操作について <" + NL +
+				"--------------------" + NL +
+				" [Home]     カーソルを「先頭」へ移動" + NL +
+				" [End]      カーソルを「末尾」へ移動" + NL +
+				" [PageUp]   カーソル位置より「前」の文字列を削除" + NL +
+				" [PageDown] カーソル位置から「後」の文字列を削除" + NL +
+				" [↑]       カーソル位置より前の空白を検索" + NL +
+				" [↓]       カレントのフォルダ／ファイル一覧を表示" + NL +
+				NL
+			);
 		}
 
 		//-----------
@@ -490,7 +586,7 @@ namespace iwm_commandliner3
 		//------------
 		private void CmsCmdSub_全クリア_Click(object sender, EventArgs e)
 		{
-			TbCmdSub.Text = null;
+			TbCmdSub.Text = "";
 		}
 
 		private void CmsCmdSub_全コピー_Click(object sender, EventArgs e)
@@ -517,13 +613,13 @@ namespace iwm_commandliner3
 		//-----------
 		// DgvMacro
 		//-----------
-		private bool GblBDgvMacro = true;
+		private bool GblDgvMacroOpen = true;
 
 		private void BtnDgvMacro_Click(object sender, EventArgs e)
 		{
-			if (GblBDgvMacro == true)
+			if (GblDgvMacroOpen == true)
 			{
-				GblBDgvMacro = false;
+				GblDgvMacroOpen = false;
 				BtnDgvMacro.BackColor = Color.LightYellow;
 
 				DgvMacro.Enabled = false;
@@ -533,13 +629,13 @@ namespace iwm_commandliner3
 			}
 			else
 			{
-				GblBDgvMacro = true;
+				GblDgvMacroOpen = true;
 				BtnDgvMacro.BackColor = Color.Gold;
 
 				DgvMacro.Enabled = true;
 				DgvMacro.ScrollBars = ScrollBars.Vertical;
 				DgvMacro.Width = 369;
-				DgvMacro.Height = 311;
+				DgvMacro.Height = 305;
 			}
 		}
 
@@ -550,6 +646,8 @@ namespace iwm_commandliner3
 
 		private void DgvMacro_Click(object sender, EventArgs e)
 		{
+			GblTbCmdPos = TbCmd.SelectionStart;
+
 			string s1 = DgvMacro[0, DgvMacro.CurrentRow.Index].Value.ToString();
 			int iPos = 0;
 
@@ -557,21 +655,19 @@ namespace iwm_commandliner3
 			{
 				if (GblAOCmd[_i1, 0].ToString() == s1)
 				{
-					int _i2 = (int)GblAOCmd[_i1, 2];
-					for (int _i3 = 0; _i3 < _i2; _i3++)
+					iPos = (int)GblAOCmd[_i1, 2];
+					for (int _i3 = 0; _i3 < iPos; _i3++)
 					{
 						s1 += " \"\"";
 					}
-					iPos = _i2 - 1;
+					iPos = s1.Length - (iPos > 0 ? (iPos * 3) - 2 : 0);
 					break;
 				}
 			}
+			TbCmd.Text = TbCmd.Text.Substring(0, TbCmd.SelectionStart) + s1 + TbCmd.Text.Substring(TbCmd.SelectionStart);
+			SubTbCmdFocus(GblTbCmdPos + iPos);
 
-			TbCmd.Text = s1;
-
-			SubTbCmdFocus(TbCmd.TextLength - 1 - (iPos * 3));
-
-			GblBDgvMacro = true;
+			GblDgvMacroOpen = true;
 			BtnDgvMacro_Click(sender, e);
 		}
 
@@ -595,6 +691,10 @@ namespace iwm_commandliner3
 
 			switch (e.KeyCode)
 			{
+				case Keys.F2:
+					BtnDgvMacro_Click(sender, e);
+					break;
+
 				case Keys.Space:
 					DgvMacro_Click(sender, e);
 					break;
@@ -636,13 +736,13 @@ namespace iwm_commandliner3
 		//---------
 		// DgvCmd
 		//---------
-		private bool GblBDgvCmd = true;
+		private bool GblDgvCmdOpen = true;
 
 		private void BtnDgvCmd_Click(object sender, EventArgs e)
 		{
-			if (GblBDgvCmd == true)
+			if (GblDgvCmdOpen == true)
 			{
-				GblBDgvCmd = false;
+				GblDgvCmdOpen = false;
 				BtnDgvCmd.BackColor = Color.LightYellow;
 
 				DgvCmd.Enabled = false;
@@ -653,13 +753,13 @@ namespace iwm_commandliner3
 			}
 			else
 			{
-				GblBDgvCmd = true;
+				GblDgvCmdOpen = true;
 				BtnDgvCmd.BackColor = Color.Gold;
 
 				DgvCmd.Enabled = true;
 				DgvCmd.ScrollBars = ScrollBars.Both;
 				DgvCmd.Width = 286;
-				DgvCmd.Height = 311;
+				DgvCmd.Height = 305;
 				TbDgvCmdSearch.Visible = true;
 			}
 		}
@@ -671,12 +771,14 @@ namespace iwm_commandliner3
 
 		private void DgvCmd_Click(object sender, EventArgs e)
 		{
+			GblTbCmdPos = TbCmd.SelectionStart;
+
 			string s1 = DgvCmd[0, DgvCmd.CurrentCell.RowIndex].Value.ToString();
-			TbCmd.Text = s1;
 
-			SubTbCmdFocus(-1);
+			TbCmd.Text = TbCmd.Text.Substring(0, TbCmd.SelectionStart) + s1 + TbCmd.Text.Substring(TbCmd.SelectionStart);
+			SubTbCmdFocus(GblTbCmdPos + s1.Length);
 
-			GblBDgvCmd = true;
+			GblDgvCmdOpen = true;
 			BtnDgvCmd_Click(sender, e);
 		}
 
@@ -700,6 +802,10 @@ namespace iwm_commandliner3
 
 			switch (e.KeyCode)
 			{
+				case Keys.F3:
+					BtnDgvCmd_Click(sender, e);
+					break;
+
 				case Keys.Space:
 					DgvCmd_Click(sender, e);
 					break;
@@ -817,6 +923,20 @@ namespace iwm_commandliner3
 			Thread.Sleep(250);
 		}
 
+		//-------------
+		// CbTextCode
+		//-------------
+		private void CbTextCode_KeyUp(object sender, KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.F4:
+					CbTextCode.DroppedDown = false;
+					SubTbCmdFocus(GblTbCmdPos);
+					break;
+			}
+		}
+
 		//-------
 		// 実行
 		//-------
@@ -839,7 +959,7 @@ namespace iwm_commandliner3
 			// 変数
 			Regex rgx = null;
 			Match match = null;
-			string s1 = null;
+			string s1 = "";
 			int i1 = 0;
 
 			// 変換 コマンド => マクロ
@@ -884,7 +1004,8 @@ namespace iwm_commandliner3
 				{
 					// 出力消去
 					case "#clear":
-						TbResult.Text = null;
+						TbCmdSub.Text = "";
+						TbResult.Text = "";
 						break;
 
 					// フォルダ変更
@@ -1184,21 +1305,21 @@ namespace iwm_commandliner3
 		{
 			TbResult_Enter(sender, e);
 
-			TbCmd.Text = TbCmd.Text.Trim();
-
 			// 履歴に追加
-			LCmdHistory.Add(TbCmd.Text);
+			LCmdHistory.Add(""); //【重要】
+			LCmdHistory.Add(TbCmd.Text.Trim());
 			SubListHistory(LCmdHistory, CbCmdHistory);
 
 			GblCmdExec = true;
 			foreach (string _s1 in RtnCmdFormat(TbCmd.Text))
 			{
-				if (GblCmdExec == true)
+				if (GblCmdExec == false)
 				{
-					SubTbCmdExec(_s1);
+					break;
 				}
+				SubTbCmdExec(_s1);
 			}
-			SubTbCmdFocus(-1);
+			SubTbCmdFocus(GblTbCmdPos);
 		}
 
 		private List<string> RtnCmdFormat(string str)
@@ -1249,9 +1370,9 @@ namespace iwm_commandliner3
 		//-------------
 		private void BtnAllClear_Click(object sender, EventArgs e)
 		{
-			TbCmd.Text = null;
-			TbCmdSub.Text = null;
-			TbResult.Text = null;
+			TbCmd.Text = "";
+			TbCmdSub.Text = "";
+			TbResult.Text = "";
 			SubTbCmdFocus(-1);
 		}
 
@@ -1260,10 +1381,10 @@ namespace iwm_commandliner3
 		//-----------
 		private void TbResult_Enter(object sender, EventArgs e)
 		{
-			GblBDgvMacro = true;
+			GblDgvMacroOpen = true;
 			BtnDgvMacro_Click(sender, e);
 
-			GblBDgvCmd = true;
+			GblDgvCmdOpen = true;
 			BtnDgvCmd_Click(sender, e);
 		}
 
@@ -1272,7 +1393,7 @@ namespace iwm_commandliner3
 			switch (e.KeyCode)
 			{
 				case Keys.Escape:
-					SubTbCmdFocus(-1);
+					SubTbCmdFocus(GblTbCmdPos);
 					break;
 
 				case Keys.PageUp:
@@ -1300,7 +1421,7 @@ namespace iwm_commandliner3
 		{
 			if (TbResult.SelectionLength == 0)
 			{
-				TbResultInfo.Text = null;
+				TbResultInfo.Text = "";
 				return;
 			}
 
@@ -1325,7 +1446,7 @@ namespace iwm_commandliner3
 
 		private void TbResult_TextChanged(object sender, EventArgs e)
 		{
-			TbResultInfo.Text = null;
+			TbResultInfo.Text = "";
 		}
 
 		private void TbResult_DragDrop(object sender, DragEventArgs e)
@@ -1373,7 +1494,7 @@ namespace iwm_commandliner3
 
 		private void CmsResult_全クリア_Click(object sender, EventArgs e)
 		{
-			TbResult.Text = null;
+			TbResult.Text = "";
 		}
 
 		private void CmsResult_全コピー_Click(object sender, EventArgs e)
@@ -1407,7 +1528,7 @@ namespace iwm_commandliner3
 			StringCollection files = Clipboard.GetFileDropList();
 			foreach (string _s1 in files)
 			{
-				_ = SB.Append(_s1 + (Directory.Exists(_s1) ? @"\" : null) + NL);
+				_ = SB.Append(_s1 + (Directory.Exists(_s1) ? @"\" : "") + NL);
 			}
 
 			_ = NativeMethods.SendMessage(TbResult.Handle, EM_REPLACESEL, 1, SB.ToString());
@@ -1426,21 +1547,57 @@ namespace iwm_commandliner3
 		//-------
 		// 履歴
 		//-------
-		private void CbCmdHistory_SelectedIndexChanged(object sender, EventArgs e)
+		private void CbCmdHistory_DropDownClosed(object sender, EventArgs e)
 		{
 			TbCmd.Text = CbCmdHistory.Text;
-			SubTbCmdFocus(-1);
 		}
 
-		private void CbResultHistory_SelectedIndexChanged(object sender, EventArgs e)
+		private void CbCmdHistory_KeyUp(object sender, KeyEventArgs e)
 		{
-			TbResult.Text = HResultHistory[CbResultHistory.Text.Substring(0, 8)];
-			SubTbCmdFocus(-1);
+			switch (e.KeyCode)
+			{
+				case Keys.F1:
+					CbCmdHistory.Text = "";
+					CbCmdHistory.DroppedDown = false;
+					SubTbCmdFocus(GblTbCmdPos);
+					break;
+
+				case Keys.Enter:
+				case Keys.Space:
+					SubTbCmdFocus(GblTbCmdPos + CbCmdHistory.Text.Length);
+					break;
+			}
+		}
+
+		private void CbResultHistory_DropDownClosed(object sender, EventArgs e)
+		{
+			if (CbResultHistory.Text.Length > "xx:xx:xx|".Length)
+			{
+				TbResult.Text = HResultHistory[CbResultHistory.Text.Substring(0, 8)];
+			}
+			SubTbCmdFocus(GblTbCmdPos);
+		}
+
+		private void CbResultHistory_KeyUp(object sender, KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.F7:
+					CbResultHistory.Text = "xx:xx:xx|";
+					CbResultHistory.DroppedDown = false;
+					SubTbCmdFocus(GblTbCmdPos);
+					break;
+
+				case Keys.Enter:
+				case Keys.Space:
+					SubTbCmdFocus(GblTbCmdPos);
+					break;
+			}
 		}
 
 		private void SubListHistory(List<string> l, ComboBox cb)
 		{
-			string sOld = null;
+			string sOld = "";
 			List<string> LTmp = new List<string>();
 
 			l.Sort();
@@ -1483,6 +1640,7 @@ namespace iwm_commandliner3
 			try
 			{
 				HResultHistory.Add(DateTime.Now.ToString("HH:mm:ss"), TbResult.Text);
+				HResultHistory.Add("xx:xx:xx", ""); //【重要】
 			}
 			catch
 			{
@@ -1494,6 +1652,33 @@ namespace iwm_commandliner3
 		//-----------------
 		// フォントサイズ
 		//-----------------
+		private void NumericUpDown1_Enter(object sender, EventArgs e)
+		{
+			NumericUpDown1.ForeColor = Color.White;
+			NumericUpDown1.BackColor = Color.RoyalBlue;
+		}
+
+		private void NumericUpDown1_Leave(object sender, EventArgs e)
+		{
+			NumericUpDown1.ForeColor = Color.White;
+			NumericUpDown1.BackColor = Color.DimGray;
+		}
+
+		private void NumericUpDown1_KeyUp(object sender, KeyEventArgs e)
+		{
+			switch (e.KeyCode)
+			{
+				case Keys.F9:
+					SubTbCmdFocus(GblTbCmdPos);
+					break;
+
+				case Keys.Enter:
+				case Keys.Space:
+					SubTbCmdFocus(GblTbCmdPos);
+					break;
+			}
+		}
+
 		private void NumericUpDown1_ValueChanged(object sender, EventArgs e)
 		{
 			if (NumericUpDown1.Value < NumericUpDown1.Minimum)
@@ -1515,7 +1700,8 @@ namespace iwm_commandliner3
 		// TbCmd
 		private void SubTbCmdFocus(int iPos)
 		{
-			if (iPos < 0)
+			_ = TbCmd.Focus();
+			if (iPos < 0 || iPos > TbCmd.TextLength)
 			{
 				TbCmd.Text = TbCmd.Text.Trim();
 				if (TbCmd.TextLength > 0)
@@ -1524,8 +1710,7 @@ namespace iwm_commandliner3
 				}
 				iPos = TbCmd.TextLength;
 			}
-			TbCmd.SelectionStart = iPos;
-			_ = TbCmd.Focus();
+			TbCmd.Select(iPos, 0);
 		}
 
 		//-----------------------
@@ -1538,7 +1723,7 @@ namespace iwm_commandliner3
 			{
 				InitialDirectory = ".",
 				FileName = DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".txt",
-				Filter = "All files (*.*)|*.*",
+				Filter = GblFileFilter,
 				FilterIndex = 1
 			}
 			)
@@ -1829,7 +2014,7 @@ namespace iwm_commandliner3
 				}
 			}
 
-			string rtn = null;
+			string rtn = "";
 
 			// 前
 			rtn += str.Substring(0, iBgnPos);
@@ -1887,7 +2072,7 @@ namespace iwm_commandliner3
 			List<string> rtn = new List<string>();
 
 			ListStr.Sort();
-			string s1 = null;
+			string s1 = "";
 
 			foreach (string _s1 in ListStr)
 			{
@@ -1906,7 +2091,7 @@ namespace iwm_commandliner3
 		//-----------
 		private string RtnEvalCalc(string str)
 		{
-			string rtn = str.ToLower().Replace(" ", null);
+			string rtn = str.ToLower().Replace(" ", "");
 
 			// Help
 			if (rtn.Length == 0)
@@ -1929,8 +2114,8 @@ namespace iwm_commandliner3
 						foreach (Match _m1 in Regex.Matches(rtn, _s1 + @"\(\d+\.*\d*\)"))
 						{
 							string _s2 = _m1.Value;
-							_s2 = _s2.Replace(_s1 + "(", null);
-							_s2 = _s2.Replace(")", null);
+							_s2 = _s2.Replace(_s1 + "(", "");
+							_s2 = _s2.Replace(")", "");
 
 							double _d1 = double.Parse(_s2);
 
@@ -1951,8 +2136,8 @@ namespace iwm_commandliner3
 					foreach (Match _m1 in Regex.Matches(rtn, @"pow\(\d+\.*\d*\,\d+\)"))
 					{
 						string _s2 = _m1.Value;
-						_s2 = _s2.Replace("pow(", null);
-						_s2 = _s2.Replace(")", null);
+						_s2 = _s2.Replace("pow(", "");
+						_s2 = _s2.Replace(")", "");
 
 						string[] _a1 = _s2.Split(',');
 						rtn = rtn.Replace(_m1.Value, Math.Pow(double.Parse(_a1[0]), int.Parse(_a1[1])).ToString());
