@@ -23,7 +23,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200308_1312 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200308_1429 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 
