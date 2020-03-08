@@ -1,0 +1,5 @@
+#clear;
+#code "Shift_JIS";
+dir;
+#grep "2020";
+#replace "20(20)" "$1"

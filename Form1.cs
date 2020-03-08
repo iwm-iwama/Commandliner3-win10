@@ -23,7 +23,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200307_1408 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200308_1312 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 
@@ -224,16 +224,21 @@ namespace iwm_commandliner3
 				case Keys.F1:
 					CbCmdHistory.DroppedDown = true;
 					_ = CbCmdHistory.Focus();
+					CbCmdHistory.SelectedIndex = 0;
 					break;
 
 				case Keys.F2:
 					BtnDgvMacro_Click(sender, e);
 					_ = DgvMacro.Focus();
+					DgvMacro.CurrentCell = DgvMacro[0, 0];
+					DgvMacro.FirstDisplayedScrollingRowIndex = DgvMacro.CurrentRow.Index;
 					break;
 
 				case Keys.F3:
 					BtnDgvCmd_Click(sender, e);
 					_ = DgvCmd.Focus();
+					DgvCmd.CurrentCell = DgvCmd[0, 0];
+					DgvCmd.FirstDisplayedScrollingRowIndex = DgvCmd.CurrentRow.Index;
 					break;
 
 				case Keys.F4:
@@ -252,6 +257,7 @@ namespace iwm_commandliner3
 				case Keys.F7:
 					CbResultHistory.DroppedDown = true;
 					_ = CbResultHistory.Focus();
+					CbResultHistory.SelectedIndex = 0;
 					break;
 
 				case Keys.F8:
@@ -646,8 +652,6 @@ namespace iwm_commandliner3
 
 		private void DgvMacro_Click(object sender, EventArgs e)
 		{
-			GblTbCmdPos = TbCmd.SelectionStart;
-
 			string s1 = DgvMacro[0, DgvMacro.CurrentRow.Index].Value.ToString();
 			int iPos = 0;
 
@@ -664,8 +668,8 @@ namespace iwm_commandliner3
 					break;
 				}
 			}
-			TbCmd.Text = TbCmd.Text.Substring(0, TbCmd.SelectionStart) + s1 + TbCmd.Text.Substring(TbCmd.SelectionStart);
-			SubTbCmdFocus(GblTbCmdPos + iPos);
+			TbCmd.Text = s1;
+			SubTbCmdFocus(iPos);
 
 			GblDgvMacroOpen = true;
 			BtnDgvMacro_Click(sender, e);
@@ -771,12 +775,8 @@ namespace iwm_commandliner3
 
 		private void DgvCmd_Click(object sender, EventArgs e)
 		{
-			GblTbCmdPos = TbCmd.SelectionStart;
-
-			string s1 = DgvCmd[0, DgvCmd.CurrentCell.RowIndex].Value.ToString();
-
-			TbCmd.Text = TbCmd.Text.Substring(0, TbCmd.SelectionStart) + s1 + TbCmd.Text.Substring(TbCmd.SelectionStart);
-			SubTbCmdFocus(GblTbCmdPos + s1.Length);
+			TbCmd.Text = DgvCmd[0, DgvCmd.CurrentCell.RowIndex].Value.ToString();
+			SubTbCmdFocus(TbCmd.TextLength);
 
 			GblDgvCmdOpen = true;
 			BtnDgvCmd_Click(sender, e);
