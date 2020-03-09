@@ -23,7 +23,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200308_1429 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200309_1228 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 
@@ -56,6 +56,8 @@ namespace iwm_commandliner3
 			{ "#rmBlankLn", "空白行削除",                                     0 },
 			{ "#addLnNum",  "行番号付与",                                     0 },
 			{ "#wget",      "ファイル取得  #wget \"http://.../index.html\"",  1 },
+			{ "#fread",     "ファイル読込  #fread \"ファイル名\"",            1 },
+			{ "#fwrite",    "ファイル書込  #fwrite \"ファイル名\"",           1 },
 			{ "#stream",    "行毎に処理    #stream \"wget\" \"-q\"",          2 },
 			{ "#msgbox",    "MsgBox        #msgbox \"本文\"",                 1 },
 			{ "#calc",      "計算機        #calc \"45 * pi / 180\"",          1 },
@@ -516,7 +518,7 @@ namespace iwm_commandliner3
 
 		private void CmsCmd_コマンドを保存_Click(object sender, EventArgs e)
 		{
-			SubTextToSaveFile(string.Join(";" + NL, RtnCmdFormat(TbCmd.Text).ToArray()) + NL, "Shift_JIS");
+			SubTextToSaveFile(string.Join(";" + NL, RtnCmdFormat(TbCmd.Text).ToArray()) + NL, GblASTextCode[0]);
 		}
 
 		private void CmsCmd_コマンドを読込_Click(object sender, EventArgs e)
@@ -532,7 +534,7 @@ namespace iwm_commandliner3
 				if (openFileDialog1.ShowDialog() == DialogResult.OK)
 				{
 					TbCmd.Text = Regex.Replace(
-						File.ReadAllText(openFileDialog1.FileName, Encoding.GetEncoding("Shift_JIS")),
+						File.ReadAllText(openFileDialog1.FileName, Encoding.GetEncoding(GblASTextCode[0])),
 						@";*\r*\n", // ";" がなくても改行されていれば有効
 						"; "
 					);
@@ -1180,28 +1182,48 @@ namespace iwm_commandliner3
 
 					// ファイル取得
 					case "#wget":
-						System.Net.WebClient wc = new System.Net.WebClient();
-						try
+					// ファイル読込
+					case "#fread":
+						using (System.Net.WebClient wc = new System.Net.WebClient())
 						{
-							string url = aOp[1];
-							byte[] data = wc.DownloadData(url);
-							if (Regex.IsMatch(url, "^(http|ftp)"))
+							try
 							{
-								s1 = Encoding.GetEncoding(CbTextCode.Text.ToString()).GetString(data);
-								if (Regex.IsMatch(s1, "charset.*=.*UTF-8", RegexOptions.IgnoreCase))
+								string url = aOp[1];
+								s1 = Encoding.GetEncoding(CbTextCode.Text).GetString(wc.DownloadData(url));
+								if (Regex.IsMatch(url, "^(http|ftp)"))
 								{
-									CbTextCode.Text = GblASTextCode[1];
+									if (Regex.IsMatch(s1, "charset.*=.*UTF-8", RegexOptions.IgnoreCase))
+									{
+										CbTextCode.Text = GblASTextCode[1];
+									}
 								}
+								_ = NativeMethods.SendMessage(TbResult.Handle, EM_REPLACESEL, 1, Regex.Replace(s1, "\r*\n", NL));
 							}
-							_ = NativeMethods.SendMessage(
-								TbResult.Handle, EM_REPLACESEL, 1,
-								Regex.Replace(Encoding.GetEncoding(CbTextCode.Text.ToString()).GetString(data), "\r*\n", NL)
-							);
+							catch
+							{
+							}
 						}
-						catch
+						break;
+
+					// ファイル書込
+					case "#fwrite":
+						string fn = aOp[1];
+						switch (CbTextCode.Text.ToUpper())
 						{
+							case "UTF-8":
+								using (StreamWriter sw = new StreamWriter(fn, false, new UTF8Encoding(false)))
+								{
+									sw.Write(TbResult.Text);
+								}
+								break;
+
+							default:
+								using (StreamWriter sw = new StreamWriter(fn, false, Encoding.GetEncoding(GblASTextCode[0])))
+								{
+									sw.Write(TbResult.Text);
+								}
+								break;
 						}
-						wc.Dispose();
 						break;
 
 					// 行毎に処理
@@ -1223,7 +1245,7 @@ namespace iwm_commandliner3
 								P1.StartInfo.RedirectStandardOutput = true;
 								P1.StartInfo.RedirectStandardError = true;
 								P1.StartInfo.CreateNoWindow = true;
-								P1.StartInfo.StandardOutputEncoding = Encoding.GetEncoding(CbTextCode.Text.ToString());
+								P1.StartInfo.StandardOutputEncoding = Encoding.GetEncoding(CbTextCode.Text);
 								P1.OutputDataReceived += new DataReceivedEventHandler(ProcessDataReceived);
 								_ = P1.Start();
 								///TbResult.Text += P1.StandardOutput.ReadToEnd() + NL;
@@ -1273,7 +1295,7 @@ namespace iwm_commandliner3
 				P1.StartInfo.RedirectStandardOutput = true;
 				P1.StartInfo.RedirectStandardError = true;
 				P1.StartInfo.CreateNoWindow = true;
-				P1.StartInfo.StandardOutputEncoding = Encoding.GetEncoding(CbTextCode.Text.ToString());
+				P1.StartInfo.StandardOutputEncoding = Encoding.GetEncoding(CbTextCode.Text);
 				P1.OutputDataReceived += new DataReceivedEventHandler(ProcessDataReceived);
 				_ = P1.Start();
 				TbResult.Text += P1.StandardOutput.ReadToEnd();
@@ -1457,7 +1479,7 @@ namespace iwm_commandliner3
 
 			foreach(string _s1 in files)
 			{
-				foreach (string _s2 in File.ReadLines(_s1, Encoding.GetEncoding(CbTextCode.Text.ToString())))
+				foreach (string _s2 in File.ReadLines(_s1, Encoding.GetEncoding(CbTextCode.Text)))
 				{
 					_ = SB.Append(_s2.TrimEnd() + NL);
 				}
@@ -1534,14 +1556,9 @@ namespace iwm_commandliner3
 			_ = NativeMethods.SendMessage(TbResult.Handle, EM_REPLACESEL, 1, SB.ToString());
 		}
 
-		private void CmsResult_名前を付けて保存_ShiftJIS_Click(object sender, EventArgs e)
+		private void CmsResult_名前を付けて保存_Click(object sender, EventArgs e)
 		{
-			SubTextToSaveFile(TbResult.Text, CmsResult_名前を付けて保存_ShiftJIS.Text);
-		}
-
-		private void CmsResult_名前を付けて保存_UTF8N_Click(object sender, EventArgs e)
-		{
-			SubTextToSaveFile(TbResult.Text, CmsResult_名前を付けて保存_UTF8N.Text);
+			SubTextToSaveFile(TbResult.Text, CbTextCode.Text);
 		}
 
 		//-------
@@ -1732,13 +1749,12 @@ namespace iwm_commandliner3
 				{
 					switch (code.ToUpper())
 					{
-						case "UTF-8N":
-							UTF8Encoding utf8nEnc = new UTF8Encoding(false);
-							File.WriteAllText(saveFileDialog1.FileName, s, utf8nEnc);
+						case "UTF-8":
+							File.WriteAllText(saveFileDialog1.FileName, s, new UTF8Encoding(false));
 							break;
 
 						default:
-							File.WriteAllText(saveFileDialog1.FileName, s, Encoding.GetEncoding("Shift_JIS"));
+							File.WriteAllText(saveFileDialog1.FileName, s, Encoding.GetEncoding(GblASTextCode[0]));
 							break;
 					}
 				}

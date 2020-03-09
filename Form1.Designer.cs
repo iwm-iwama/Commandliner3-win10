@@ -46,8 +46,6 @@
 			this.CmsResult_ファイル名を貼り付け = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsResult_L4 = new System.Windows.Forms.ToolStripSeparator();
 			this.CmsResult_名前を付けて保存 = new System.Windows.Forms.ToolStripMenuItem();
-			this.CmsResult_名前を付けて保存_ShiftJIS = new System.Windows.Forms.ToolStripMenuItem();
-			this.CmsResult_名前を付けて保存_UTF8N = new System.Windows.Forms.ToolStripMenuItem();
 			this.TbCmd = new System.Windows.Forms.TextBox();
 			this.CmsCmd = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.CmsCmd_左へ = new System.Windows.Forms.ToolStripMenuItem();
@@ -186,7 +184,7 @@
             this.CmsResult_L4,
             this.CmsResult_名前を付けて保存});
 			this.CmsResult.Name = "CmsResult";
-			this.CmsResult.Size = new System.Drawing.Size(171, 242);
+			this.CmsResult.Size = new System.Drawing.Size(181, 264);
 			// 
 			// CmsResult_上へ
 			// 
@@ -270,27 +268,11 @@
 			// 
 			// CmsResult_名前を付けて保存
 			// 
-			this.CmsResult_名前を付けて保存.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CmsResult_名前を付けて保存_ShiftJIS,
-            this.CmsResult_名前を付けて保存_UTF8N});
 			this.CmsResult_名前を付けて保存.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.CmsResult_名前を付けて保存.Name = "CmsResult_名前を付けて保存";
-			this.CmsResult_名前を付けて保存.Size = new System.Drawing.Size(170, 22);
+			this.CmsResult_名前を付けて保存.Size = new System.Drawing.Size(180, 22);
 			this.CmsResult_名前を付けて保存.Text = "名前を付けて保存";
-			// 
-			// CmsResult_名前を付けて保存_ShiftJIS
-			// 
-			this.CmsResult_名前を付けて保存_ShiftJIS.Name = "CmsResult_名前を付けて保存_ShiftJIS";
-			this.CmsResult_名前を付けて保存_ShiftJIS.Size = new System.Drawing.Size(116, 22);
-			this.CmsResult_名前を付けて保存_ShiftJIS.Text = "Shift_JIS";
-			this.CmsResult_名前を付けて保存_ShiftJIS.Click += new System.EventHandler(this.CmsResult_名前を付けて保存_ShiftJIS_Click);
-			// 
-			// CmsResult_名前を付けて保存_UTF8N
-			// 
-			this.CmsResult_名前を付けて保存_UTF8N.Name = "CmsResult_名前を付けて保存_UTF8N";
-			this.CmsResult_名前を付けて保存_UTF8N.Size = new System.Drawing.Size(116, 22);
-			this.CmsResult_名前を付けて保存_UTF8N.Text = "UTF-8N";
-			this.CmsResult_名前を付けて保存_UTF8N.Click += new System.EventHandler(this.CmsResult_名前を付けて保存_UTF8N_Click);
+			this.CmsResult_名前を付けて保存.Click += new System.EventHandler(this.CmsResult_名前を付けて保存_Click);
 			// 
 			// TbCmd
 			// 
@@ -1154,8 +1136,6 @@
 		private System.Windows.Forms.TextBox TbCurDir;
 		private System.Windows.Forms.ToolStripSeparator CmsResult_L4;
 		private System.Windows.Forms.ToolStripMenuItem CmsResult_名前を付けて保存;
-		private System.Windows.Forms.ToolStripMenuItem CmsResult_名前を付けて保存_ShiftJIS;
-		private System.Windows.Forms.ToolStripMenuItem CmsResult_名前を付けて保存_UTF8N;
 		private System.Windows.Forms.ContextMenuStrip CmsCmd;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmd_貼り付け;
 		private System.Windows.Forms.ToolTip ToolTip1;
