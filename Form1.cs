@@ -23,7 +23,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200309_1228 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200309_1942 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 
@@ -300,13 +300,13 @@ namespace iwm_commandliner3
 					LstTbCmd.Items.Clear();
 					_ = LstTbCmd.Items.Add("[×]");
 					_ = LstTbCmd.Items.Add(@"..\");
-					foreach (string fn in Directory.GetDirectories(TbCurDir.Text, "*"))
+					foreach (string _s1 in Directory.GetDirectories(TbCurDir.Text, "*"))
 					{
-						_ = LstTbCmd.Items.Add(Path.GetFileName(fn) + @"\");
+						_ = LstTbCmd.Items.Add(Path.GetFileName(_s1) + @"\");
 					}
-					foreach (string fn in Directory.GetFiles(TbCurDir.Text, "*"))
+					foreach (string _s1 in Directory.GetFiles(TbCurDir.Text, "*"))
 					{
-						_ = LstTbCmd.Items.Add(Path.GetFileName(fn));
+						_ = LstTbCmd.Items.Add(Path.GetFileName(_s1));
 					}
 					LstTbCmd.Visible = true;
 					_ = LstTbCmd.Focus();
@@ -1180,17 +1180,19 @@ namespace iwm_commandliner3
 						TbResult.Text = SB.ToString();
 						break;
 
-					// ファイル取得
+					// ファイル取得／ファイル読込
 					case "#wget":
-					// ファイル読込
 					case "#fread":
+						if (aOp[1].Length == 0)
+						{
+							break;
+						}
 						using (System.Net.WebClient wc = new System.Net.WebClient())
 						{
 							try
 							{
-								string url = aOp[1];
-								s1 = Encoding.GetEncoding(CbTextCode.Text).GetString(wc.DownloadData(url));
-								if (Regex.IsMatch(url, "^(http|ftp)"))
+								s1 = Encoding.GetEncoding(CbTextCode.Text).GetString(wc.DownloadData(aOp[1]));
+								if (Regex.IsMatch(aOp[1], "^(http|ftp)"))
 								{
 									if (Regex.IsMatch(s1, "charset.*=.*UTF-8", RegexOptions.IgnoreCase))
 									{
@@ -1207,18 +1209,21 @@ namespace iwm_commandliner3
 
 					// ファイル書込
 					case "#fwrite":
-						string fn = aOp[1];
+						if (aOp[1].Length == 0)
+						{
+							break;
+						}
 						switch (CbTextCode.Text.ToUpper())
 						{
 							case "UTF-8":
-								using (StreamWriter sw = new StreamWriter(fn, false, new UTF8Encoding(false)))
+								using (StreamWriter sw = new StreamWriter(aOp[1], false, new UTF8Encoding(false)))
 								{
 									sw.Write(TbResult.Text);
 								}
 								break;
 
 							default:
-								using (StreamWriter sw = new StreamWriter(fn, false, Encoding.GetEncoding(GblASTextCode[0])))
+								using (StreamWriter sw = new StreamWriter(aOp[1], false, Encoding.GetEncoding(GblASTextCode[0])))
 								{
 									sw.Write(TbResult.Text);
 								}
@@ -1259,12 +1264,7 @@ namespace iwm_commandliner3
 
 					// MsgBox
 					case "#msgbox":
-						DialogResult result = MessageBox.Show(
-							aOp[1].Replace("\\n", NL),
-							"",
-							MessageBoxButtons.YesNo,
-							MessageBoxIcon.Asterisk
-						);
+						DialogResult result = MessageBox.Show(aOp[1].Replace("\\n", NL), "", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
 						GblCmdExec = result == DialogResult.Yes || result == DialogResult.OK ? true : false;
 						break;
 
