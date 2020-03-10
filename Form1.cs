@@ -23,7 +23,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200309_1942 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200310_2239 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 
@@ -50,8 +50,9 @@ namespace iwm_commandliner3
 			{ "#toHanNum",  "半角に変換(数字のみ)",                           0 },
 			{ "#toHanKana", "半角に変換(カナのみ)",                           0 },
 			{ "#erase",     "文字消去      #erase \"0\" \"5\"",               2 },
-			{ "#sort",      "ソート",                                         0 },
-			{ "#uniq",      "ソートし重複行を消去",                           0 },
+			{ "#sort",      "ソート(昇順)",                                   0 },
+			{ "#sort-r",    "ソート(降順)",                                   0 },
+			{ "#uniq",      "重複行を消去",                                   0 },
 			{ "#getLn",     "指定行取得    #getLn \"2\" \"0\"",               2 },
 			{ "#rmBlankLn", "空白行削除",                                     0 },
 			{ "#addLnNum",  "行番号付与",                                     0 },
@@ -213,6 +214,8 @@ namespace iwm_commandliner3
 			if (e.KeyData == (Keys.Control | Keys.V))
 			{
 				TbCmd.Text = TbCmd.Text.Replace(NL, " ").Trim();
+				SubTbCmdFocus(-1);
+				return;
 			}
 
 			int iLen = TbCmd.TextLength;
@@ -1111,21 +1114,25 @@ namespace iwm_commandliner3
 						TbResult.Text = RtnTextEraseInLine(TbResult.Text, aOp[1], aOp[2]);
 						break;
 
-					// ソート
+					// ソート(昇順)
 					case "#sort":
+						TbResult.Text = RtnTextSort(TbResult.Text, true);
+						break;
+
+					// ソート(降順)
+					case "#sort-r":
 						TbResult.Text = RtnTextSort(TbResult.Text, false);
 						break;
 
-					// ソート後、重複消除
+					// 重複行を消去
 					case "#uniq":
-						TbResult.Text = RtnTextSort(TbResult.Text, true);
+						TbResult.Text = RtnTextUniq(TbResult.Text);
 						break;
 
 					// 指定行取得
 					case "#getln":
 						int bgnLn = 1;
 						int endLn = 0;
-
 						try
 						{
 							bgnLn = int.Parse(aOp[1]);
@@ -1136,9 +1143,7 @@ namespace iwm_commandliner3
 							SubCmdSubAddText("引数：\"開始行\" \"終了行\"" + NL + "※終了行 \"0\" のときは最終行まで");
 							break;
 						}
-
 						int cnt2 = 0;
-
 						_ = SB.Clear();
 						foreach (string _s1 in TbResult.Text.Split(SPLITS, StringSplitOptions.None))
 						{
@@ -1160,8 +1165,7 @@ namespace iwm_commandliner3
 						_ = SB.Clear();
 						foreach (string _s1 in TbResult.Text.Split(SPLITS, StringSplitOptions.None))
 						{
-							string _s2 = _s1.TrimEnd();
-							if (_s2.Length > 0)
+							if (_s1.TrimEnd().Length > 0)
 							{
 								_ = SB.Append(_s1 + NL);
 							}
@@ -1426,13 +1430,6 @@ namespace iwm_commandliner3
 					TbResult.SelectionStart = TbResult.TextLength;
 					break;
 
-				case Keys.V:
-					if (e.Control == true)
-					{
-						CmsResult_貼り付け_Click(sender, e);
-					}
-					break;
-
 				default:
 					TbResult_MouseUp(sender, null);
 					break;
@@ -1475,9 +1472,7 @@ namespace iwm_commandliner3
 		{
 			_ = SB.Clear();
 
-			string[] files = (string[])e.Data.GetData(DataFormats.FileDrop, false);
-
-			foreach(string _s1 in files)
+			foreach (string _s1 in (string[])e.Data.GetData(DataFormats.FileDrop, false))
 			{
 				foreach (string _s2 in File.ReadLines(_s1, Encoding.GetEncoding(CbTextCode.Text)))
 				{
@@ -1547,8 +1542,7 @@ namespace iwm_commandliner3
 		{
 			_ = SB.Clear();
 
-			StringCollection files = Clipboard.GetFileDropList();
-			foreach (string _s1 in files)
+			foreach (string _s1 in Clipboard.GetFileDropList())
 			{
 				_ = SB.Append(_s1 + (Directory.Exists(_s1) ? @"\" : "") + NL);
 			}
@@ -2047,10 +2041,10 @@ namespace iwm_commandliner3
 			return rtn;
 		}
 
-		//-------------
-		// Sort／Uniq
-		//-------------
-		private string RtnTextSort(string str, bool bUniq)
+		//---------------
+		// Sort／Sort-R
+		//---------------
+		private string RtnTextSort(string str, bool bAsc)
 		{
 			List<string> l1 = new List<string>();
 
@@ -2065,41 +2059,33 @@ namespace iwm_commandliner3
 
 			l1.Sort();
 
-			if (bUniq)
+			if (! bAsc)
 			{
-				l1 = RtnListUniqSort(l1);
+				l1.Reverse();
 			}
 
-			_ = SB.Clear();
-
-			foreach (string _s1 in l1)
-			{
-				_ = SB.Append(_s1 + NL);
-			}
-
-			return SB.ToString();
+			return string.Join(NL, l1) + NL;
 		}
 
-		//-----------------------
-		// ソートして重複を除外
-		//-----------------------
-		private List<string> RtnListUniqSort(List<string> ListStr)
+		//-------
+		// Uniq
+		//-------
+		private string RtnTextUniq(string str)
 		{
-			List<string> rtn = new List<string>();
+			_ = SB.Clear();
 
-			ListStr.Sort();
-			string s1 = "";
+			string flg = "";
 
-			foreach (string _s1 in ListStr)
+			foreach (string _s1 in str.Split(SPLITS, StringSplitOptions.None))
 			{
-				if (_s1 != s1)
+				if (_s1 != flg && _s1.TrimEnd().Length > 0)
 				{
-					rtn.Add(_s1);
-					s1 = _s1;
+					_ = SB.Append(_s1 + NL);
+					flg = _s1;
 				}
 			}
 
-			return rtn;
+			return SB.ToString();
 		}
 
 		//-----------
