@@ -85,7 +85,6 @@
 			this.Lbl2 = new System.Windows.Forms.Label();
 			this.TbDgvCmdSearch = new System.Windows.Forms.TextBox();
 			this.DgvCmd = new System.Windows.Forms.DataGridView();
-			this.DgvCmd01 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.TbResult = new System.Windows.Forms.TextBox();
 			this.TbCmdSub = new System.Windows.Forms.TextBox();
 			this.CmsCmdSub = new System.Windows.Forms.ContextMenuStrip(this.components);
@@ -108,6 +107,7 @@
 			this.Lbl_F7 = new System.Windows.Forms.Label();
 			this.Lbl_F8 = new System.Windows.Forms.Label();
 			this.Lbl_F9 = new System.Windows.Forms.Label();
+			this.DgvCmd01 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			((System.ComponentModel.ISupportInitialize)(this.DgvMacro)).BeginInit();
 			this.CmsResult.SuspendLayout();
 			this.CmsCmd.SuspendLayout();
@@ -141,8 +141,10 @@
 			this.DgvMacro.TabIndex = 7;
 			this.DgvMacro.TabStop = false;
 			this.DgvMacro.Click += new System.EventHandler(this.DgvMacro_Click);
+			this.DgvMacro.Enter += new System.EventHandler(this.DgvMacro_Enter);
 			this.DgvMacro.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DgvMacro_KeyDown);
 			this.DgvMacro.KeyUp += new System.Windows.Forms.KeyEventHandler(this.DgvMacro_KeyUp);
+			this.DgvMacro.Leave += new System.EventHandler(this.DgvMacro_Leave);
 			this.DgvMacro.MouseHover += new System.EventHandler(this.DgvMacro_MouseHover);
 			// 
 			// Dgv_Tbc21
@@ -184,7 +186,7 @@
             this.CmsResult_L4,
             this.CmsResult_名前を付けて保存});
 			this.CmsResult.Name = "CmsResult";
-			this.CmsResult.Size = new System.Drawing.Size(181, 264);
+			this.CmsResult.Size = new System.Drawing.Size(171, 242);
 			// 
 			// CmsResult_上へ
 			// 
@@ -270,7 +272,7 @@
 			// 
 			this.CmsResult_名前を付けて保存.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.CmsResult_名前を付けて保存.Name = "CmsResult_名前を付けて保存";
-			this.CmsResult_名前を付けて保存.Size = new System.Drawing.Size(180, 22);
+			this.CmsResult_名前を付けて保存.Size = new System.Drawing.Size(170, 22);
 			this.CmsResult_名前を付けて保存.Text = "名前を付けて保存";
 			this.CmsResult_名前を付けて保存.Click += new System.EventHandler(this.CmsResult_名前を付けて保存_Click);
 			// 
@@ -561,7 +563,9 @@
 			this.CbTextCode.TabIndex = 11;
 			this.CbTextCode.TabStop = false;
 			this.ToolTip1.SetToolTip(this.CbTextCode, "[F4] 出力文字コード");
+			this.CbTextCode.Enter += new System.EventHandler(this.CbTextCode_Enter);
 			this.CbTextCode.KeyUp += new System.Windows.Forms.KeyEventHandler(this.CbTextCode_KeyUp);
+			this.CbTextCode.Leave += new System.EventHandler(this.CbTextCode_Leave);
 			// 
 			// CbCmdHistory
 			// 
@@ -586,7 +590,9 @@
 			this.CbCmdHistory.TabStop = false;
 			this.ToolTip1.SetToolTip(this.CbCmdHistory, "[F1] マクロ・コマンド履歴");
 			this.CbCmdHistory.DropDownClosed += new System.EventHandler(this.CbCmdHistory_DropDownClosed);
+			this.CbCmdHistory.Enter += new System.EventHandler(this.CbCmdHistory_Enter);
 			this.CbCmdHistory.KeyUp += new System.Windows.Forms.KeyEventHandler(this.CbCmdHistory_KeyUp);
+			this.CbCmdHistory.Leave += new System.EventHandler(this.CbCmdHistory_Leave);
 			// 
 			// CbResultHistory
 			// 
@@ -611,7 +617,9 @@
 			this.CbResultHistory.TabStop = false;
 			this.ToolTip1.SetToolTip(this.CbResultHistory, "[F7] 出力履歴");
 			this.CbResultHistory.DropDownClosed += new System.EventHandler(this.CbResultHistory_DropDownClosed);
+			this.CbResultHistory.Enter += new System.EventHandler(this.CbResultHistory_Enter);
 			this.CbResultHistory.KeyUp += new System.Windows.Forms.KeyEventHandler(this.CbResultHistory_KeyUp);
+			this.CbResultHistory.Leave += new System.EventHandler(this.CbResultHistory_Leave);
 			// 
 			// BtnAllClear
 			// 
@@ -756,19 +764,11 @@
 			this.DgvCmd.TabIndex = 9;
 			this.DgvCmd.TabStop = false;
 			this.DgvCmd.Click += new System.EventHandler(this.DgvCmd_Click);
+			this.DgvCmd.Enter += new System.EventHandler(this.DgvCmd_Enter);
 			this.DgvCmd.KeyDown += new System.Windows.Forms.KeyEventHandler(this.DgvCmd_KeyDown);
 			this.DgvCmd.KeyUp += new System.Windows.Forms.KeyEventHandler(this.DgvCmd_KeyUp);
+			this.DgvCmd.Leave += new System.EventHandler(this.DgvCmd_Leave);
 			this.DgvCmd.MouseHover += new System.EventHandler(this.DgvCmd_MouseHover);
-			// 
-			// DgvCmd01
-			// 
-			this.DgvCmd01.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
-			this.DgvCmd01.HeaderText = "コマンド";
-			this.DgvCmd01.MinimumWidth = 50;
-			this.DgvCmd01.Name = "DgvCmd01";
-			this.DgvCmd01.ReadOnly = true;
-			this.DgvCmd01.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.DgvCmd01.Width = 260;
 			// 
 			// TbResult
 			// 
@@ -1068,6 +1068,17 @@
 			this.Lbl_F9.TabIndex = 30;
 			this.Lbl_F9.Text = "F9";
 			// 
+			// DgvCmd01
+			// 
+			this.DgvCmd01.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.DgvCmd01.HeaderText = "コマンド";
+			this.DgvCmd01.MinimumWidth = 50;
+			this.DgvCmd01.Name = "DgvCmd01";
+			this.DgvCmd01.ReadOnly = true;
+			this.DgvCmd01.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.DgvCmd01.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.DgvCmd01.Width = 260;
+			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1175,7 +1186,6 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
 		private System.Windows.Forms.DataGridViewTextBoxColumn Dgv_Tbc21;
 		private System.Windows.Forms.DataGridViewTextBoxColumn Dgv_Tbc22;
-		private System.Windows.Forms.DataGridViewTextBoxColumn DgvCmd01;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmd_コマンドをグループ化;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmd_コマンドをグループ化_追加;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmd_コマンドをグループ化_出力;
@@ -1204,6 +1214,7 @@
 		private System.Windows.Forms.Label Lbl_F9;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmd_キー操作;
+		private System.Windows.Forms.DataGridViewTextBoxColumn DgvCmd01;
 	}
 }
 
