@@ -23,7 +23,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200311_2318 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200312_1420 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 
@@ -362,7 +362,7 @@ namespace iwm_commandliner3
 			}
 
 			// 補完(*)
-			if ((e.KeyCode == Keys.Right || e.KeyCode == Keys.Space) && TbCmd.TextLength == TbCmd.SelectionStart && Regex.IsMatch(TbCmd.Text, @"^.+\s+"))
+			if (e.KeyCode == Keys.Right && TbCmd.TextLength == TbCmd.SelectionStart && Regex.IsMatch(TbCmd.Text, @"^.+\s+"))
 			{
 				TbCmd.ForeColor = Color.Red;
 				TbCmd.Text = Regex.Replace(TbCmd.Text, @"\s$", " \"\"").Trim();
@@ -1065,8 +1065,7 @@ namespace iwm_commandliner3
 				{
 					// 出力消去
 					case "#clear":
-						TbCmdSub.Text = "";
-						TbResult.Text = "";
+						BtnAllClear_Click(null, null);
 						break;
 
 					// フォルダ変更
@@ -1450,7 +1449,7 @@ namespace iwm_commandliner3
 		//-------------
 		private void BtnAllClear_Click(object sender, EventArgs e)
 		{
-			TbCmd.Text = "";
+			/// TbCmd.Text = "";
 			TbCmdSub.Text = "";
 			TbResult.Text = "";
 			SubTbCmdFocus(-1);
@@ -1801,10 +1800,6 @@ namespace iwm_commandliner3
 			if (iPos < 0 || iPos > TbCmd.TextLength)
 			{
 				TbCmd.Text = TbCmd.Text.Trim();
-				if (TbCmd.TextLength > 0)
-				{
-					TbCmd.Text += " ";
-				}
 				iPos = TbCmd.TextLength;
 			}
 			TbCmd.Select(iPos, 0);
