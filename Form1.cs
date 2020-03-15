@@ -23,7 +23,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200315_1710 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200315_2039 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 
@@ -2174,25 +2174,24 @@ namespace iwm_commandliner3
 		//-----------
 		private string RtnEvalCalc(string str)
 		{
-			string rtn = str.ToLower().Replace(" ", "");
+			string rtn = Regex.Replace(str.ToLower(), @"(\s+|math\.)", "");
 
 			// Help
 			if (rtn.Length == 0)
 			{
-				return "pi, rad, pow(n,n), sqrt(n), sin(n°), cos(n°), tan(n°)";
+				return "pi, pow(n,n), sqrt(n), sin(n°), cos(n°), tan(n°)";
 			}
-
-			double _degPerSec = Math.PI / 180;
 
 			// 定数
 			rtn = rtn.Replace("pi", Math.PI.ToString());
-			rtn = rtn.Replace("rad", (180 / Math.PI).ToString());
+
+			double _degPerSec = Math.PI / 180;
 
 			// sqrt(n) sin(n°) cos(n°) tan(n°)
 			string[] aMath = { "sqrt", "sin", "cos", "tan" };
 			foreach (string _s1 in aMath)
 			{
-				foreach (Match _m1 in Regex.Matches(rtn, _s1 + @"\(\d+\.*\d*\)"))
+				foreach (Match _m1 in Regex.Matches(rtn, $@"{_s1}\(\d+\.*\d*\)"))
 				{
 					string _s2 = _m1.Value;
 					_s2 = _s2.Replace(_s1 + "(", "");
@@ -2203,9 +2202,9 @@ namespace iwm_commandliner3
 					switch (_s1)
 					{
 						case "sqrt": _d1 = Math.Sqrt(_d1); break;
-						case "sin": _d1 = Math.Sin(_degPerSec * _d1); break;
-						case "cos": _d1 = Math.Cos(_degPerSec * _d1); break;
-						case "tan": _d1 = Math.Tan(_degPerSec * _d1); break;
+						case "sin": _d1 = Math.Sin(_d1 * _degPerSec); break;
+						case "cos": _d1 = Math.Cos(_d1 * _degPerSec); break;
+						case "tan": _d1 = Math.Tan(_d1 * _degPerSec); break;
 						default: _d1 = 0; break;
 					}
 
