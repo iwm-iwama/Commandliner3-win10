@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.Specialized;
+//using System.Collections.Specialized;
 //using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
@@ -23,7 +23,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200312_1420 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200315_1710 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 
@@ -61,7 +61,7 @@ namespace iwm_commandliner3
 			{ "#fwrite",    "ファイル書込  #fwrite \"ファイル名\"",           1 },
 			{ "#stream",    "行毎に処理    #stream \"wget\" \"-q\"",          2 },
 			{ "#msgbox",    "MsgBox        #msgbox \"本文\"",                 1 },
-			{ "#calc",      "計算機        #calc \"45 * pi / 180\"",          1 },
+			{ "#calc",      "計算機        #calc \"pi / 180\"",               1 },
 			{ "#now",       "現在日時",                                       0 },
 			{ "#version",   "バージョン",                                     0 }
 		};
@@ -2179,53 +2179,55 @@ namespace iwm_commandliner3
 			// Help
 			if (rtn.Length == 0)
 			{
-				return "pi, e, sin(n), cos(n), tan(n), sqrt(n), pow(n,n)";
+				return "pi, rad, pow(n,n), sqrt(n), sin(n°), cos(n°), tan(n°)";
+			}
+
+			double _degPerSec = Math.PI / 180;
+
+			// 定数
+			rtn = rtn.Replace("pi", Math.PI.ToString());
+			rtn = rtn.Replace("rad", (180 / Math.PI).ToString());
+
+			// sqrt(n) sin(n°) cos(n°) tan(n°)
+			string[] aMath = { "sqrt", "sin", "cos", "tan" };
+			foreach (string _s1 in aMath)
+			{
+				foreach (Match _m1 in Regex.Matches(rtn, _s1 + @"\(\d+\.*\d*\)"))
+				{
+					string _s2 = _m1.Value;
+					_s2 = _s2.Replace(_s1 + "(", "");
+					_s2 = _s2.Replace(")", "");
+
+					double _d1 = double.Parse(_s2);
+
+					switch (_s1)
+					{
+						case "sqrt": _d1 = Math.Sqrt(_d1); break;
+						case "sin": _d1 = Math.Sin(_degPerSec * _d1); break;
+						case "cos": _d1 = Math.Cos(_degPerSec * _d1); break;
+						case "tan": _d1 = Math.Tan(_degPerSec * _d1); break;
+						default: _d1 = 0; break;
+					}
+
+					rtn = rtn.Replace(_m1.Value, _d1.ToString());
+				}
+			}
+
+			// pow(n,n)
+			foreach (Match _m1 in Regex.Matches(rtn, @"pow\(\d+\.*\d*\,\d+\)"))
+			{
+				string _s2 = _m1.Value;
+				_s2 = _s2.Replace("pow(", "");
+				_s2 = _s2.Replace(")", "");
+
+				string[] _a1 = _s2.Split(',');
+				rtn = rtn.Replace(_m1.Value, Math.Pow(double.Parse(_a1[0]), int.Parse(_a1[1])).ToString());
 			}
 
 			using (DataTable dt = new DataTable())
 			{
 				try
 				{
-					// 定数
-					rtn = rtn.Replace("pi", Math.PI.ToString());
-					rtn = rtn.Replace("e", Math.E.ToString());
-
-					// sin(n) cos(n) tan(n) sqrt(n)
-					string[] aMath = { "sin", "cos", "tan", "sqrt" };
-					foreach (string _s1 in aMath)
-					{
-						foreach (Match _m1 in Regex.Matches(rtn, _s1 + @"\(\d+\.*\d*\)"))
-						{
-							string _s2 = _m1.Value;
-							_s2 = _s2.Replace(_s1 + "(", "");
-							_s2 = _s2.Replace(")", "");
-
-							double _d1 = double.Parse(_s2);
-
-							switch (_s1)
-							{
-								case "sin": _d1 = Math.Sin(_d1 * Math.PI / 180); break;
-								case "cos": _d1 = Math.Cos(_d1 * Math.PI / 180); break;
-								case "tan": _d1 = Math.Tan(_d1 * Math.PI / 180); break;
-								case "sqrt": _d1 = Math.Sqrt(_d1); break;
-								default: _d1 = 0; break;
-							}
-
-							rtn = rtn.Replace(_m1.Value, _d1.ToString());
-						}
-					}
-
-					// pow(n,n)
-					foreach (Match _m1 in Regex.Matches(rtn, @"pow\(\d+\.*\d*\,\d+\)"))
-					{
-						string _s2 = _m1.Value;
-						_s2 = _s2.Replace("pow(", "");
-						_s2 = _s2.Replace(")", "");
-
-						string[] _a1 = _s2.Split(',');
-						rtn = rtn.Replace(_m1.Value, Math.Pow(double.Parse(_a1[0]), int.Parse(_a1[1])).ToString());
-					}
-
 					rtn = dt.Compute(rtn, null).ToString();
 				}
 				catch
