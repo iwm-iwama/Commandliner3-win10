@@ -23,7 +23,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200315_2039 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200316_1808 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 
@@ -2185,7 +2185,7 @@ namespace iwm_commandliner3
 			// 定数
 			rtn = rtn.Replace("pi", Math.PI.ToString());
 
-			double _degPerSec = Math.PI / 180;
+			double _PiPerDeg = Math.PI / 180;
 
 			// sqrt(n) sin(n°) cos(n°) tan(n°)
 			string[] aMath = { "sqrt", "sin", "cos", "tan" };
@@ -2202,9 +2202,9 @@ namespace iwm_commandliner3
 					switch (_s1)
 					{
 						case "sqrt": _d1 = Math.Sqrt(_d1); break;
-						case "sin": _d1 = Math.Sin(_d1 * _degPerSec); break;
-						case "cos": _d1 = Math.Cos(_d1 * _degPerSec); break;
-						case "tan": _d1 = Math.Tan(_d1 * _degPerSec); break;
+						case "sin": _d1 = Math.Sin(_d1 * _PiPerDeg); break;
+						case "cos": _d1 = Math.Cos(_d1 * _PiPerDeg); break;
+						case "tan": _d1 = Math.Tan(_d1 * _PiPerDeg); break;
 						default: _d1 = 0; break;
 					}
 
