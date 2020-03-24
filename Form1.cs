@@ -7,7 +7,7 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-//using System.Net;
+using System.Net;
 using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
@@ -23,7 +23,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200316_1808 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200324_1327 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 
@@ -1246,7 +1246,7 @@ namespace iwm_commandliner3
 						{
 							break;
 						}
-						using (System.Net.WebClient wc = new System.Net.WebClient())
+						using (WebClient wc = new WebClient())
 						{
 							try
 							{
@@ -1256,6 +1256,8 @@ namespace iwm_commandliner3
 									if (Regex.IsMatch(s1, "charset.*=.*UTF-8", RegexOptions.IgnoreCase))
 									{
 										CbTextCode.Text = TEXT_CODE[1];
+										// UTF-8で再読込
+										s1 = Encoding.GetEncoding(CbTextCode.Text).GetString(wc.DownloadData(aOp[1]));
 									}
 								}
 								_ = NativeMethods.SendMessage(TbResult.Handle, EM_REPLACESEL, 1, Regex.Replace(s1, "\r*\n", NL));
