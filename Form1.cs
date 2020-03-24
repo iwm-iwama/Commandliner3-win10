@@ -23,7 +23,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200324_1327 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200324_1357 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 
@@ -1251,15 +1251,6 @@ namespace iwm_commandliner3
 							try
 							{
 								s1 = Encoding.GetEncoding(CbTextCode.Text).GetString(wc.DownloadData(aOp[1]));
-								if (Regex.IsMatch(aOp[1], "^(http|ftp)"))
-								{
-									if (Regex.IsMatch(s1, "charset.*=.*UTF-8", RegexOptions.IgnoreCase))
-									{
-										CbTextCode.Text = TEXT_CODE[1];
-										// UTF-8で再読込
-										s1 = Encoding.GetEncoding(CbTextCode.Text).GetString(wc.DownloadData(aOp[1]));
-									}
-								}
 								_ = NativeMethods.SendMessage(TbResult.Handle, EM_REPLACESEL, 1, Regex.Replace(s1, "\r*\n", NL));
 							}
 							catch
