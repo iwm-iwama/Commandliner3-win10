@@ -23,7 +23,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200324_1357 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200523_2255 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 
@@ -1304,10 +1304,18 @@ namespace iwm_commandliner3
 								Ps1.StartInfo.CreateNoWindow = true;
 								Ps1.StartInfo.StandardOutputEncoding = Encoding.GetEncoding(CbTextCode.Text);
 								Ps1.OutputDataReceived += new DataReceivedEventHandler(ProcessDataReceived);
-								_ = Ps1.Start();
-								///TbResult.Text += Ps1.StandardOutput.ReadToEnd() + NL;
-								TbCmdSub.Text += Ps1.StandardError.ReadToEnd() + NL;
-								Ps1.Close();
+								try
+								{
+									_ = Ps1.Start();
+									/// TbResult.Text += Ps1.StandardOutput.ReadToEnd() + NL;
+									TbCmdSub.Text += Ps1.StandardError.ReadToEnd() + NL;
+									Ps1.Close();
+								}
+								catch
+								{
+									_ = MessageBox.Show("#stream の引数を再確認してください!!");
+									break;
+								}
 							}
 						}
 						TbCmdSub.SelectionStart = TbCmdSub.TextLength;
