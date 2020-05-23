@@ -23,7 +23,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200523_2255 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200524_0000 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 
@@ -1027,7 +1027,7 @@ namespace iwm_commandliner3
 			cmd = Regex.Replace(cmd, @"^#*(cd|chdir)\s+", "#cd ", RegexOptions.IgnoreCase);
 
 			// コメント行
-			if (cmd.Substring(0, 2) == "//")
+			if (cmd.Length >= 2 && cmd.Substring(0, 2) == "//")
 			{
 				; // 何もしない
 			}
@@ -1325,7 +1325,7 @@ namespace iwm_commandliner3
 					// MsgBox
 					case "#msgbox":
 						DialogResult result = MessageBox.Show(aOp[1].Replace("\\n", NL), "", MessageBoxButtons.YesNo, MessageBoxIcon.Asterisk);
-						GblCmdExec = result == DialogResult.Yes || result == DialogResult.OK ? true : false;
+						GblCmdExec = result == DialogResult.Yes || result == DialogResult.OK;
 						break;
 
 					// 計算機
@@ -1363,7 +1363,6 @@ namespace iwm_commandliner3
 				TbResult.SelectionStart = TbResult.TextLength;
 				TbResult.ScrollToCaret();
 			}
-
 			LblWait.Visible = false;
 			Cursor.Current = Cursors.Default;
 		}
@@ -1660,7 +1659,7 @@ namespace iwm_commandliner3
 
 		private void CbResultHistory_DropDownClosed(object sender, EventArgs e)
 		{
-			if (CbResultHistory.Text.Length > "xx:xx:xx|".Length)
+			if (CbResultHistory.Text.Length > "xx:xx:xx|".Length) // > 9
 			{
 				TbResult.Text = ResultHistory[CbResultHistory.Text.Substring(0, 8)];
 			}
