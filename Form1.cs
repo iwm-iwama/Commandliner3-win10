@@ -23,7 +23,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200524_0000 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200524_1315 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 
@@ -725,7 +725,7 @@ namespace iwm_commandliner3
 			switch (e.KeyCode)
 			{
 				case Keys.Enter:
-					SubCmdSubAddText("[Click]または[Space]キーで選択" + NL);
+					MessageBox.Show("[Click]または[Space]キーで選択");
 					break;
 			}
 		}
@@ -842,7 +842,7 @@ namespace iwm_commandliner3
 			switch (e.KeyCode)
 			{
 				case Keys.Enter:
-					SubCmdSubAddText("[Click]または[Space]キーで選択" + NL);
+					MessageBox.Show("[Click]または[Space]キーで選択");
 					break;
 			}
 		}
@@ -864,7 +864,8 @@ namespace iwm_commandliner3
 				case Keys.Up:
 					if (--GblDgvCmdCurRow < 0)
 					{
-						GblDgvCmdCurRow = i1;
+						GblDgvCmdCurRow = 0;
+						_ = TbDgvCmdSearch.Focus();
 					}
 					break;
 
@@ -889,10 +890,6 @@ namespace iwm_commandliner3
 
 				case Keys.PageDown:
 					GblDgvCmdCurRow = GblDgvCmdCurRow == i1 ? 0 : DgvCmd.CurrentRow.Index;
-					break;
-
-				case Keys.Tab:
-					_ = TbDgvCmdSearch.Focus();
 					break;
 			}
 			DgvCmd.CurrentCell = DgvCmd[0, GblDgvCmdCurRow];
@@ -943,6 +940,11 @@ namespace iwm_commandliner3
 			}
 		}
 
+		private void TbDgvCmdSearch_Enter(object sender, EventArgs e)
+		{
+			TbDgvCmdSearch.SelectionStart = TbDgvCmdSearch.TextLength;
+		}
+
 		private void TbDgvCmdSearch_MouseHover(object sender, EventArgs e)
 		{
 			_ = TbDgvCmdSearch.Focus();
@@ -953,6 +955,9 @@ namespace iwm_commandliner3
 			switch (e.KeyCode)
 			{
 				case Keys.Up:
+					TbDgvCmdSearch_Enter(sender, e);
+					break;
+
 				case Keys.Down:
 					_ = DgvCmd.Focus();
 					break;
