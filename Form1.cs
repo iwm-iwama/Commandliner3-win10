@@ -24,11 +24,11 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200802_2316 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200810_2222 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
-
-		private readonly string[] SPLITS = { NL };
+		private readonly string RgxNL = "\r*\n";
+		private readonly string[] AryNL = { NL };
 
 		private readonly string[] TEXT_CODE = { "Shift_JIS", "UTF-8" };
 
@@ -537,7 +537,7 @@ namespace iwm_commandliner3
 		private void CmsCmd_貼り付け_Click(object sender, EventArgs e)
 		{
 			TbCmd.Paste();
-			TbCmd.Text = Regex.Replace(TbCmd.Text, "\r*\n", " ");
+			TbCmd.Text = Regex.Replace(TbCmd.Text, RgxNL, " ");
 		}
 
 		private void CmsCmd_DQで囲む_Click(object sender, EventArgs e)
@@ -609,7 +609,7 @@ namespace iwm_commandliner3
 				{
 					TbCmd.Text = Regex.Replace(
 						File.ReadAllText(openFileDialog1.FileName, Encoding.GetEncoding(TEXT_CODE[0])),
-						@";*\r*\n", // ";" がなくても改行されていれば有効
+						";*" + RgxNL, // ";" がなくても改行されていれば有効
 						"; "
 					);
 					SubTbCmdFocus(-1);
@@ -1426,7 +1426,7 @@ namespace iwm_commandliner3
 						}
 						int cnt2 = 0;
 						_ = Sb.Clear();
-						foreach (string _s1 in TbResult.Text.Split(SPLITS, StringSplitOptions.None))
+						foreach (string _s1 in TbResult.Text.Split(AryNL, StringSplitOptions.None))
 						{
 							++cnt2;
 							if (cnt2 >= bgnLn)
@@ -1444,7 +1444,7 @@ namespace iwm_commandliner3
 					// 空白行削除
 					case "#rmblankln":
 						_ = Sb.Clear();
-						foreach (string _s1 in TbResult.Text.Split(SPLITS, StringSplitOptions.None))
+						foreach (string _s1 in TbResult.Text.Split(AryNL, StringSplitOptions.None))
 						{
 							if (_s1.TrimEnd().Length > 0)
 							{
@@ -1458,7 +1458,7 @@ namespace iwm_commandliner3
 					case "#addlnnum":
 						int cnt1 = 0;
 						_ = Sb.Clear();
-						foreach (string _s1 in TbResult.Text.Split(SPLITS, StringSplitOptions.None))
+						foreach (string _s1 in TbResult.Text.Split(AryNL, StringSplitOptions.None))
 						{
 							_ = Sb.Append(string.Format("{0:D8}\t{1}{2}", ++cnt1, _s1, NL));
 						}
@@ -1467,12 +1467,7 @@ namespace iwm_commandliner3
 
 					// 改行を消去
 					case "#rmnl":
-						_ = Sb.Clear();
-						foreach (string _s1 in TbResult.Text.Split(SPLITS, StringSplitOptions.None))
-						{
-							_ = Sb.Append(_s1.TrimEnd());
-						}
-						TbResult.Text = Sb.ToString();
+						TbResult.Text = Regex.Replace(TbResult.Text, RgxNL, "");
 						break;
 
 					// ファイル取得／ファイル読込
@@ -1487,7 +1482,7 @@ namespace iwm_commandliner3
 							try
 							{
 								s1 = Encoding.GetEncoding(CbTextCode.Text).GetString(wc.DownloadData(aOp[1]));
-								_ = NativeMethods.SendMessage(TbResult.Handle, EM_REPLACESEL, 1, Regex.Replace(s1, "\r*\n", NL));
+								_ = NativeMethods.SendMessage(TbResult.Handle, EM_REPLACESEL, 1, Regex.Replace(s1, RgxNL, NL));
 							}
 							catch
 							{
@@ -1527,7 +1522,7 @@ namespace iwm_commandliner3
 							break;
 						}
 						MyEvent = new MyEventHandler(EventDataReceived);
-						foreach (string _s1 in TbResult.Text.Split(SPLITS, StringSplitOptions.None))
+						foreach (string _s1 in TbResult.Text.Split(AryNL, StringSplitOptions.None))
 						{
 							if (_s1.Trim().Length > 0)
 							{
@@ -1545,8 +1540,8 @@ namespace iwm_commandliner3
 								{
 									// Stdout, Stderr を出力
 									_ = Ps1.Start();
-									TbCmdMemo.AppendText(Regex.Replace(Ps1.StandardOutput.ReadToEnd(), "\r*\n", NL));
-									TbCmdMemo.AppendText(Regex.Replace(Ps1.StandardError.ReadToEnd(), "\r*\n", NL));
+									TbCmdMemo.AppendText(Regex.Replace(Ps1.StandardOutput.ReadToEnd(), RgxNL, NL));
+									TbCmdMemo.AppendText(Regex.Replace(Ps1.StandardError.ReadToEnd(), RgxNL, NL));
 									Ps1.Close();
 								}
 								catch
@@ -1702,7 +1697,7 @@ namespace iwm_commandliner3
 			int iRow = 0;
 			int iCnt = 0;
 
-			foreach (string _s1 in TbResult.SelectedText.Split(SPLITS, StringSplitOptions.None))
+			foreach (string _s1 in TbResult.SelectedText.Split(AryNL, StringSplitOptions.None))
 			{
 				++iNL;
 
@@ -1770,7 +1765,7 @@ namespace iwm_commandliner3
 		{
 			_ = NativeMethods.SendMessage(
 				TbResult.Handle, EM_REPLACESEL, 1,
-				Regex.Replace(Clipboard.GetText(), "\r*\n", NL)
+				Regex.Replace(Clipboard.GetText(), RgxNL, NL)
 			);
 		}
 
@@ -2155,12 +2150,11 @@ namespace iwm_commandliner3
 
 			_ = Sb.Clear();
 
-			foreach (string _s1 in str.Split(SPLITS, StringSplitOptions.None))
+			foreach (string _s1 in str.Split(AryNL, StringSplitOptions.None))
 			{
-				string _s2 = _s1 + NL;
-				if (bMatch == rgx.IsMatch(_s2))
+				if (bMatch == rgx.IsMatch(_s1))
 				{
-					_ = Sb.Append(_s2);
+					_ = Sb.Append(_s1 + NL);
 				}
 			}
 
@@ -2198,7 +2192,7 @@ namespace iwm_commandliner3
 
 			_ = Sb.Clear();
 
-			foreach (string _s1 in str.Split(SPLITS, StringSplitOptions.None))
+			foreach (string _s1 in str.Split(AryNL, StringSplitOptions.None))
 			{
 				_ = Sb.Append(rgx.Replace(_s1, sNew) + NL);
 			}
@@ -2234,7 +2228,7 @@ namespace iwm_commandliner3
 
 			_ = Sb.Clear();
 
-			foreach (string _s1 in str.Split(SPLITS, StringSplitOptions.None))
+			foreach (string _s1 in str.Split(AryNL, StringSplitOptions.None))
 			{
 				if (_s1.Length > 0)
 				{
@@ -2322,7 +2316,7 @@ namespace iwm_commandliner3
 
 			_ = Sb.Clear();
 
-			foreach (string _s1 in str.Split(SPLITS, StringSplitOptions.None))
+			foreach (string _s1 in str.Split(AryNL, StringSplitOptions.None))
 			{
 				_ = Sb.Append(RtnEraseLen(_s1, ' ', iBgnPos, iEndPos) + NL);
 			}
@@ -2390,7 +2384,7 @@ namespace iwm_commandliner3
 		{
 			List<string> l1 = new List<string>();
 
-			foreach (string _s1 in str.Split(SPLITS, StringSplitOptions.None))
+			foreach (string _s1 in str.Split(AryNL, StringSplitOptions.None))
 			{
 				string _s2 = _s1.TrimEnd();
 				if (_s2.Length > 0)
@@ -2418,7 +2412,7 @@ namespace iwm_commandliner3
 
 			string flg = "";
 
-			foreach (string _s1 in str.Split(SPLITS, StringSplitOptions.None))
+			foreach (string _s1 in str.Split(AryNL, StringSplitOptions.None))
 			{
 				if (_s1 != flg && _s1.TrimEnd().Length > 0)
 				{
