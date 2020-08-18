@@ -24,7 +24,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200810_2222 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200818_2120 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 		private readonly string RgxNL = "\r*\n";
@@ -540,6 +540,12 @@ namespace iwm_commandliner3
 			TbCmd.Text = Regex.Replace(TbCmd.Text, RgxNL, " ");
 		}
 
+		private void CmsCmd_上書き_Click(object sender, EventArgs e)
+		{
+			TbCmd.Text = "";
+			CmsCmd_貼り付け_Click(sender, e);
+		}
+
 		private void CmsCmd_DQで囲む_Click(object sender, EventArgs e)
 		{
 			TbCmd.SelectedText = "\"" + TbCmd.SelectedText.Trim('\"') + "\"";
@@ -763,6 +769,12 @@ namespace iwm_commandliner3
 			TbCmdMemo.Paste();
 		}
 
+		private void CmsCmdMemo_上書き_Click(object sender, EventArgs e)
+		{
+			TbCmdMemo.Text = "";
+			CmsCmdMemo_貼り付け_Click(sender, e);
+		}
+
 		private void SubCmdMemoAddText(string str)
 		{
 			_ = NativeMethods.SendMessage(TbCmdMemo.Handle, EM_REPLACESEL, 1, str + NL);
@@ -794,7 +806,7 @@ namespace iwm_commandliner3
 				GblDgvMacroOpen = true;
 				DgvMacro.Enabled = true;
 				BtnDgvMacro.BackColor = Color.Gold;
-				DgvMacro.ScrollBars = ScrollBars.Vertical;
+				DgvMacro.ScrollBars = ScrollBars.Both;
 				DgvMacro.Width = 408;
 				DgvMacro.Height = Height - 228;
 				/// DgvMacro.MaximumSize = new Size(DgvMacro.Width, ((DgvMacro.RowCount + 1) * (DgvMacro.ColumnHeadersHeight + 1)) + 1);
@@ -813,8 +825,11 @@ namespace iwm_commandliner3
 			Lbl_F2.ForeColor = Color.Gray;
 		}
 
-		private void DgvMacro_Click(object sender, EventArgs e)
+		private void DgvMacro_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
 		{
+			// セル[1, n]をクリップボードにコピー
+			Clipboard.SetText(DgvMacro[1, DgvMacro.CurrentRow.Index].Value.ToString());
+
 			string s1 = DgvMacro[0, DgvMacro.CurrentRow.Index].Value.ToString();
 			int iPos = 0;
 
@@ -856,12 +871,12 @@ namespace iwm_commandliner3
 				case Keys.Enter:
 					DgvMacro.CurrentCell = DgvMacro[0, DgvMacro.CurrentCell.RowIndex - (DgvMacro.CurrentRow.Index == GblDgvMacroRow ? 0 : 1)];
 					GblTbCmdPos = DgvMacro.CurrentCell.Value.ToString().Length + 2;
-					DgvMacro_Click(sender, e);
+					DgvMacro_CellMouseClick(sender, null);
 					break;
 
 				case Keys.Space:
 					GblTbCmdPos = DgvMacro.CurrentCell.Value.ToString().Length + 2;
-					DgvMacro_Click(sender, e);
+					DgvMacro_CellMouseClick(sender, null);
 					break;
 
 				case Keys.PageUp:
@@ -915,7 +930,7 @@ namespace iwm_commandliner3
 				GblDgvCmdOpen = true;
 				DgvCmd.Enabled = true;
 				BtnDgvCmd.BackColor = Color.Gold;
-				DgvCmd.ScrollBars = ScrollBars.Vertical;
+				DgvCmd.ScrollBars = ScrollBars.Both;
 				DgvCmd.Width = 323;
 				DgvCmd.Height = Height - 228;
 				/// DgvCmd.MaximumSize = new Size(DgvCmd.Width, ((DgvCmd.RowCount + 1) * (DgvCmd.ColumnHeadersHeight + 1)) + 1);
@@ -936,7 +951,7 @@ namespace iwm_commandliner3
 			Lbl_F3.ForeColor = Color.Gray;
 		}
 
-		private void DgvCmd_Click(object sender, EventArgs e)
+		private void DgvCmd_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
 		{
 			TbCmd.Text = DgvCmd[0, DgvCmd.CurrentCell.RowIndex].Value.ToString();
 			SubTbCmdFocus(TbCmd.TextLength);
@@ -963,12 +978,12 @@ namespace iwm_commandliner3
 				case Keys.Enter:
 					DgvCmd.CurrentCell = DgvCmd[0, DgvCmd.CurrentCell.RowIndex - (DgvCmd.CurrentRow.Index == GblDgvCmdRow ? 0 : 1)];
 					GblTbCmdPos = DgvCmd.CurrentCell.Value.ToString().Length;
-					DgvCmd_Click(sender, e);
+					DgvCmd_CellMouseClick(sender, null);
 					break;
 
 				case Keys.Space:
 					GblTbCmdPos = DgvCmd.CurrentCell.Value.ToString().Length;
-					DgvCmd_Click(sender, e);
+					DgvCmd_CellMouseClick(sender, null);
 					break;
 
 				case Keys.PageUp:
@@ -1621,9 +1636,11 @@ namespace iwm_commandliner3
 				TbResult.AppendText(s1);
 
 				Ps1.Close();
-				TbResult.SelectionStart = TbResult.TextLength;
-				TbResult.ScrollToCaret();
 			}
+
+			TbResult.SelectionStart = TbResult.TextLength;
+			TbResult.ScrollToCaret();
+
 			Lbl_Wait.Visible = false;
 			Cursor.Current = Cursors.Default;
 		}
@@ -1645,8 +1662,12 @@ namespace iwm_commandliner3
 		//-------------
 		private void BtnClear_Click(object sender, EventArgs e)
 		{
-			TbResult.Text = "";
+			// [Ctrl+Z]を有効化
+			TbResult.SelectAll();
+			TbResult.Cut();
+
 			TbInfo.Text = "";
+
 			SubTbCmdFocus(GblTbCmdPos);
 		}
 
@@ -1742,7 +1763,9 @@ namespace iwm_commandliner3
 		//------------
 		private void CmsResult_クリア_Click(object sender, EventArgs e)
 		{
-			TbResult.Text = "";
+			// [Ctrl+Z]を有効化
+			TbResult.SelectAll();
+			TbResult.Cut();
 		}
 
 		private void CmsResult_全コピー_Click(object sender, EventArgs e)
@@ -1767,6 +1790,12 @@ namespace iwm_commandliner3
 				TbResult.Handle, EM_REPLACESEL, 1,
 				Regex.Replace(Clipboard.GetText(), RgxNL, NL)
 			);
+		}
+
+		private void CmsResult_上書き_Click(object sender, EventArgs e)
+		{
+			TbResult.Text = "";
+			CmsResult_貼り付け_Click(sender, e);
 		}
 
 		private void CmsResult_ファイル名を貼り付け_Click(object sender, EventArgs e)
