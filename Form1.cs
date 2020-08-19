@@ -24,7 +24,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200818_2120 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20200819_2318 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 		private readonly string RgxNL = "\r*\n";
@@ -237,7 +237,6 @@ namespace iwm_commandliner3
 		// TbCmd
 		//--------
 		private int GblTbCmdPos = 0;
-		private string GblTbCmd = "";
 
 		private void TbCmd_Enter(object sender, EventArgs e)
 		{
@@ -425,13 +424,14 @@ namespace iwm_commandliner3
 				case Keys.Up:
 					if (TbCmd.Text.Trim().Length == 0)
 					{
-						TbCmd.Text = GblTbCmd;
+						TbCmd.Undo();
 						TbCmd.SelectionStart = TbCmd.TextLength;
 					}
 					else
 					{
-						GblTbCmd = TbCmd.Text;
-						TbCmd.Text = "";
+						// [Ctrl+Z] 有効化
+						TbCmd.SelectAll();
+						TbCmd.Cut();
 					}
 					break;
 
@@ -515,13 +515,22 @@ namespace iwm_commandliner3
 
 		private void CmsCmd_クリア_Click(object sender, EventArgs e)
 		{
-			TbCmd.Text = "";
+			// [Ctrl+Z] 有効化
+			TbCmd.SelectAll();
+			TbCmd.Cut();
 		}
 
 		private void CmsCmd_全コピー_Click(object sender, EventArgs e)
 		{
 			TbCmd.SelectAll();
 			TbCmd.Copy();
+		}
+
+		private void CmsCmd_上書き_Click(object sender, EventArgs e)
+		{
+			// [Ctrl+Z] 有効化
+			TbCmd.SelectAll();
+			CmsCmd_貼り付け_Click(sender, e);
 		}
 
 		private void CmsCmd_コピー_Click(object sender, EventArgs e)
@@ -536,14 +545,9 @@ namespace iwm_commandliner3
 
 		private void CmsCmd_貼り付け_Click(object sender, EventArgs e)
 		{
+			// [Ctrl+Z] 有効化
+			Clipboard.SetText(Regex.Replace(Clipboard.GetText(), RgxNL, " "));
 			TbCmd.Paste();
-			TbCmd.Text = Regex.Replace(TbCmd.Text, RgxNL, " ");
-		}
-
-		private void CmsCmd_上書き_Click(object sender, EventArgs e)
-		{
-			TbCmd.Text = "";
-			CmsCmd_貼り付け_Click(sender, e);
 		}
 
 		private void CmsCmd_DQで囲む_Click(object sender, EventArgs e)
@@ -745,13 +749,22 @@ namespace iwm_commandliner3
 		//-------------
 		private void CmsCmdMemo_クリア_Click(object sender, EventArgs e)
 		{
-			TbCmdMemo.Text = "";
+			// [Ctrl+Z]を有効化
+			TbCmdMemo.SelectAll();
+			TbCmdMemo.Cut();
 		}
 
 		private void CmsCmdMemo_全コピー_Click(object sender, EventArgs e)
 		{
 			TbCmdMemo.SelectAll();
 			TbCmdMemo.Copy();
+		}
+
+		private void CmsCmdMemo_上書き_Click(object sender, EventArgs e)
+		{
+			// [Ctrl+Z] 有効化
+			TbCmdMemo.SelectAll();
+			CmsCmdMemo_貼り付け_Click(sender, e);
 		}
 
 		private void CmsCmdMemo_コピー_Click(object sender, EventArgs e)
@@ -767,12 +780,6 @@ namespace iwm_commandliner3
 		private void CmsCmdMemo_貼り付け_Click(object sender, EventArgs e)
 		{
 			TbCmdMemo.Paste();
-		}
-
-		private void CmsCmdMemo_上書き_Click(object sender, EventArgs e)
-		{
-			TbCmdMemo.Text = "";
-			CmsCmdMemo_貼り付け_Click(sender, e);
 		}
 
 		private void SubCmdMemoAddText(string str)
@@ -1113,7 +1120,9 @@ namespace iwm_commandliner3
 		//--------------------
 		private void CmsTbDgvCmdSearch_クリア_Click(object sender, EventArgs e)
 		{
-			TbDgvCmdSearch.Text = "";
+			// [Ctrl+Z]を有効化
+			TbDgvCmdSearch.SelectAll();
+			TbDgvCmdSearch.Cut();
 
 			DgvCmd.Rows.Clear();
 
@@ -1774,6 +1783,13 @@ namespace iwm_commandliner3
 			TbResult.Copy();
 		}
 
+		private void CmsResult_上書き_Click(object sender, EventArgs e)
+		{
+			// [Ctrl+Z] 有効化
+			TbResult.SelectAll();
+			CmsResult_貼り付け_Click(sender, e);
+		}
+
 		private void CmsResult_コピー_Click(object sender, EventArgs e)
 		{
 			TbResult.Copy();
@@ -1790,12 +1806,6 @@ namespace iwm_commandliner3
 				TbResult.Handle, EM_REPLACESEL, 1,
 				Regex.Replace(Clipboard.GetText(), RgxNL, NL)
 			);
-		}
-
-		private void CmsResult_上書き_Click(object sender, EventArgs e)
-		{
-			TbResult.Text = "";
-			CmsResult_貼り付け_Click(sender, e);
 		}
 
 		private void CmsResult_ファイル名を貼り付け_Click(object sender, EventArgs e)
