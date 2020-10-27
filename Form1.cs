@@ -24,7 +24,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20200819_2318 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20201027_2245 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 		private readonly string RgxNL = "\r*\n";
@@ -76,7 +76,7 @@ namespace iwm_commandliner3
 		private string CurDir = "";
 
 		// 文字列
-		private readonly StringBuilder Sb = new StringBuilder();
+		private readonly StringBuilder SB = new StringBuilder();
 
 		// 履歴
 		private readonly List<string> CmdHistory = new List<string>() { };
@@ -85,7 +85,9 @@ namespace iwm_commandliner3
 		private delegate void MyEventHandler(object sender, DataReceivedEventArgs e);
 		private event MyEventHandler MyEvent = null;
 
-		private Process Ps1 = null;
+		// Object
+		private Process PS = null;
+		private TextBox TB = null;
 
 		internal static class NativeMethods
 		{
@@ -489,6 +491,11 @@ namespace iwm_commandliner3
 			ToolTip1.SetToolTip(TbCmd, Regex.Replace(TbCmd.Text, @"(?<=\G.{80})(?!$)", NL));
 		}
 
+		private void TbCmd_MouseUp(object sender, MouseEventArgs e)
+		{
+			CmsTextSelect_Open(e, TbCmd);
+		}
+
 		private void TbCmd_DragDrop(object sender, DragEventArgs e)
 		{
 			string[] a1 = (string[])e.Data.GetData(DataFormats.FileDrop, false);
@@ -508,9 +515,9 @@ namespace iwm_commandliner3
 			e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : DragDropEffects.None;
 		}
 
-		//-------------
-		// CmsCmdMemo
-		//-------------
+		//---------
+		// CmsCmd
+		//---------
 		private string GblCmsCmdBatch = "";
 
 		private void CmsCmd_クリア_Click(object sender, EventArgs e)
@@ -531,16 +538,6 @@ namespace iwm_commandliner3
 			// [Ctrl+Z] 有効化
 			TbCmd.SelectAll();
 			CmsCmd_貼り付け_Click(sender, e);
-		}
-
-		private void CmsCmd_コピー_Click(object sender, EventArgs e)
-		{
-			TbCmd.Copy();
-		}
-
-		private void CmsCmd_切り取り_Click(object sender, EventArgs e)
-		{
-			TbCmd.Cut();
 		}
 
 		private void CmsCmd_貼り付け_Click(object sender, EventArgs e)
@@ -744,6 +741,11 @@ namespace iwm_commandliner3
 			LblCmdMemo.Visible = false;
 		}
 
+		private void TbCmdMemo_MouseUp(object sender, MouseEventArgs e)
+		{
+			CmsTextSelect_Open(e, TbCmdMemo);
+		}
+
 		//-------------
 		// CmsCmdMemo
 		//-------------
@@ -793,7 +795,7 @@ namespace iwm_commandliner3
 		// DgvMacro
 		//-----------
 		private int GblDgvMacroRow = 0;
-		private bool GblDgvMacroOpen = true; // DgvMacro.enabled より速い 
+		private bool GblDgvMacroOpen = true; // DgvMacro.enabled より速い
 
 		private void BtnDgvMacro_Click(object sender, EventArgs e)
 		{
@@ -1449,44 +1451,44 @@ namespace iwm_commandliner3
 							break;
 						}
 						int cnt2 = 0;
-						_ = Sb.Clear();
+						_ = SB.Clear();
 						foreach (string _s1 in TbResult.Text.Split(AryNL, StringSplitOptions.None))
 						{
 							++cnt2;
 							if (cnt2 >= bgnLn)
 							{
-								_ = Sb.Append(_s1 + NL);
+								_ = SB.Append(_s1 + NL);
 							}
 							if (endLn > 0 && cnt2 >= endLn)
 							{
 								break;
 							}
 						}
-						TbResult.Text = Sb.ToString();
+						TbResult.Text = SB.ToString();
 						break;
 
 					// 空白行削除
 					case "#rmblankln":
-						_ = Sb.Clear();
+						_ = SB.Clear();
 						foreach (string _s1 in TbResult.Text.Split(AryNL, StringSplitOptions.None))
 						{
 							if (_s1.TrimEnd().Length > 0)
 							{
-								_ = Sb.Append(_s1 + NL);
+								_ = SB.Append(_s1 + NL);
 							}
 						}
-						TbResult.Text = Sb.ToString();
+						TbResult.Text = SB.ToString();
 						break;
 
 					// 行番号付与
 					case "#addlnnum":
 						int cnt1 = 0;
-						_ = Sb.Clear();
+						_ = SB.Clear();
 						foreach (string _s1 in TbResult.Text.Split(AryNL, StringSplitOptions.None))
 						{
-							_ = Sb.Append(string.Format("{0:D8}\t{1}{2}", ++cnt1, _s1, NL));
+							_ = SB.Append(string.Format("{0:D8}\t{1}{2}", ++cnt1, _s1, NL));
 						}
-						TbResult.Text = Sb.ToString();
+						TbResult.Text = SB.ToString();
 						break;
 
 					// 改行を消去
@@ -1550,23 +1552,23 @@ namespace iwm_commandliner3
 						{
 							if (_s1.Trim().Length > 0)
 							{
-								Ps1 = new Process();
-								Ps1.StartInfo.FileName = aOp[1];
-								Ps1.StartInfo.Arguments = aOp[2] + " " + _s1;
-								Ps1.StartInfo.UseShellExecute = false;
-								Ps1.StartInfo.RedirectStandardInput = true;
-								Ps1.StartInfo.RedirectStandardOutput = true;
-								Ps1.StartInfo.RedirectStandardError = true;
-								Ps1.StartInfo.CreateNoWindow = true;
-								Ps1.StartInfo.StandardOutputEncoding = Encoding.GetEncoding(CbTextCode.Text);
-								Ps1.OutputDataReceived += new DataReceivedEventHandler(ProcessDataReceived);
+								PS = new Process();
+								PS.StartInfo.FileName = aOp[1];
+								PS.StartInfo.Arguments = aOp[2] + " " + _s1;
+								PS.StartInfo.UseShellExecute = false;
+								PS.StartInfo.RedirectStandardInput = true;
+								PS.StartInfo.RedirectStandardOutput = true;
+								PS.StartInfo.RedirectStandardError = true;
+								PS.StartInfo.CreateNoWindow = true;
+								PS.StartInfo.StandardOutputEncoding = Encoding.GetEncoding(CbTextCode.Text);
+								PS.OutputDataReceived += new DataReceivedEventHandler(ProcessDataReceived);
 								try
 								{
 									// Stdout, Stderr を出力
-									_ = Ps1.Start();
-									TbCmdMemo.AppendText(Regex.Replace(Ps1.StandardOutput.ReadToEnd(), RgxNL, NL));
-									TbCmdMemo.AppendText(Regex.Replace(Ps1.StandardError.ReadToEnd(), RgxNL, NL));
-									Ps1.Close();
+									_ = PS.Start();
+									TbCmdMemo.AppendText(Regex.Replace(PS.StandardOutput.ReadToEnd(), RgxNL, NL));
+									TbCmdMemo.AppendText(Regex.Replace(PS.StandardError.ReadToEnd(), RgxNL, NL));
+									PS.Close();
 								}
 								catch
 								{
@@ -1604,15 +1606,15 @@ namespace iwm_commandliner3
 			else
 			{
 				MyEvent = new MyEventHandler(EventDataReceived);
-				Ps1 = new Process();
+				PS = new Process();
 
-				Ps1.StartInfo.UseShellExecute = false;
-				Ps1.StartInfo.RedirectStandardInput = true;
-				Ps1.StartInfo.RedirectStandardOutput = true;
-				Ps1.StartInfo.RedirectStandardError = true;
-				Ps1.StartInfo.CreateNoWindow = true;
-				Ps1.StartInfo.StandardOutputEncoding = Encoding.GetEncoding(CbTextCode.Text);
-				Ps1.OutputDataReceived += new DataReceivedEventHandler(ProcessDataReceived);
+				PS.StartInfo.UseShellExecute = false;
+				PS.StartInfo.RedirectStandardInput = true;
+				PS.StartInfo.RedirectStandardOutput = true;
+				PS.StartInfo.RedirectStandardError = true;
+				PS.StartInfo.CreateNoWindow = true;
+				PS.StartInfo.StandardOutputEncoding = Encoding.GetEncoding(CbTextCode.Text);
+				PS.OutputDataReceived += new DataReceivedEventHandler(ProcessDataReceived);
 
 				string _cmd1 = "";
 				string _cmd2 = "";
@@ -1626,25 +1628,25 @@ namespace iwm_commandliner3
 				// 失敗したら、cmd.exe経由で再実行（例：dir）
 				try
 				{
-					Ps1.StartInfo.FileName = _cmd1;
-					Ps1.StartInfo.Arguments = _cmd2;
-					_ = Ps1.Start();
+					PS.StartInfo.FileName = _cmd1;
+					PS.StartInfo.Arguments = _cmd2;
+					_ = PS.Start();
 				}
 				catch
 				{
-					Ps1.StartInfo.FileName = "cmd.exe";
-					Ps1.StartInfo.Arguments = $"/c {_cmd1} {_cmd2}";
-					_ = Ps1.Start();
+					PS.StartInfo.FileName = "cmd.exe";
+					PS.StartInfo.Arguments = $"/c {_cmd1} {_cmd2}";
+					_ = PS.Start();
 				}
 
-				s1 = Ps1.StandardOutput.ReadToEnd();
+				s1 = PS.StandardOutput.ReadToEnd();
 				if (Regex.IsMatch(s1, NL) == false)
 				{
 					s1 = s1.Replace("\n", NL);
 				}
 				TbResult.AppendText(s1);
 
-				Ps1.Close();
+				PS.Close();
 			}
 
 			TbResult.SelectionStart = TbResult.TextLength;
@@ -1740,6 +1742,8 @@ namespace iwm_commandliner3
 			}
 
 			TbInfo.Text = string.Format("{0}字(有効{1}行／全{2}行)選択", iCnt, iRow, iNL);
+
+			CmsTextSelect_Open(e, TbResult);
 		}
 
 		private void TbResult_TextChanged(object sender, EventArgs e)
@@ -1749,17 +1753,17 @@ namespace iwm_commandliner3
 
 		private void TbResult_DragDrop(object sender, DragEventArgs e)
 		{
-			_ = Sb.Clear();
+			_ = SB.Clear();
 
 			foreach (string _s1 in (string[])e.Data.GetData(DataFormats.FileDrop, false))
 			{
 				foreach (string _s2 in File.ReadLines(_s1, Encoding.GetEncoding(CbTextCode.Text)))
 				{
-					_ = Sb.Append(_s2.TrimEnd() + NL);
+					_ = SB.Append(_s2.TrimEnd() + NL);
 				}
 			}
 
-			_ = NativeMethods.SendMessage(TbResult.Handle, EM_REPLACESEL, 1, Sb.ToString());
+			_ = NativeMethods.SendMessage(TbResult.Handle, EM_REPLACESEL, 1, SB.ToString());
 		}
 
 		private void TbResult_DragEnter(object sender, DragEventArgs e)
@@ -1810,14 +1814,14 @@ namespace iwm_commandliner3
 
 		private void CmsResult_ファイル名を貼り付け_Click(object sender, EventArgs e)
 		{
-			_ = Sb.Clear();
+			_ = SB.Clear();
 
 			foreach (string _s1 in Clipboard.GetFileDropList())
 			{
-				_ = Sb.Append(_s1 + (Directory.Exists(_s1) ? @"\" : "") + NL);
+				_ = SB.Append(_s1 + (Directory.Exists(_s1) ? @"\" : "") + NL);
 			}
 
-			_ = NativeMethods.SendMessage(TbResult.Handle, EM_REPLACESEL, 1, Sb.ToString());
+			_ = NativeMethods.SendMessage(TbResult.Handle, EM_REPLACESEL, 1, SB.ToString());
 		}
 
 		private void CmsResult_名前を付けて保存_Click(object sender, EventArgs e)
@@ -2066,54 +2070,26 @@ namespace iwm_commandliner3
 			}
 		}
 
-		private void CmsNudTbResult_10_Click(object sender, EventArgs e)
+		//----------------
+		// CmsTextSelect
+		//----------------
+		private void CmsTextSelect_Open(MouseEventArgs e, TextBox Tb)
 		{
-			NudTbResult.Value = 10;
+			if (Tb.SelectionLength > 0 && e.Button == MouseButtons.Left)
+			{
+				TB = Tb;
+				CmsTextSelect.Show(Cursor.Position);
+			}
 		}
 
-		private void CmsNudTbResult_12_Click(object sender, EventArgs e)
+		private void CmsTextSelect_コピー_Click(object sender, EventArgs e)
 		{
-			NudTbResult.Value = 12;
+			TB.Copy();
 		}
 
-		private void CmsNudTbResult_14_Click(object sender, EventArgs e)
+		private void CmsTextSelect_切り取り_Click(object sender, EventArgs e)
 		{
-			NudTbResult.Value = 14;
-		}
-
-		private void CmsNudTbResult_16_Click(object sender, EventArgs e)
-		{
-			NudTbResult.Value = 16;
-		}
-
-		private void CmsNudTbResult_18_Click(object sender, EventArgs e)
-		{
-			NudTbResult.Value = 18;
-		}
-
-		private void CmsNudTbResult_20_Click(object sender, EventArgs e)
-		{
-			NudTbResult.Value = 20;
-		}
-
-		private void CmsNudTbResult_22_Click(object sender, EventArgs e)
-		{
-			NudTbResult.Value = 22;
-		}
-
-		private void CmsNudTbResult_24_Click(object sender, EventArgs e)
-		{
-			NudTbResult.Value = 24;
-		}
-
-		private void CmsNudTbResult_26_Click(object sender, EventArgs e)
-		{
-			NudTbResult.Value = 26;
-		}
-
-		private void CmsNudTbResult_28_Click(object sender, EventArgs e)
-		{
-			NudTbResult.Value = 28;
+			TB.Cut();
 		}
 
 		//-----------------------
@@ -2187,17 +2163,17 @@ namespace iwm_commandliner3
 				return str;
 			}
 
-			_ = Sb.Clear();
+			_ = SB.Clear();
 
 			foreach (string _s1 in str.Split(AryNL, StringSplitOptions.None))
 			{
 				if (bMatch == rgx.IsMatch(_s1))
 				{
-					_ = Sb.Append(_s1 + NL);
+					_ = SB.Append(_s1 + NL);
 				}
 			}
 
-			return Sb.ToString();
+			return SB.ToString();
 		}
 
 		//---------------------
@@ -2229,14 +2205,14 @@ namespace iwm_commandliner3
 				return str;
 			}
 
-			_ = Sb.Clear();
+			_ = SB.Clear();
 
 			foreach (string _s1 in str.Split(AryNL, StringSplitOptions.None))
 			{
-				_ = Sb.Append(rgx.Replace(_s1, sNew) + NL);
+				_ = SB.Append(rgx.Replace(_s1, sNew) + NL);
 			}
 
-			return Sb.ToString();
+			return SB.ToString();
 		}
 
 		//---------------------
@@ -2265,7 +2241,7 @@ namespace iwm_commandliner3
 				return str;
 			}
 
-			_ = Sb.Clear();
+			_ = SB.Clear();
 
 			foreach (string _s1 in str.Split(AryNL, StringSplitOptions.None))
 			{
@@ -2287,11 +2263,11 @@ namespace iwm_commandliner3
 					}
 
 					// 該当なしの変換子を削除
-					_ = Sb.Append(rgx1.Replace(_s2, "") + NL);
+					_ = SB.Append(rgx1.Replace(_s2, "") + NL);
 				}
 			}
 
-			return Sb.ToString();
+			return SB.ToString();
 		}
 
 		//----------------
@@ -2353,14 +2329,14 @@ namespace iwm_commandliner3
 				return str;
 			}
 
-			_ = Sb.Clear();
+			_ = SB.Clear();
 
 			foreach (string _s1 in str.Split(AryNL, StringSplitOptions.None))
 			{
-				_ = Sb.Append(RtnEraseLen(_s1, ' ', iBgnPos, iEndPos) + NL);
+				_ = SB.Append(RtnEraseLen(_s1, ' ', iBgnPos, iEndPos) + NL);
 			}
 
-			return Sb.ToString();
+			return SB.ToString();
 		}
 
 		private string RtnEraseLen(string str, char cRep, int iBgnPos, int iLen)
@@ -2447,7 +2423,7 @@ namespace iwm_commandliner3
 		//-------
 		private string RtnTextUniq(string str)
 		{
-			_ = Sb.Clear();
+			_ = SB.Clear();
 
 			string flg = "";
 
@@ -2455,12 +2431,12 @@ namespace iwm_commandliner3
 			{
 				if (_s1 != flg && _s1.TrimEnd().Length > 0)
 				{
-					_ = Sb.Append(_s1 + NL);
+					_ = SB.Append(_s1 + NL);
 					flg = _s1;
 				}
 			}
 
-			return Sb.ToString();
+			return SB.ToString();
 		}
 
 		//-----------
