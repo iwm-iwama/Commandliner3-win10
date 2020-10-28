@@ -16,6 +16,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 //using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Web;
 
 namespace iwm_commandliner3
 {
@@ -24,7 +25,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20201027_2245 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20201028_1453 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 		private readonly string RgxNL = "\r*\n";
@@ -2090,6 +2091,16 @@ namespace iwm_commandliner3
 		private void CmsTextSelect_切り取り_Click(object sender, EventArgs e)
 		{
 			TB.Cut();
+		}
+
+		private void CmsTextSelect_ネット検索_Google_Click(object sender, EventArgs e)
+		{
+			_ = Process.Start("https://www.google.co.jp/search?q=" + HttpUtility.UrlEncode(TB.SelectedText));
+		}
+
+		private void CmsTextSelect_ネット検索_YouTube_Click(object sender, EventArgs e)
+		{
+			_ = Process.Start("https://www.youtube.com/results?search_query=" + HttpUtility.UrlEncode(TB.SelectedText));
 		}
 
 		//-----------------------

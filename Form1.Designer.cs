@@ -110,6 +110,10 @@
 			this.CmsTextSelect = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.CmsTextSelect_コピー = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsTextSelect_切り取り = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator3 = new System.Windows.Forms.ToolStripSeparator();
+			this.CmsTextSelect_ネット検索 = new System.Windows.Forms.ToolStripMenuItem();
+			this.CmsTextSelect_ネット検索_Google = new System.Windows.Forms.ToolStripMenuItem();
+			this.CmsTextSelect_ネット検索_YouTube = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.DgvMacro)).BeginInit();
 			this.CmsResult.SuspendLayout();
 			this.CmsCmd.SuspendLayout();
@@ -1124,23 +1128,53 @@
 			// 
 			this.CmsTextSelect.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CmsTextSelect_コピー,
-            this.CmsTextSelect_切り取り});
+            this.CmsTextSelect_切り取り,
+            this.toolStripSeparator3,
+            this.CmsTextSelect_ネット検索});
 			this.CmsTextSelect.Name = "CmsResult";
-			this.CmsTextSelect.Size = new System.Drawing.Size(115, 48);
+			this.CmsTextSelect.Size = new System.Drawing.Size(181, 98);
 			// 
 			// CmsTextSelect_コピー
 			// 
 			this.CmsTextSelect_コピー.Name = "CmsTextSelect_コピー";
-			this.CmsTextSelect_コピー.Size = new System.Drawing.Size(114, 22);
+			this.CmsTextSelect_コピー.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_コピー.Text = "コピー";
 			this.CmsTextSelect_コピー.Click += new System.EventHandler(this.CmsTextSelect_コピー_Click);
 			// 
 			// CmsTextSelect_切り取り
 			// 
 			this.CmsTextSelect_切り取り.Name = "CmsTextSelect_切り取り";
-			this.CmsTextSelect_切り取り.Size = new System.Drawing.Size(114, 22);
+			this.CmsTextSelect_切り取り.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_切り取り.Text = "切り取り";
 			this.CmsTextSelect_切り取り.Click += new System.EventHandler(this.CmsTextSelect_切り取り_Click);
+			// 
+			// toolStripSeparator3
+			// 
+			this.toolStripSeparator3.Name = "toolStripSeparator3";
+			this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
+			// 
+			// CmsTextSelect_ネット検索
+			// 
+			this.CmsTextSelect_ネット検索.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CmsTextSelect_ネット検索_Google,
+            this.CmsTextSelect_ネット検索_YouTube});
+			this.CmsTextSelect_ネット検索.Name = "CmsTextSelect_ネット検索";
+			this.CmsTextSelect_ネット検索.Size = new System.Drawing.Size(180, 22);
+			this.CmsTextSelect_ネット検索.Text = "ネット検索";
+			// 
+			// CmsTextSelect_ネット検索_Google
+			// 
+			this.CmsTextSelect_ネット検索_Google.Name = "CmsTextSelect_ネット検索_Google";
+			this.CmsTextSelect_ネット検索_Google.Size = new System.Drawing.Size(180, 22);
+			this.CmsTextSelect_ネット検索_Google.Text = "Google";
+			this.CmsTextSelect_ネット検索_Google.Click += new System.EventHandler(this.CmsTextSelect_ネット検索_Google_Click);
+			// 
+			// CmsTextSelect_ネット検索_YouTube
+			// 
+			this.CmsTextSelect_ネット検索_YouTube.Name = "CmsTextSelect_ネット検索_YouTube";
+			this.CmsTextSelect_ネット検索_YouTube.Size = new System.Drawing.Size(180, 22);
+			this.CmsTextSelect_ネット検索_YouTube.Text = "YouTube";
+			this.CmsTextSelect_ネット検索_YouTube.Click += new System.EventHandler(this.CmsTextSelect_ネット検索_YouTube_Click);
 			// 
 			// Form1
 			// 
@@ -1290,6 +1324,10 @@
 		private System.Windows.Forms.ContextMenuStrip CmsTextSelect;
 		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_コピー;
 		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_切り取り;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_ネット検索;
+		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_ネット検索_Google;
+		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_ネット検索_YouTube;
 	}
 }
 
