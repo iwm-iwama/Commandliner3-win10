@@ -25,7 +25,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20201028_1453 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20201101_1301 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 		private readonly string RgxNL = "\r*\n";
@@ -117,9 +117,6 @@ namespace iwm_commandliner3
 			CurDir = TbCurDir.Text = Directory.GetCurrentDirectory();
 			Directory.SetCurrentDirectory(CurDir);
 
-			// LstTbCmd に着色
-			LstTbCmd.DrawMode = DrawMode.OwnerDrawFixed;
-
 			// DgvMacro／DgvCmd 表示
 			for (int _i1 = 0; _i1 < MACRO.GetLength(0); _i1++)
 			{
@@ -182,6 +179,7 @@ namespace iwm_commandliner3
 			using (FolderBrowserDialog fbd = new FolderBrowserDialog
 			{
 				Description = "フォルダを指定してください。",
+				RootFolder = Environment.SpecialFolder.MyComputer,
 				SelectedPath = Environment.CurrentDirectory,
 				ShowNewFolderButton = true
 			}
@@ -243,7 +241,6 @@ namespace iwm_commandliner3
 
 		private void TbCmd_Enter(object sender, EventArgs e)
 		{
-			LstTbCmd.Visible = false;
 			Lbl_F1.ForeColor = Lbl_F2.ForeColor = Lbl_F3.ForeColor = Lbl_F4.ForeColor = Lbl_F5.ForeColor = Lbl_F6.ForeColor = Lbl_F7.ForeColor = Lbl_F8.ForeColor = Lbl_F9.ForeColor = Color.White;
 			LblCmd.Visible = true;
 		}
@@ -425,34 +422,11 @@ namespace iwm_commandliner3
 					break;
 
 				case Keys.Up:
-					if (TbCmd.Text.Trim().Length == 0)
-					{
-						TbCmd.Undo();
-						TbCmd.SelectionStart = TbCmd.TextLength;
-					}
-					else
-					{
-						// [Ctrl+Z] 有効化
-						TbCmd.SelectAll();
-						TbCmd.Cut();
-					}
+					TbCmd.SelectionStart = 0;
 					break;
 
 				case Keys.Down:
-					LstTbCmd.Items.Clear();
-					_ = LstTbCmd.Items.Add("");
-					_ = LstTbCmd.Items.Add(@"..\");
-					foreach (string _s1 in Directory.GetDirectories(TbCurDir.Text, "*"))
-					{
-						_ = LstTbCmd.Items.Add(Path.GetFileName(_s1) + @"\");
-					}
-					foreach (string _s1 in Directory.GetFiles(TbCurDir.Text, "*"))
-					{
-						_ = LstTbCmd.Items.Add(Path.GetFileName(_s1));
-					}
-					LstTbCmd.Visible = true;
-					_ = LstTbCmd.Focus();
-					LstTbCmd.SetSelected(0, true);
+					TbCmd.SelectionStart = TbCmd.TextLength;
 					break;
 
 				case Keys.Right:
@@ -501,14 +475,31 @@ namespace iwm_commandliner3
 		{
 			string[] a1 = (string[])e.Data.GetData(DataFormats.FileDrop, false);
 
-			int i1 = TbCmd.SelectionStart;
-			if (i1 == TbCmd.TextLength)
+			string s1 = "";
+
+			if (TbCmd.Text.Substring(TbCmd.SelectionStart - 1, 1) != " ")
 			{
-				TbCmd.Text += " ";
-				++i1;
+				s1 = " ";
 			}
 
-			TbCmd.Text = TbCmd.Text.Substring(0, i1) + string.Join(" ", a1) + TbCmd.Text.Substring(i1);
+			for (int _i1 = 0; _i1 < a1.Length; _i1++)
+			{
+				s1 += "\"" + a1[_i1] + "\" ";
+			}
+
+			if (TbCmd.SelectionStart < TbCmd.TextLength && TbCmd.Text.Substring(TbCmd.SelectionStart, 1) != " ")
+			{
+			}
+			else
+			{
+				s1 = s1.TrimEnd();
+			}
+
+			int i1 = TbCmd.SelectionStart + s1.Length;
+
+			TbCmd.Text = TbCmd.Text.Substring(0, TbCmd.SelectionStart) + s1 + TbCmd.Text.Substring(TbCmd.SelectionStart);
+
+			TbCmd.SelectionStart = i1;
 		}
 
 		private void TbCmd_DragEnter(object sender, DragEventArgs e)
@@ -546,6 +537,40 @@ namespace iwm_commandliner3
 			// [Ctrl+Z] 有効化
 			Clipboard.SetText(Regex.Replace(Clipboard.GetText(), RgxNL, " "));
 			TbCmd.Paste();
+		}
+
+		private void CmsCmd_フォルダ選択_Click(object sender, EventArgs e)
+		{
+			using (FolderBrowserDialog fbd = new FolderBrowserDialog
+			{
+				Description = "フォルダを指定してください。",
+				RootFolder = Environment.SpecialFolder.MyComputer,
+				SelectedPath = Environment.CurrentDirectory,
+				ShowNewFolderButton = true
+			}
+			)
+			{
+				if (fbd.ShowDialog(this) == DialogResult.OK)
+				{
+					string s1 = "", s2 = "";
+
+					if (TbCmd.Text.Substring(TbCmd.SelectionStart - 1, 1) != " ")
+					{
+						s1 = " ";
+					}
+
+					if (TbCmd.SelectionStart < TbCmd.TextLength && TbCmd.Text.Substring(TbCmd.SelectionStart, 1) != " ")
+					{
+						s2 = " ";
+					}
+
+					int i1 = TbCmd.SelectionStart + fbd.SelectedPath.Length + 3;
+
+					TbCmd.Text = TbCmd.Text.Substring(0, TbCmd.SelectionStart) + s1 + "\"" + fbd.SelectedPath + "\"" + s2 + TbCmd.Text.Substring(TbCmd.SelectionStart);
+
+					TbCmd.SelectionStart = i1;
+				}
+			}
 		}
 
 		private void CmsCmd_DQで囲む_Click(object sender, EventArgs e)
@@ -623,92 +648,6 @@ namespace iwm_commandliner3
 					SubTbCmdFocus(-1);
 				}
 			}
-		}
-
-		//-----------
-		// LstTbCmd
-		//-----------
-		private int GblLstTbCmdRow = 0;
-
-		private void LstTbCmd_Click(object sender, EventArgs e)
-		{
-			LstTbCmd.Visible = false;
-			string s1 = LstTbCmd.SelectedItem.ToString();
-
-			if (s1.Length == 0)
-			{
-				return;
-			}
-
-			string spBgn = GblTbCmdPos > 0 && TbCmd.Text.Substring(GblTbCmdPos - 1, 1) != " " ? " " : "";
-			string spEnd = GblTbCmdPos < TbCmd.TextLength && TbCmd.Text.Substring(GblTbCmdPos, 1) != " " ? " " : "";
-
-			TbCmd.Text = TbCmd.Text.Substring(0, GblTbCmdPos) + spBgn + s1 + spEnd + TbCmd.Text.Substring(GblTbCmdPos);
-
-			SubTbCmdFocus(GblTbCmdPos + s1.Length + 1);
-			TbCmd.ScrollToCaret();
-		}
-
-		private void LstTbCmd_KeyUp(object sender, KeyEventArgs e)
-		{
-			switch (e.KeyCode)
-			{
-				case Keys.Escape:
-				case Keys.Enter:
-				case Keys.Space:
-					LstTbCmd_Click(sender, e);
-					break;
-
-				case Keys.PageUp:
-				case Keys.Up:
-					if (GblLstTbCmdRow == 0)
-					{
-						LstTbCmd.SetSelected(LstTbCmd.Items.Count - 1, true);
-					}
-					break;
-
-				case Keys.PageDown:
-				case Keys.Down:
-					if (GblLstTbCmdRow == LstTbCmd.Items.Count - 1)
-					{
-						LstTbCmd.SetSelected(0, true);
-					}
-					break;
-
-				case Keys.Left:
-					LstTbCmd.SetSelected(
-						LstTbCmd.SelectedIndex == 0 ? LstTbCmd.Items.Count - 1 : 0,
-						true
-					);
-					break;
-
-				case Keys.Right:
-					LstTbCmd.SetSelected(
-						LstTbCmd.SelectedIndex == LstTbCmd.Items.Count - 1 ? 0 : LstTbCmd.Items.Count - 1,
-						true
-					);
-					break;
-			}
-			GblLstTbCmdRow = LstTbCmd.SelectedIndex;
-		}
-
-		private void LstTbCmd_DrawItem(object sender, DrawItemEventArgs e)
-		{
-			e.DrawBackground();
-
-			if (e.Index > -1)
-			{
-				string s1 = LstTbCmd.Items[e.Index].ToString();
-
-				Brush brsh = (e.State & DrawItemState.Selected) != DrawItemState.Selected && (s1 == "" || s1.EndsWith(@"\"))
-					? new SolidBrush(Color.Cyan)
-					: new SolidBrush(Color.Lime)
-				;
-
-				e.Graphics.DrawString(s1, e.Font, brsh, e.Bounds);
-				brsh.Dispose();
-			}
-			e.DrawFocusRectangle();
 		}
 
 		//------------
@@ -1261,12 +1200,7 @@ namespace iwm_commandliner3
 				return;
 			}
 
-			Lbl_Wait.Left = (Width - Lbl_Wait.Width - 24) / 2;
-			Lbl_Wait.Top = (Height - Lbl_Wait.Height) / 2;
-			Lbl_Wait.Visible = true;
-			Refresh();
-
-			Cursor.Current = Cursors.WaitCursor;
+			SubLblWaitOn();
 
 			// 変数
 			Regex rgx = null;
@@ -1653,8 +1587,7 @@ namespace iwm_commandliner3
 			TbResult.SelectionStart = TbResult.TextLength;
 			TbResult.ScrollToCaret();
 
-			Lbl_Wait.Visible = false;
-			Cursor.Current = Cursors.Default;
+			SubLblWaitOff();
 		}
 
 		//----------------
@@ -1679,6 +1612,8 @@ namespace iwm_commandliner3
 			TbResult.Cut();
 
 			TbInfo.Text = "";
+
+			GC.Collect();
 
 			SubTbCmdFocus(GblTbCmdPos);
 		}
@@ -1710,10 +1645,6 @@ namespace iwm_commandliner3
 
 				case Keys.F12: // 仮実装
 					_ = TbCmdMemo.Focus();
-					break;
-
-				default:
-					TbResult_MouseUp(sender, null);
 					break;
 			}
 		}
@@ -1754,17 +1685,35 @@ namespace iwm_commandliner3
 
 		private void TbResult_DragDrop(object sender, DragEventArgs e)
 		{
+			SubLblWaitOn();
+
 			_ = SB.Clear();
+
+			string s1 = "";
 
 			foreach (string _s1 in (string[])e.Data.GetData(DataFormats.FileDrop, false))
 			{
-				foreach (string _s2 in File.ReadLines(_s1, Encoding.GetEncoding(CbTextCode.Text)))
+				if (RtnIsBinaryFile(_s1))
 				{
-					_ = SB.Append(_s2.TrimEnd() + NL);
+					s1 += "・" + _s1 + NL;
+				}
+				else
+				{
+					foreach (string _s2 in File.ReadLines(_s1, Encoding.GetEncoding(CbTextCode.Text)))
+					{
+						_ = SB.Append(_s2.TrimEnd() + NL);
+					}
 				}
 			}
 
 			_ = NativeMethods.SendMessage(TbResult.Handle, EM_REPLACESEL, 1, SB.ToString());
+
+			if (s1.Length > 0)
+			{
+				_ = MessageBox.Show(s1, "読込エラー");
+			}
+
+			SubLblWaitOff();
 		}
 
 		private void TbResult_DragEnter(object sender, DragEventArgs e)
@@ -2093,14 +2042,34 @@ namespace iwm_commandliner3
 			TB.Cut();
 		}
 
+		private void CmsTextSelect_削除_Click(object sender, EventArgs e)
+		{
+			TB.SelectedText = "";
+		}
+
+		private void CmsTextSelect_貼り付け_Click(object sender, EventArgs e)
+		{
+			TB.Paste();
+		}
+
 		private void CmsTextSelect_ネット検索_Google_Click(object sender, EventArgs e)
 		{
-			_ = Process.Start("https://www.google.co.jp/search?q=" + HttpUtility.UrlEncode(TB.SelectedText));
+			SubNetSearch("https://www.google.co.jp/search?q=");
 		}
 
 		private void CmsTextSelect_ネット検索_YouTube_Click(object sender, EventArgs e)
 		{
-			_ = Process.Start("https://www.youtube.com/results?search_query=" + HttpUtility.UrlEncode(TB.SelectedText));
+			SubNetSearch("https://www.youtube.com/results?search_query=");
+		}
+
+		private void CmsTextSelect_ネット検索_Wikipedia_Click(object sender, EventArgs e)
+		{
+			SubNetSearch("https://ja.wikipedia.org/wiki/");
+		}
+	
+		private void SubNetSearch(string url)
+		{
+			_ = Process.Start(url + HttpUtility.UrlEncode(TB.SelectedText));
 		}
 
 		//-----------------------
@@ -2150,6 +2119,25 @@ namespace iwm_commandliner3
 					}
 				}
 			}
+		}
+
+		//-----------
+		// LblWait
+		//-----------
+		private void SubLblWaitOn()
+		{
+			Cursor.Current = Cursors.WaitCursor;
+
+			LblWait.Left = (Width - LblWait.Width - 24) / 2;
+			LblWait.Top = (Height - LblWait.Height) / 2;
+			LblWait.Visible = true;
+			Refresh();
+		}
+
+		private void SubLblWaitOff()
+		{
+			LblWait.Visible = false;
+			Cursor.Current = Cursors.Default;
 		}
 
 		//---------------------
@@ -2482,11 +2470,21 @@ namespace iwm_commandliner3
 
 					switch (_s1)
 					{
-						case "sqrt": _d1 = Math.Sqrt(_d1); break;
-						case "sin": _d1 = Math.Sin(_d1 * _PiPerDeg); break;
-						case "cos": _d1 = Math.Cos(_d1 * _PiPerDeg); break;
-						case "tan": _d1 = Math.Tan(_d1 * _PiPerDeg); break;
-						default: _d1 = 0; break;
+						case "sqrt":
+							_d1 = Math.Sqrt(_d1);
+							break;
+						case "sin":
+							_d1 = Math.Sin(_d1 * _PiPerDeg);
+							break;
+						case "cos":
+							_d1 = Math.Cos(_d1 * _PiPerDeg);
+							break;
+						case "tan":
+							_d1 = Math.Tan(_d1 * _PiPerDeg);
+							break;
+						default:
+							_d1 = 0;
+							break;
 					}
 
 					rtn = rtn.Replace(_m1.Value, _d1.ToString());
@@ -2517,6 +2515,36 @@ namespace iwm_commandliner3
 			}
 
 			return rtn;
+		}
+
+		//----------------
+		// Binary File ?
+		//----------------
+		private bool RtnIsBinaryFile(string path)
+		{
+			FileStream fs = File.OpenRead(path);
+			int len = (int)fs.Length;
+			byte[] ac = new byte[len];
+			int size = fs.Read(ac, 0, len);
+
+			int cnt = 0;
+
+			for (int _i1 = 0; _i1 < size; _i1++)
+			{
+				if (ac[_i1] == 0)
+				{
+					if (++cnt > 2)
+					{
+						return true;
+					}
+				}
+				else
+				{
+					cnt = 0;
+				}
+			}
+
+			return false;
 		}
 	}
 }
