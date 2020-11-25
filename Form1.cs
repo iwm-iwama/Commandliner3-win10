@@ -2,8 +2,6 @@
 
 using System;
 using System.Collections.Generic;
-//using System.Collections.Specialized;
-//using System.ComponentModel;
 using System.Data;
 using System.Diagnostics;
 using System.Drawing;
@@ -14,9 +12,8 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading;
-//using System.Threading.Tasks;
-using System.Windows.Forms;
 using System.Web;
+using System.Windows.Forms;
 
 namespace iwm_commandliner3
 {
@@ -25,7 +22,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20201114 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20201125 'A-29' (C)2018-2020 iwm-iwama";
 
 		private const string NL = "\r\n";
 		private readonly string RgxNL = "\r*\n";
@@ -1675,23 +1672,7 @@ namespace iwm_commandliner3
 				return;
 			}
 
-			int iNL = 0;
-			int iRow = 0;
-			int iCnt = 0;
-
-			foreach (string _s1 in TbResult.SelectedText.Split(AryNL, StringSplitOptions.None))
-			{
-				++iNL;
-
-				if (_s1.Trim().Length > 0)
-				{
-					++iRow;
-				}
-
-				iCnt += _s1.Length;
-			}
-
-			TbInfo.Text = string.Format("{0}字(有効{1}行／全{2}行)選択", iCnt, iRow, iNL);
+			SubTbResultCnt();
 
 			CmsTextSelect_Open(e, TbResult);
 		}
@@ -1739,9 +1720,37 @@ namespace iwm_commandliner3
 			e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : DragDropEffects.None;
 		}
 
+		private void SubTbResultCnt()
+		{
+			int iNL = 0;
+			int iRow = 0;
+			int iCnt = 0;
+
+			foreach (string _s1 in TbResult.SelectedText.Split(AryNL, StringSplitOptions.None))
+			{
+				++iNL;
+
+				if (_s1.Trim().Length > 0)
+				{
+					++iRow;
+				}
+
+				iCnt += _s1.Length;
+			}
+
+			TbInfo.Text = string.Format("{0}字(有効{1}行／全{2}行)選択", iCnt, iRow, iNL);
+		}
+
 		//------------
 		// CmsResult
 		//------------
+		private void CmsResult_全選択_Click(object sender, EventArgs e)
+		{
+			TbResult.Focus();
+			TbResult.SelectAll();
+			SubTbResultCnt();
+		}
+
 		private void CmsResult_クリア_Click(object sender, EventArgs e)
 		{
 			// [Ctrl+Z]を有効化
