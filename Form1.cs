@@ -22,7 +22,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20201231 'A-29' (C)2018-2020 iwm-iwama";
+		private const string VERSION = "Ver.20210104 'A-29' (C)2018-2021 iwm-iwama";
 
 		private const string NL = "\r\n";
 		private readonly string RgxNL = "\r*\n";
@@ -32,13 +32,13 @@ namespace iwm_commandliner3
 
 		private readonly object[,] MACRO = {
 			// [マクロ]     [説明]                                                                                 [引数]
-			{ "#clear",     "出力消去     #clear",                                                                   0 },
+			{ "#clear",     "全消去       #clear",                                                                   0 },
 			{ "#cd",        "フォルダ変更 #cd \"..\"",                                                               1 },
 			{ "#code",      "文字コード   #code \"Shift_JIS\" | \"UTF-8\"",                                          1 },
 			{ "#grep",      "検索         #grep \"\\d{4}\"",                                                         1 },
 			{ "#except",    "不一致検索   #except \"\\d{4}\"",                                                       1 },
 			{ "#replace",   "置換         #replace \"(\\d{2})(\\d{2})\" \"$1+$2\" ※$1..()で区切った検索文字に対応", 2 },
-			{ "#split",     "分割         #split \"\\t\" \"[num],[0],[1]\" ※[num]行番号付与 [0..]分割列に対応",     2 },
+			{ "#split",     "分割         #split \"\\t\" \"[LN],[0],[1]\" ※[LN]行番号付与 [0..]分割列に対応",       2 },
 			{ "#trim",      "行前後の空白消去",                                                                      0 },
 			{ "#toUpper",   "大文字に変換",                                                                          0 },
 			{ "#toLower",   "小文字に変換",                                                                          0 },
@@ -133,8 +133,8 @@ namespace iwm_commandliner3
 			}
 			CbTextCode.Text = TEXT_CODE[0];
 
-			// LblResultInfo
-			TbResult_MouseUp(sender, null);
+			// TbInfo
+			SubTbResultCnt();
 
 			// フォントサイズ
 			NudTbResult.Value = (int)Math.Round(TbResult.Font.Size);
@@ -772,14 +772,17 @@ namespace iwm_commandliner3
 				BtnDgvMacro.BackColor = Color.Gold;
 				DgvMacro.ScrollBars = ScrollBars.Both;
 				DgvMacro.Width = Width - 112;
-				int i1 = Dgv_Tbc21.Width + Dgv_Tbc22.Width;
+
+				int i1 = DgvTb11.Width + DgvTb12.Width + 20;
 				if (DgvMacro.Width > i1)
 				{
 					DgvMacro.Width = i1;
 				}
-				DgvMacro.Height = Height - 228;
 
-				DgvMacro.Focus();
+				DgvMacro.Height = Height - 230;
+
+				DgvMacro.BringToFront();
+				_ = DgvMacro.Focus();
 			}
 		}
 
@@ -795,8 +798,11 @@ namespace iwm_commandliner3
 
 		private void DgvMacro_CellMouseClick(object sender, DataGridViewCellMouseEventArgs e)
 		{
-			// セル[1, n]をクリップボードにコピー
-			Clipboard.SetText(DgvMacro[1, DgvMacro.CurrentRow.Index].Value.ToString());
+			// [説明]
+			if (DgvMacro.CurrentCellAddress.X == 1)
+			{
+				return;
+			}
 
 			string s1 = DgvMacro[0, DgvMacro.CurrentRow.Index].Value.ToString();
 			int iPos = 0;
@@ -900,18 +906,19 @@ namespace iwm_commandliner3
 				BtnDgvCmd.BackColor = Color.Gold;
 				DgvCmd.ScrollBars = ScrollBars.Both;
 				DgvCmd.Width = Width - 197;
-				if (DgvCmd.Width > DgvCmd01.Width)
+
+				int i1 = DgvTb21.Width + 20;
+				if (DgvCmd.Width > i1)
 				{
-					DgvCmd.Width = DgvCmd01.Width;
+					DgvCmd.Width = i1;
 				}
 
-
-
-				DgvCmd.Height = Height - 228;
-
+				DgvCmd.Height = Height - 230;
 				TbDgvCmdSearch.Visible = true;
+
+				DgvCmd.BringToFront();
 				TbDgvCmdSearch.BringToFront();
-				TbDgvCmdSearch.Focus();
+				_ = TbDgvCmdSearch.Focus();
 			}
 		}
 
@@ -1131,6 +1138,11 @@ namespace iwm_commandliner3
 			}
 		}
 
+		private void CbTextCode_SelectedIndexChanged(object sender, EventArgs e)
+		{
+			SubCmdMemoAddText("#code \"" + CbTextCode.Text + "\";");
+		}
+
 		private void EventDataReceived(object sender, DataReceivedEventArgs e)
 		{
 			_ = NativeMethods.SendMessage(TbResult.Handle, EM_REPLACESEL, 1, e.Data + NL);
@@ -1157,6 +1169,8 @@ namespace iwm_commandliner3
 		private void BtnCmdExec_Click(object sender, EventArgs e)
 		{
 			TbResult_Enter(sender, e);
+
+			SubCmdMemoAddText(TbCmd.Text + ";");
 
 			// 履歴に追加
 			CmdHistory.Add(TbCmd.Text.Trim());
@@ -1274,15 +1288,14 @@ namespace iwm_commandliner3
 				// 大小区別しない
 				switch (aOp[0].ToLower())
 				{
-					// 出力消去
+					// 全消去
 					case "#clear":
+						TbCmd.Text = "";
 						TbCmdMemo.Text = "";
 						TbResult.Text = "";
-						TbInfo.Text = "";
-
+						SubTbResultCnt();
 						GblDgvCmdOpen = true;
 						BtnDgvCmd_Click(null, null);
-
 						break;
 
 					// フォルダ変更
@@ -1290,20 +1303,21 @@ namespace iwm_commandliner3
 						aOp[1] = aOp[1].Trim();
 						if (aOp[1].Length == 0)
 						{
-							SubCmdMemoAddText("(例１) #cd \"..\"" + NL + "(例２) #cd \"NewDir\"");
+							TbResult.Text += NL + "(例１) #cd \"..\"" + NL + "(例２) #cd \"NewDir\"" + NL;
 							break;
 						}
+
 						string sCd = Path.GetFullPath(aOp[1]);
-						try
+						if (Directory.Exists(sCd))
 						{
 							Directory.SetCurrentDirectory(sCd);
+							TbCurDir.Text = Path.GetFullPath(sCd);
 						}
-						catch
+						else
 						{
-							SubCmdMemoAddText("Dir \"" + aOp[1] + "\" は存在しない");
-							break;
+							TbResult.Text += NL + "Dir \"" + aOp[1] + "\" は存在しない" + NL;
 						}
-						TbCurDir.Text = Path.GetFullPath(sCd);
+
 						break;
 
 					// 文字コード（Batchで使用）
@@ -1533,17 +1547,17 @@ namespace iwm_commandliner3
 
 					// 計算機
 					case "#calc":
-						TbResult.Text += RtnEvalCalc(aOp[1]) + NL;
+						TbResult.Text += NL + RtnEvalCalc(aOp[1]) + NL;
 						break;
 
 					// 現在日時
 					case "#now":
-						TbResult.Text += DateTime.Now.ToString("yyyy/MM/dd(ddd) HH:mm:ss") + NL;
+						TbResult.Text += NL + DateTime.Now.ToString("yyyy/MM/dd(ddd) HH:mm:ss") + NL;
 						break;
 
 					// バージョン
 					case "#version":
-						TbResult.Text += VERSION + NL;
+						TbResult.Text += NL + VERSION + NL;
 						break;
 
 					// 終了
@@ -1626,7 +1640,7 @@ namespace iwm_commandliner3
 			TbResult.SelectAll();
 			TbResult.Cut();
 
-			TbInfo.Text = "";
+			SubTbResultCnt();
 
 			GC.Collect();
 
@@ -1661,25 +1675,22 @@ namespace iwm_commandliner3
 				case Keys.F12: // 仮実装
 					_ = TbCmdMemo.Focus();
 					break;
+
+				default:
+					SubTbResultCnt();
+					break;
 			}
 		}
 
 		private void TbResult_MouseUp(object sender, MouseEventArgs e)
 		{
-			if (TbResult.SelectionLength == 0)
-			{
-				TbInfo.Text = "";
-				return;
-			}
-
 			SubTbResultCnt();
-
 			CmsTextSelect_Open(e, TbResult);
 		}
 
 		private void TbResult_TextChanged(object sender, EventArgs e)
 		{
-			TbInfo.Text = "";
+			SubTbResultCnt();
 		}
 
 		private void TbResult_DragDrop(object sender, DragEventArgs e)
@@ -1746,7 +1757,7 @@ namespace iwm_commandliner3
 		//------------
 		private void CmsResult_全選択_Click(object sender, EventArgs e)
 		{
-			TbResult.Focus();
+			_ = TbResult.Focus();
 			TbResult.SelectAll();
 			SubTbResultCnt();
 		}
@@ -2093,7 +2104,7 @@ namespace iwm_commandliner3
 		{
 			SubNetSearch("https://ja.wikipedia.org/wiki/");
 		}
-	
+
 		private void SubNetSearch(string url)
 		{
 			_ = Process.Start(url + HttpUtility.UrlEncode(TB.SelectedText));
@@ -2264,7 +2275,7 @@ namespace iwm_commandliner3
 			_ = SB.Clear();
 
 			// 行番号付与
-			const string sLineNumber = @"\[num\]";
+			const string sLineNumber = @"\[LN\]";
 			int iLineNumber = 0;
 
 			foreach (string _s1 in str.Split(AryNL, StringSplitOptions.None))
