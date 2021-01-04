@@ -1161,9 +1161,10 @@
 			// 
 			// CmsTextSelect_Cancel
 			// 
+			this.CmsTextSelect_Cancel.ForeColor = System.Drawing.Color.Tomato;
 			this.CmsTextSelect_Cancel.Name = "CmsTextSelect_Cancel";
 			this.CmsTextSelect_Cancel.Size = new System.Drawing.Size(124, 22);
-			this.CmsTextSelect_Cancel.Text = "→";
+			this.CmsTextSelect_Cancel.Text = "▶";
 			// 
 			// CmsTextSelect_コピー
 			// 
