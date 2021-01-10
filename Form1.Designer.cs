@@ -125,6 +125,8 @@
 			this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
 			this.folderBrowserDialog1 = new System.Windows.Forms.FolderBrowserDialog();
 			this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+			this.CmsTextSelect_ネット検索_Google翻訳 = new System.Windows.Forms.ToolStripMenuItem();
+			this.CmsTextSelect_ネット検索_Googleマップ = new System.Windows.Forms.ToolStripMenuItem();
 			((System.ComponentModel.ISupportInitialize)(this.DgvMacro)).BeginInit();
 			this.CmsResult.SuspendLayout();
 			this.CmsCmd.SuspendLayout();
@@ -1157,81 +1159,83 @@
             this.toolStripSeparator3,
             this.CmsTextSelect_ネット検索});
 			this.CmsTextSelect.Name = "CmsResult";
-			this.CmsTextSelect.Size = new System.Drawing.Size(125, 148);
+			this.CmsTextSelect.Size = new System.Drawing.Size(181, 170);
 			// 
 			// CmsTextSelect_Cancel
 			// 
 			this.CmsTextSelect_Cancel.ForeColor = System.Drawing.Color.Tomato;
 			this.CmsTextSelect_Cancel.Name = "CmsTextSelect_Cancel";
-			this.CmsTextSelect_Cancel.Size = new System.Drawing.Size(124, 22);
+			this.CmsTextSelect_Cancel.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_Cancel.Text = "▶";
 			// 
 			// CmsTextSelect_コピー
 			// 
 			this.CmsTextSelect_コピー.Name = "CmsTextSelect_コピー";
-			this.CmsTextSelect_コピー.Size = new System.Drawing.Size(124, 22);
+			this.CmsTextSelect_コピー.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_コピー.Text = "コピー";
 			this.CmsTextSelect_コピー.Click += new System.EventHandler(this.CmsTextSelect_コピー_Click);
 			// 
 			// CmsTextSelect_切り取り
 			// 
 			this.CmsTextSelect_切り取り.Name = "CmsTextSelect_切り取り";
-			this.CmsTextSelect_切り取り.Size = new System.Drawing.Size(124, 22);
+			this.CmsTextSelect_切り取り.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_切り取り.Text = "切り取り";
 			this.CmsTextSelect_切り取り.Click += new System.EventHandler(this.CmsTextSelect_切り取り_Click);
 			// 
 			// CmsTextSelect_削除
 			// 
 			this.CmsTextSelect_削除.Name = "CmsTextSelect_削除";
-			this.CmsTextSelect_削除.Size = new System.Drawing.Size(124, 22);
+			this.CmsTextSelect_削除.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_削除.Text = "削除";
 			this.CmsTextSelect_削除.Click += new System.EventHandler(this.CmsTextSelect_削除_Click);
 			// 
 			// toolStripSeparator6
 			// 
 			this.toolStripSeparator6.Name = "toolStripSeparator6";
-			this.toolStripSeparator6.Size = new System.Drawing.Size(121, 6);
+			this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
 			// 
 			// CmsTextSelect_貼り付け
 			// 
 			this.CmsTextSelect_貼り付け.Name = "CmsTextSelect_貼り付け";
-			this.CmsTextSelect_貼り付け.Size = new System.Drawing.Size(124, 22);
+			this.CmsTextSelect_貼り付け.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_貼り付け.Text = "貼り付け";
 			this.CmsTextSelect_貼り付け.Click += new System.EventHandler(this.CmsTextSelect_貼り付け_Click);
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(121, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
 			// 
 			// CmsTextSelect_ネット検索
 			// 
 			this.CmsTextSelect_ネット検索.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CmsTextSelect_ネット検索_Google,
+            this.CmsTextSelect_ネット検索_Google翻訳,
+            this.CmsTextSelect_ネット検索_Googleマップ,
             this.CmsTextSelect_ネット検索_YouTube,
             this.CmsTextSelect_ネット検索_Wikipedia});
 			this.CmsTextSelect_ネット検索.Name = "CmsTextSelect_ネット検索";
-			this.CmsTextSelect_ネット検索.Size = new System.Drawing.Size(124, 22);
+			this.CmsTextSelect_ネット検索.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_ネット検索.Text = "ネット検索";
 			// 
 			// CmsTextSelect_ネット検索_Google
 			// 
 			this.CmsTextSelect_ネット検索_Google.Name = "CmsTextSelect_ネット検索_Google";
-			this.CmsTextSelect_ネット検索_Google.Size = new System.Drawing.Size(126, 22);
+			this.CmsTextSelect_ネット検索_Google.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_ネット検索_Google.Text = "Google";
 			this.CmsTextSelect_ネット検索_Google.Click += new System.EventHandler(this.CmsTextSelect_ネット検索_Google_Click);
 			// 
 			// CmsTextSelect_ネット検索_YouTube
 			// 
 			this.CmsTextSelect_ネット検索_YouTube.Name = "CmsTextSelect_ネット検索_YouTube";
-			this.CmsTextSelect_ネット検索_YouTube.Size = new System.Drawing.Size(126, 22);
+			this.CmsTextSelect_ネット検索_YouTube.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_ネット検索_YouTube.Text = "YouTube";
 			this.CmsTextSelect_ネット検索_YouTube.Click += new System.EventHandler(this.CmsTextSelect_ネット検索_YouTube_Click);
 			// 
 			// CmsTextSelect_ネット検索_Wikipedia
 			// 
 			this.CmsTextSelect_ネット検索_Wikipedia.Name = "CmsTextSelect_ネット検索_Wikipedia";
-			this.CmsTextSelect_ネット検索_Wikipedia.Size = new System.Drawing.Size(126, 22);
+			this.CmsTextSelect_ネット検索_Wikipedia.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_ネット検索_Wikipedia.Text = "Wikipedia";
 			this.CmsTextSelect_ネット検索_Wikipedia.Click += new System.EventHandler(this.CmsTextSelect_ネット検索_Wikipedia_Click);
 			// 
@@ -1239,6 +1243,20 @@
 			// 
 			this.folderBrowserDialog1.Description = "フォルダを指定してください。";
 			this.folderBrowserDialog1.RootFolder = System.Environment.SpecialFolder.MyComputer;
+			// 
+			// CmsTextSelect_ネット検索_Google翻訳
+			// 
+			this.CmsTextSelect_ネット検索_Google翻訳.Name = "CmsTextSelect_ネット検索_Google翻訳";
+			this.CmsTextSelect_ネット検索_Google翻訳.Size = new System.Drawing.Size(180, 22);
+			this.CmsTextSelect_ネット検索_Google翻訳.Text = "Google 翻訳";
+			this.CmsTextSelect_ネット検索_Google翻訳.Click += new System.EventHandler(this.CmsTextSelect_ネット検索_Google翻訳_Click);
+			// 
+			// CmsTextSelect_ネット検索_Googleマップ
+			// 
+			this.CmsTextSelect_ネット検索_Googleマップ.Name = "CmsTextSelect_ネット検索_Googleマップ";
+			this.CmsTextSelect_ネット検索_Googleマップ.Size = new System.Drawing.Size(180, 22);
+			this.CmsTextSelect_ネット検索_Googleマップ.Text = "Google マップ";
+			this.CmsTextSelect_ネット検索_Googleマップ.Click += new System.EventHandler(this.CmsTextSelect_ネット検索_Googleマップ_Click);
 			// 
 			// Form1
 			// 
@@ -1402,6 +1420,8 @@
 		private System.Windows.Forms.DataGridViewTextBoxColumn DgvTb12;
 		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_Cancel;
 		private System.Windows.Forms.DataGridViewTextBoxColumn DgvTb21;
+		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_ネット検索_Google翻訳;
+		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_ネット検索_Googleマップ;
 	}
 }
 

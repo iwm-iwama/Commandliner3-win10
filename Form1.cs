@@ -22,7 +22,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20210105 'A-29' (C)2018-2021 iwm-iwama";
+		private const string VERSION = "Ver.20210110 'A-29' (C)2018-2021 iwm-iwama";
 
 		private const string NL = "\r\n";
 		private readonly string RgxNL = "\r*\n";
@@ -2093,6 +2093,16 @@ namespace iwm_commandliner3
 		private void CmsTextSelect_ネット検索_Google_Click(object sender, EventArgs e)
 		{
 			SubNetSearch("https://www.google.co.jp/search?q=");
+		}
+
+		private void CmsTextSelect_ネット検索_Google翻訳_Click(object sender, EventArgs e)
+		{
+			SubNetSearch("https://translate.google.com/?hl=ja&sl=auto&tl=ja&op=translate&text=");
+		}
+
+		private void CmsTextSelect_ネット検索_Googleマップ_Click(object sender, EventArgs e)
+		{
+			SubNetSearch("https://www.google.co.jp/maps/place/");
 		}
 
 		private void CmsTextSelect_ネット検索_YouTube_Click(object sender, EventArgs e)
