@@ -22,7 +22,7 @@ namespace iwm_commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20210110 'A-29' (C)2018-2021 iwm-iwama";
+		private const string VERSION = "Ver.20210124 'A-29' (C)2018-2021 iwm-iwama";
 
 		private const string NL = "\r\n";
 		private readonly string RgxNL = "\r*\n";
@@ -105,6 +105,12 @@ namespace iwm_commandliner3
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
+			StartPosition = FormStartPosition.Manual;
+			DesktopLocation = new Point(
+				(Screen.PrimaryScreen.Bounds.Width - Width) / 2,
+				30
+			);
+
 			// 入力例
 			TbCmd.Text = "dir";
 
