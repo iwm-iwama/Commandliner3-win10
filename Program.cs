@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Windows.Forms;
 
-namespace iwm_commandliner3
+namespace iwm_Commandliner3
 {
 	static class Program
 	{

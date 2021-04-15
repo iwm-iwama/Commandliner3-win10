@@ -15,14 +15,14 @@ using System.Threading;
 using System.Web;
 using System.Windows.Forms;
 
-namespace iwm_commandliner3
+namespace iwm_Commandliner3
 {
 	public partial class Form1 : Form
 	{
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20210124 'A-29' (C)2018-2021 iwm-iwama";
+		private const string VERSION = "Ver.20210414 'A-29' (C)2018-2021 iwm-iwama";
 
 		private const string NL = "\r\n";
 		private readonly string RgxNL = "\r*\n";
@@ -106,10 +106,9 @@ namespace iwm_commandliner3
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			StartPosition = FormStartPosition.Manual;
-			DesktopLocation = new Point(
-				(Screen.PrimaryScreen.Bounds.Width - Width) / 2,
-				30
-			);
+
+			/// DesktopLocation = new Point((Screen.PrimaryScreen.Bounds.Width - Width) / 2, 30);
+			DesktopLocation = new Point(0, 0);
 
 			// 入力例
 			TbCmd.Text = "dir";

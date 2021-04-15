@@ -1,4 +1,4 @@
-﻿namespace iwm_commandliner3
+﻿namespace iwm_Commandliner3
 {
 	partial class Form1
 	{
@@ -1346,7 +1346,7 @@
 			this.ShowIcon = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = "iwm_commandliner3";
+			this.Text = "iwm_Commandliner3";
 			this.Load += new System.EventHandler(this.Form1_Load);
 			this.Resize += new System.EventHandler(this.Form1_Resize);
 			((System.ComponentModel.ISupportInitialize)(this.DgvMacro)).EndInit();
