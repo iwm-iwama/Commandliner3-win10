@@ -1,6 +1,6 @@
-// —á
-#clear;
+// Example
+#cls;
 #code "Shift_JIS";
 dir;
-#grep "2020";
-#replace "20(20)" "$1"
+#grep "^20";
+#replace "^20(\d+)" "'$1"
