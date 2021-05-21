@@ -22,7 +22,11 @@ namespace iwm_Commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20210505 'A-29' (C)2018-2021 iwm-iwama";
+		private const string VERSION = "Ver.20210521 'A-29' (C)2018-2021 iwm-iwama";
+		// 履歴
+		//  Ver.20210521
+		//  Ver.20210505
+		//  Ver.20210414
 
 		private const string NL = "\r\n";
 		private readonly string RgxNL = "\r*\n";
@@ -584,6 +588,8 @@ namespace iwm_Commandliner3
 
 		private void CmsCmd_フォルダ選択_Click(object sender, EventArgs e)
 		{
+			int iPos = TbCmd.SelectionStart;
+
 			FolderBrowserDialog fbd = folderBrowserDialog1;
 
 			fbd.SelectedPath = Environment.CurrentDirectory;
@@ -592,24 +598,26 @@ namespace iwm_Commandliner3
 			{
 				string s1 = "", s2 = "";
 
-				if (TbCmd.Text.Substring(TbCmd.SelectionStart - 1, 1) != " ")
+				if (TbCmd.Text.Substring(iPos - 1, 1) != " ")
 				{
 					s1 = " ";
 				}
 
-				if (TbCmd.SelectionStart < TbCmd.TextLength && TbCmd.Text.Substring(TbCmd.SelectionStart, 1) != " ")
+				if (iPos < TbCmd.TextLength && TbCmd.Text.Substring(iPos, 1) != " ")
 				{
 					s2 = " ";
 				}
 
-				int i1 = TbCmd.SelectionStart + fbd.SelectedPath.Length + 3;
-				TbCmd.Text = TbCmd.Text.Substring(0, TbCmd.SelectionStart) + s1 + fbd.SelectedPath + s2 + TbCmd.Text.Substring(TbCmd.SelectionStart);
+				int i1 = iPos + fbd.SelectedPath.Length + 3;
+				TbCmd.Text = TbCmd.Text.Substring(0, iPos) + s1 + "\"" + fbd.SelectedPath + "\"" + s2 + TbCmd.Text.Substring(iPos);
 				TbCmd.SelectionStart = i1;
 			}
 		}
 
 		private void CmsCmd_ファイル選択_Click(object sender, EventArgs e)
 		{
+			int iPos = TbCmd.SelectionStart;
+
 			OpenFileDialog ofd = openFileDialog1;
 
 			ofd.InitialDirectory = Environment.CurrentDirectory;
@@ -628,18 +636,18 @@ namespace iwm_Commandliner3
 
 				string s1 = "", s2 = "";
 
-				if (TbCmd.Text.Substring(TbCmd.SelectionStart - 1, 1) != " ")
+				if (TbCmd.Text.Substring(iPos - 1, 1) != " ")
 				{
 					s1 = " ";
 				}
 
-				if (TbCmd.SelectionStart < TbCmd.TextLength && TbCmd.Text.Substring(TbCmd.SelectionStart, 1) != " ")
+				if (iPos < TbCmd.TextLength && TbCmd.Text.Substring(iPos, 1) != " ")
 				{
 					s2 = " ";
 				}
 
-				int i1 = TbCmd.SelectionStart + sFn.Length + 3;
-				TbCmd.Text = TbCmd.Text.Substring(0, TbCmd.SelectionStart) + s1 + sFn + s2 + TbCmd.Text.Substring(TbCmd.SelectionStart);
+				int i1 = iPos + sFn.Length + 3;
+				TbCmd.Text = TbCmd.Text.Substring(0, iPos) + s1 + sFn + s2 + TbCmd.Text.Substring(iPos);
 				TbCmd.SelectionStart = i1;
 			}
 		}
@@ -772,16 +780,6 @@ namespace iwm_Commandliner3
 			CmsCmdMemo_貼り付け_Click(sender, e);
 		}
 
-		private void CmsCmdMemo_コピー_Click(object sender, EventArgs e)
-		{
-			RtbCmdMemo.Copy();
-		}
-
-		private void CmsCmdMemo_切り取り_Click(object sender, EventArgs e)
-		{
-			RtbCmdMemo.Cut();
-		}
-
 		private void CmsCmdMemo_貼り付け_Click(object sender, EventArgs e)
 		{
 			RtbCmdMemo.Paste();
@@ -789,6 +787,7 @@ namespace iwm_Commandliner3
 
 		private void SubCmdMemoAddText(string str)
 		{
+			RtbCmdMemo.SelectionStart = RtbCmdMemo.TextLength;
 			_ = NativeMethods.SendMessage(RtbCmdMemo.Handle, EM_REPLACESEL, 1, str + NL);
 			RtbCmdMemo.SelectionStart = RtbCmdMemo.TextLength;
 			RtbCmdMemo.ScrollToCaret();
@@ -2265,6 +2264,31 @@ namespace iwm_Commandliner3
 
 				case RichTextBox rtb:
 					rtb.SelectedText = $"\"{rtb.SelectedText.Trim('\"')}\"";
+					break;
+			}
+		}
+
+		private void CmsTextSelect_DQを消去_Click(object sender, EventArgs e)
+		{
+			int iPos1 = 0, iPos2 = 0;
+			string str = null;
+
+			switch (OBJ)
+			{
+				case TextBox tb:
+					iPos1 = tb.SelectionStart;
+					iPos2 = tb.SelectionStart + tb.SelectionLength;
+					str = tb.SelectedText;
+					tb.Text = tb.Text.Substring(0, iPos1) + str.Replace("\"", "") + tb.Text.Substring(iPos2);
+					tb.SelectionStart = iPos1;
+					break;
+
+				case RichTextBox rtb:
+					iPos1 = rtb.SelectionStart;
+					iPos2 = rtb.SelectionStart + rtb.SelectionLength;
+					str = rtb.SelectedText;
+					rtb.Text = rtb.Text.Substring(0, iPos1) + str.Replace("\"", "") + rtb.Text.Substring(iPos2);
+					rtb.SelectionStart = iPos1;
 					break;
 			}
 		}
