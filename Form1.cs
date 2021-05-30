@@ -22,8 +22,9 @@ namespace iwm_Commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20210521 'A-29' (C)2018-2021 iwm-iwama";
+		private const string VERSION = "Ver.20210529 'A-29' (C)2018-2021 iwm-iwama";
 		// 履歴
+		//  Ver.20210529
 		//  Ver.20210521
 		//  Ver.20210505
 		//  Ver.20210414
@@ -185,10 +186,7 @@ namespace iwm_Commandliner3
 		private void Form1_Load(object sender, EventArgs e)
 		{
 			StartPosition = FormStartPosition.Manual;
-
-			DesktopLocation = new Point(0, 0);
-			Width = Screen.GetWorkingArea(this).Width / 3;
-			Height = Screen.GetWorkingArea(this).Height / 2;
+			Form1_StartPosition();
 
 			// 入力例
 			TbCmd.Text = "dir";
@@ -241,6 +239,40 @@ namespace iwm_Commandliner3
 				GblDgvCmdOpen = false;
 				BtnDgvCmd_Click(sender, e);
 			}
+		}
+
+		private void Form1_StartPosition()
+		{
+			int WorkingAreaW = Screen.PrimaryScreen.WorkingArea.Width;
+			int WorkingAreaH = Screen.PrimaryScreen.WorkingArea.Height;
+
+			int WorkingAreaX = Screen.PrimaryScreen.WorkingArea.X;
+			int WorkingAreaY = Screen.PrimaryScreen.WorkingArea.Y;
+
+			int MouseX = Cursor.Position.X;
+			int MouseY = Cursor.Position.Y;
+
+			// X = Width
+			if (WorkingAreaW < MouseX + Size.Width)
+			{
+				MouseX -= Size.Width;
+				if (MouseX < 0)
+				{
+					MouseX = WorkingAreaX + 10;
+				}
+			}
+
+			// Y = Height
+			if (WorkingAreaH < MouseY + Size.Height)
+			{
+				MouseY -= Size.Height;
+				if (MouseY < 0)
+				{
+					MouseY = WorkingAreaY + 10;
+				}
+			}
+
+			Location = new Point(MouseX, MouseY);
 		}
 
 		//-----------
@@ -2270,8 +2302,8 @@ namespace iwm_Commandliner3
 
 		private void CmsTextSelect_DQを消去_Click(object sender, EventArgs e)
 		{
-			int iPos1 = 0, iPos2 = 0;
-			string str = null;
+			int iPos1, iPos2;
+			string str;
 
 			switch (OBJ)
 			{
