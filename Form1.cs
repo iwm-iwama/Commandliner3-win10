@@ -22,8 +22,9 @@ namespace iwm_Commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20210529 'A-29' (C)2018-2021 iwm-iwama";
+		private const string VERSION = "Ver.20210601 'A-29' (C)2018-2021 iwm-iwama";
 		// 履歴
+		//  Ver.20210601
 		//  Ver.20210529
 		//  Ver.20210521
 		//  Ver.20210505
@@ -290,9 +291,13 @@ namespace iwm_Commandliner3
 
 		private void TbCurDir_Click(object sender, EventArgs e)
 		{
-			FolderBrowserDialog fbd = folderBrowserDialog1;
-
-			fbd.SelectedPath = Environment.CurrentDirectory;
+			FolderBrowserDialog fbd = new FolderBrowserDialog
+			{
+				Description = "フォルダを指定してください。",
+				RootFolder = Environment.SpecialFolder.MyComputer,
+				SelectedPath = Environment.CurrentDirectory,
+				ShowNewFolderButton = true
+			};
 
 			if (fbd.ShowDialog(this) == DialogResult.OK)
 			{
@@ -514,7 +519,18 @@ namespace iwm_Commandliner3
 
 		private void TbCmd_MouseHover(object sender, EventArgs e)
 		{
-			ToolTip1.SetToolTip(TbCmd, TbCmdFormat());
+			string s1;
+
+			if (Regex.IsMatch(TbCmd.Text, ";"))
+			{
+				s1 = Regex.Replace(TbCmd.Text, @";\s*", ";" + NL);
+			}
+			else
+			{
+				s1 = string.Join(NL, Regex.Split(TbCmd.Text, "\\s+(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)"));
+			}
+
+			ToolTip1.SetToolTip(TbCmd, s1);
 		}
 
 		private void TbCmd_MouseUp(object sender, MouseEventArgs e)
@@ -522,9 +538,16 @@ namespace iwm_Commandliner3
 			CmsTextSelect_Open(e, TbCmd);
 		}
 
+		private void TbCmd_DragEnter(object sender, DragEventArgs e)
+		{
+			e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : DragDropEffects.None;
+		}
+
 		private void TbCmd_DragDrop(object sender, DragEventArgs e)
 		{
-			string[] a1 = (string[])e.Data.GetData(DataFormats.FileDrop, false);
+			string[] aFn = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+			Directory.SetCurrentDirectory(Path.GetDirectoryName(aFn[0]));
 
 			string s1 = "";
 
@@ -533,9 +556,9 @@ namespace iwm_Commandliner3
 				s1 = " ";
 			}
 
-			for (int _i1 = 0; _i1 < a1.Length; _i1++)
+			foreach (string _s1 in aFn)
 			{
-				s1 += $"\"{a1[_i1]}\" ";
+				s1 += $"\"{_s1}\" ";
 			}
 
 			if (TbCmd.SelectionStart < TbCmd.TextLength && TbCmd.Text.Substring(TbCmd.SelectionStart, 1) != " ")
@@ -551,11 +574,6 @@ namespace iwm_Commandliner3
 			TbCmd.Text = TbCmd.Text.Substring(0, TbCmd.SelectionStart) + s1 + TbCmd.Text.Substring(TbCmd.SelectionStart);
 
 			TbCmd.SelectionStart = i1;
-		}
-
-		private void TbCmd_DragEnter(object sender, DragEventArgs e)
-		{
-			e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : DragDropEffects.None;
 		}
 
 		private string TbCmdFormat()
@@ -622,9 +640,13 @@ namespace iwm_Commandliner3
 		{
 			int iPos = TbCmd.SelectionStart;
 
-			FolderBrowserDialog fbd = folderBrowserDialog1;
-
-			fbd.SelectedPath = Environment.CurrentDirectory;
+			FolderBrowserDialog fbd = new FolderBrowserDialog
+			{
+				Description = "フォルダを指定してください。",
+				RootFolder = Environment.SpecialFolder.MyComputer,
+				SelectedPath = Environment.CurrentDirectory,
+				ShowNewFolderButton = true
+			};
 
 			if (fbd.ShowDialog(this) == DialogResult.OK)
 			{
@@ -650,10 +672,11 @@ namespace iwm_Commandliner3
 		{
 			int iPos = TbCmd.SelectionStart;
 
-			OpenFileDialog ofd = openFileDialog1;
-
-			ofd.InitialDirectory = Environment.CurrentDirectory;
-			ofd.Multiselect = true;
+			OpenFileDialog ofd = new OpenFileDialog
+			{
+				InitialDirectory = Environment.CurrentDirectory,
+				Multiselect = true
+			};
 
 			if (ofd.ShowDialog() == DialogResult.OK)
 			{
@@ -718,30 +741,32 @@ namespace iwm_Commandliner3
 
 		private void CmsCmd_コマンドを保存_Click(object sender, EventArgs e)
 		{
-			SaveFileDialog fd = saveFileDialog1;
-
-			fd.InitialDirectory = Environment.CurrentDirectory;
-			fd.FileName = DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".iwmcmd";
-			fd.Filter = CmdFile_FILTER;
-			fd.FilterIndex = 1;
-
-			if (fd.ShowDialog() == DialogResult.OK)
+			SaveFileDialog sfd = new SaveFileDialog
 			{
-				File.WriteAllText(fd.FileName, TbCmdFormat(), Encoding.GetEncoding(TEXT_CODE[0]));
+				FileName = DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".iwmcmd",
+				Filter = CmdFile_FILTER,
+				FilterIndex = 1,
+				InitialDirectory = Environment.CurrentDirectory
+			};
+
+			if (sfd.ShowDialog() == DialogResult.OK)
+			{
+				File.WriteAllText(sfd.FileName, TbCmdFormat(), Encoding.GetEncoding(TEXT_CODE[0]));
 			}
 		}
 
 		private void CmsCmd_コマンドを読込_Click(object sender, EventArgs e)
 		{
-			OpenFileDialog fd = openFileDialog1;
+			OpenFileDialog ofd = new OpenFileDialog
+			{
+				Filter = CmdFile_FILTER,
+				InitialDirectory = Environment.CurrentDirectory
+			};
 
-			fd.InitialDirectory = Environment.CurrentDirectory;
-			fd.Filter = CmdFile_FILTER;
-
-			if (fd.ShowDialog() == DialogResult.OK)
+			if (ofd.ShowDialog() == DialogResult.OK)
 			{
 				TbCmd.Text = Regex.Replace(
-					File.ReadAllText(fd.FileName, Encoding.GetEncoding(TEXT_CODE[0])),
+					File.ReadAllText(ofd.FileName, Encoding.GetEncoding(TEXT_CODE[0])),
 					$"([\\s|;]*({RgxNL}+))+",
 					"; "
 				);
@@ -1804,15 +1829,24 @@ namespace iwm_Commandliner3
 			SubTbResultCnt();
 		}
 
+		private void TbResult_DragEnter(object sender, DragEventArgs e)
+		{
+			e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : DragDropEffects.None;
+		}
+
 		private void TbResult_DragDrop(object sender, DragEventArgs e)
 		{
+			string[] aFn = (string[])e.Data.GetData(DataFormats.FileDrop);
+
+			Directory.SetCurrentDirectory(Path.GetDirectoryName(aFn[0]));
+
 			SubLblWaitOn();
 
 			_ = SB.Clear();
 
 			string s1 = "";
 
-			foreach (string _s1 in (string[])e.Data.GetData(DataFormats.FileDrop, false))
+			foreach (string _s1 in aFn)
 			{
 				if (RtnIsBinaryFile(_s1))
 				{
@@ -1835,11 +1869,6 @@ namespace iwm_Commandliner3
 			}
 
 			SubLblWaitOff();
-		}
-
-		private void TbResult_DragEnter(object sender, DragEventArgs e)
-		{
-			e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : DragDropEffects.None;
 		}
 
 		private void SubTbResultCnt()
@@ -1925,23 +1954,24 @@ namespace iwm_Commandliner3
 
 		private void CmsResult_名前を付けて保存_Click(object sender, EventArgs e)
 		{
-			SaveFileDialog fd = saveFileDialog1;
+			SaveFileDialog sfd = new SaveFileDialog
+			{
+				FileName = DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".txt",
+				Filter = "Text (*.txt)|*.txt|TSV (*.tsv)|*.tsv|CSV (*.csv)|*.csv|HTML (*.html,*.htm)|*.html,*.htm|All files (*.*)|*.*",
+				FilterIndex = 1,
+				InitialDirectory = Environment.CurrentDirectory
+			};
 
-			fd.InitialDirectory = Environment.CurrentDirectory;
-			fd.FileName = DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".txt";
-			fd.Filter = "Text (*.txt)|*.txt|TSV (*.tsv)|*.tsv|CSV (*.csv)|*.csv|HTML (*.html,*.htm)|*.html,*.htm|All files (*.*)|*.*";
-			fd.FilterIndex = 1;
-
-			if (fd.ShowDialog() == DialogResult.OK)
+			if (sfd.ShowDialog() == DialogResult.OK)
 			{
 				switch (CbTextCode.Text.ToUpper())
 				{
 					case "UTF-8":
-						File.WriteAllText(fd.FileName, TbResult.Text, new UTF8Encoding(false));
+						File.WriteAllText(sfd.FileName, TbResult.Text, new UTF8Encoding(false));
 						break;
 
 					default:
-						File.WriteAllText(fd.FileName, TbResult.Text, Encoding.GetEncoding(TEXT_CODE[0]));
+						File.WriteAllText(sfd.FileName, TbResult.Text, Encoding.GetEncoding(TEXT_CODE[0]));
 						break;
 				}
 			}

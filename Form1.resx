@@ -585,16 +585,15 @@
   </data>
   <data name="CmsTextSelect_DQを消去.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAAAXNSR0IArs4c6QAAAARnQU1BAACxjwv8
-        YQUAAAAZdEVYdFNvZnR3YXJlAEFkb2JlIEltYWdlUmVhZHlxyWU8AAAARHRFWHRDb3B5cmlnaHQAQ3Jl
-        YXRpdmUgQ29tbW9ucyBBdHRyaWJ1dGlvbiBOb24tQ29tbWVyY2lhbCBObyBEZXJpdmF0aXZlc3vdsKAA
-        AAFWSURBVDhPlZLRjYJgEIQ3ogQeVJQHiYnm1xA1GAzEBiyBEizBjiyBEijhL+FKoIS9HW/h4O6IuUm+
-        uDszayJI0PV6Na/hH+rd5HleC3dd3wpd3OhKdLlcGKRpmqk1KHSavlpE5/PZCpwkSS0M/hxk6KCLG7WJ
-        TqfTXWBwPB7t4XAINGoFD1nTw41GX4rjuBJYqdRu9S6n/X5vdrtdLTAwxjw1IsyNjw66GvW13W7vm82G
-        O2Dveeho/W+t1+tS4AFKrQ0riqJgtVpZgX9gkWntW8vlMgjDsBRYeQpG+Oh4mOEha7wStzSfz6sgCOxi
-        sSiAzLV6LODzNYtnkXV6Fj2aTqcstP9AmQv16tlsZgBm9QqtoZfBI9/32fO89rXIXsATHmrBe6jXfgFu
-        4JHrutVkMrHj8TgTbpjhaa9Vp3cTjPYsOY6TjUYjKzCQvRJ+PW14yPo9J/sEuGOQzOzwrQcAAAAASUVO
-        RK5CYII=
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
+        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAAVZJREFUOE+VktGN
+        gmAQhDeiBB5UlAeJiebXEDUYDMQGLIESLMGOLIESKOEv4UqghL0db+Hg7oi5Sb64OzNrIkjQ9Xo1r+Ef
+        6t3keV4Ld13fCl3c6Ep0uVwYpGmaqTUodJq+WkTn89kKnCRJLQz+HGTooIsbtYlOp9NdYHA8Hu3hcAg0
+        agUPWdPDjUZfiuO4Elip1G71Lqf9fm92u10tMDDGPDUizI2PDroa9bXdbu+bzYY7YO956Gj9b63X61Lg
+        AUqtDSuKomC1WlmBf2CRae1by+UyCMOwFFh5Ckb46HiY4SFrvBK3NJ/PqyAI7GKxKIDMtXos4PM1i2eR
+        dXoWPZpOpyy0/0CZC/Xq2WxmAGb1Cq2hl8Ej3/fZ87z2tchewBMeasF7qNd+AW7gkeu61WQysePxOBNu
+        mOFpr1WndxOM9iw5jpONRiMrMJC9En49bXjI+j0n+wS4Y5DM7PCtBwAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="CmsTextSelect_ネット検索_Google.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -672,15 +671,6 @@
         mNUNwF0btAAAAABJRU5ErkJggg==
 </value>
   </data>
-  <metadata name="openFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>17, 59</value>
-  </metadata>
-  <metadata name="folderBrowserDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>1120, 20</value>
-  </metadata>
-  <metadata name="saveFileDialog1.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-    <value>157, 59</value>
-  </metadata>
   <metadata name="$this.TrayHeight" type="System.Int32, mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089">
     <value>98</value>
   </metadata>
