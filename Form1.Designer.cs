@@ -37,17 +37,18 @@
 			this.CmsResult = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.CmsResult_全選択 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
-			this.CmsResult_クリア = new System.Windows.Forms.ToolStripMenuItem();
+			this.CmsResult_全クリア = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsResult_全コピー = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsResult_上書き = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsResult_L3 = new System.Windows.Forms.ToolStripSeparator();
 			this.CmsResult_貼り付け = new System.Windows.Forms.ToolStripMenuItem();
-			this.CmsResult_ファイル名を貼り付け = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsResult_L4 = new System.Windows.Forms.ToolStripSeparator();
+			this.CmsResult_ファイル名を貼り付け = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator11 = new System.Windows.Forms.ToolStripSeparator();
 			this.CmsResult_名前を付けて保存 = new System.Windows.Forms.ToolStripMenuItem();
 			this.TbCmd = new System.Windows.Forms.TextBox();
 			this.CmsCmd = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.CmsCmd_クリア = new System.Windows.Forms.ToolStripMenuItem();
+			this.CmsCmd_全クリア = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsCmd_全コピー = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsCmd_上書き = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator1 = new System.Windows.Forms.ToolStripSeparator();
@@ -85,7 +86,7 @@
 			this.BtnResultCopy = new System.Windows.Forms.Button();
 			this.TbDgvCmdSearch = new System.Windows.Forms.TextBox();
 			this.CmsTbDgvCmdSearch = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.CmsTbDgvCmdSearch_クリア = new System.Windows.Forms.ToolStripMenuItem();
+			this.CmsTbDgvCmdSearch_全クリア = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsTbDgvCmdSearch_貼り付け = new System.Windows.Forms.ToolStripMenuItem();
 			this.NudTbResult = new System.Windows.Forms.NumericUpDown();
 			this.Lbl2 = new System.Windows.Forms.Label();
@@ -93,7 +94,7 @@
 			this.DgvTb21 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.TbResult = new System.Windows.Forms.TextBox();
 			this.CmsCmdMemo = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.CmsCmdMemo_クリア = new System.Windows.Forms.ToolStripMenuItem();
+			this.CmsCmdMemo_全クリア = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsCmdMemo_全コピー = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsCmdMemo_上書き = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator2 = new System.Windows.Forms.ToolStripSeparator();
@@ -115,10 +116,10 @@
 			this.LblCurDir = new System.Windows.Forms.Label();
 			this.CmsTextSelect = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.CmsTextSelect_Cancel = new System.Windows.Forms.ToolStripMenuItem();
+			this.CmsTextSelect_クリア = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator9 = new System.Windows.Forms.ToolStripSeparator();
 			this.CmsTextSelect_コピー = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsTextSelect_切り取り = new System.Windows.Forms.ToolStripMenuItem();
-			this.CmsTextSelect_削除 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator6 = new System.Windows.Forms.ToolStripSeparator();
 			this.CmsTextSelect_貼り付け = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator10 = new System.Windows.Forms.ToolStripSeparator();
@@ -209,43 +210,44 @@
 			this.CmsResult.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CmsResult_全選択,
             this.toolStripSeparator8,
-            this.CmsResult_クリア,
+            this.CmsResult_全クリア,
             this.CmsResult_全コピー,
             this.CmsResult_上書き,
             this.CmsResult_L3,
             this.CmsResult_貼り付け,
             this.CmsResult_L4,
             this.CmsResult_ファイル名を貼り付け,
+            this.toolStripSeparator11,
             this.CmsResult_名前を付けて保存});
 			this.CmsResult.Name = "CmsResult";
-			this.CmsResult.Size = new System.Drawing.Size(181, 198);
+			this.CmsResult.Size = new System.Drawing.Size(171, 182);
 			// 
 			// CmsResult_全選択
 			// 
 			this.CmsResult_全選択.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_全選択.Image")));
 			this.CmsResult_全選択.Name = "CmsResult_全選択";
-			this.CmsResult_全選択.Size = new System.Drawing.Size(180, 22);
+			this.CmsResult_全選択.Size = new System.Drawing.Size(170, 22);
 			this.CmsResult_全選択.Text = "全選択";
 			this.CmsResult_全選択.Click += new System.EventHandler(this.CmsResult_全選択_Click);
 			// 
 			// toolStripSeparator8
 			// 
 			this.toolStripSeparator8.Name = "toolStripSeparator8";
-			this.toolStripSeparator8.Size = new System.Drawing.Size(177, 6);
+			this.toolStripSeparator8.Size = new System.Drawing.Size(167, 6);
 			// 
-			// CmsResult_クリア
+			// CmsResult_全クリア
 			// 
-			this.CmsResult_クリア.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_クリア.Image")));
-			this.CmsResult_クリア.Name = "CmsResult_クリア";
-			this.CmsResult_クリア.Size = new System.Drawing.Size(180, 22);
-			this.CmsResult_クリア.Text = "クリア";
-			this.CmsResult_クリア.Click += new System.EventHandler(this.CmsResult_クリア_Click);
+			this.CmsResult_全クリア.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_全クリア.Image")));
+			this.CmsResult_全クリア.Name = "CmsResult_全クリア";
+			this.CmsResult_全クリア.Size = new System.Drawing.Size(170, 22);
+			this.CmsResult_全クリア.Text = "全クリア";
+			this.CmsResult_全クリア.Click += new System.EventHandler(this.CmsResult_全クリア_Click);
 			// 
 			// CmsResult_全コピー
 			// 
 			this.CmsResult_全コピー.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_全コピー.Image")));
 			this.CmsResult_全コピー.Name = "CmsResult_全コピー";
-			this.CmsResult_全コピー.Size = new System.Drawing.Size(180, 22);
+			this.CmsResult_全コピー.Size = new System.Drawing.Size(170, 22);
 			this.CmsResult_全コピー.Text = "全コピー";
 			this.CmsResult_全コピー.Click += new System.EventHandler(this.CmsResult_全コピー_Click);
 			// 
@@ -253,42 +255,47 @@
 			// 
 			this.CmsResult_上書き.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_上書き.Image")));
 			this.CmsResult_上書き.Name = "CmsResult_上書き";
-			this.CmsResult_上書き.Size = new System.Drawing.Size(180, 22);
+			this.CmsResult_上書き.Size = new System.Drawing.Size(170, 22);
 			this.CmsResult_上書き.Text = "上書き";
 			this.CmsResult_上書き.Click += new System.EventHandler(this.CmsResult_上書き_Click);
 			// 
 			// CmsResult_L3
 			// 
 			this.CmsResult_L3.Name = "CmsResult_L3";
-			this.CmsResult_L3.Size = new System.Drawing.Size(177, 6);
+			this.CmsResult_L3.Size = new System.Drawing.Size(167, 6);
 			// 
 			// CmsResult_貼り付け
 			// 
 			this.CmsResult_貼り付け.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_貼り付け.Image")));
 			this.CmsResult_貼り付け.Name = "CmsResult_貼り付け";
-			this.CmsResult_貼り付け.Size = new System.Drawing.Size(180, 22);
+			this.CmsResult_貼り付け.Size = new System.Drawing.Size(170, 22);
 			this.CmsResult_貼り付け.Text = "貼り付け";
 			this.CmsResult_貼り付け.Click += new System.EventHandler(this.CmsResult_貼り付け_Click);
+			// 
+			// CmsResult_L4
+			// 
+			this.CmsResult_L4.Name = "CmsResult_L4";
+			this.CmsResult_L4.Size = new System.Drawing.Size(167, 6);
 			// 
 			// CmsResult_ファイル名を貼り付け
 			// 
 			this.CmsResult_ファイル名を貼り付け.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_ファイル名を貼り付け.Image")));
 			this.CmsResult_ファイル名を貼り付け.Name = "CmsResult_ファイル名を貼り付け";
-			this.CmsResult_ファイル名を貼り付け.Size = new System.Drawing.Size(180, 22);
+			this.CmsResult_ファイル名を貼り付け.Size = new System.Drawing.Size(170, 22);
 			this.CmsResult_ファイル名を貼り付け.Text = "ファイル名を貼り付け";
 			this.CmsResult_ファイル名を貼り付け.Click += new System.EventHandler(this.CmsResult_ファイル名を貼り付け_Click);
 			// 
-			// CmsResult_L4
+			// toolStripSeparator11
 			// 
-			this.CmsResult_L4.Name = "CmsResult_L4";
-			this.CmsResult_L4.Size = new System.Drawing.Size(177, 6);
+			this.toolStripSeparator11.Name = "toolStripSeparator11";
+			this.toolStripSeparator11.Size = new System.Drawing.Size(167, 6);
 			// 
 			// CmsResult_名前を付けて保存
 			// 
 			this.CmsResult_名前を付けて保存.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.CmsResult_名前を付けて保存.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_名前を付けて保存.Image")));
 			this.CmsResult_名前を付けて保存.Name = "CmsResult_名前を付けて保存";
-			this.CmsResult_名前を付けて保存.Size = new System.Drawing.Size(180, 22);
+			this.CmsResult_名前を付けて保存.Size = new System.Drawing.Size(170, 22);
 			this.CmsResult_名前を付けて保存.Text = "名前を付けて保存";
 			this.CmsResult_名前を付けて保存.Click += new System.EventHandler(this.CmsResult_名前を付けて保存_Click);
 			// 
@@ -324,7 +331,7 @@
 			// CmsCmd
 			// 
 			this.CmsCmd.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CmsCmd_クリア,
+            this.CmsCmd_全クリア,
             this.CmsCmd_全コピー,
             this.CmsCmd_上書き,
             this.toolStripSeparator1,
@@ -340,13 +347,13 @@
 			this.CmsCmd.Name = "CmsResult";
 			this.CmsCmd.Size = new System.Drawing.Size(166, 242);
 			// 
-			// CmsCmd_クリア
+			// CmsCmd_全クリア
 			// 
-			this.CmsCmd_クリア.Image = ((System.Drawing.Image)(resources.GetObject("CmsCmd_クリア.Image")));
-			this.CmsCmd_クリア.Name = "CmsCmd_クリア";
-			this.CmsCmd_クリア.Size = new System.Drawing.Size(165, 22);
-			this.CmsCmd_クリア.Text = "クリア";
-			this.CmsCmd_クリア.Click += new System.EventHandler(this.CmsCmd_クリア_Click);
+			this.CmsCmd_全クリア.Image = ((System.Drawing.Image)(resources.GetObject("CmsCmd_全クリア.Image")));
+			this.CmsCmd_全クリア.Name = "CmsCmd_全クリア";
+			this.CmsCmd_全クリア.Size = new System.Drawing.Size(165, 22);
+			this.CmsCmd_全クリア.Text = "全クリア";
+			this.CmsCmd_全クリア.Click += new System.EventHandler(this.CmsCmd_全クリア_Click);
 			// 
 			// CmsCmd_全コピー
 			// 
@@ -777,18 +784,18 @@
 			// CmsTbDgvCmdSearch
 			// 
 			this.CmsTbDgvCmdSearch.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CmsTbDgvCmdSearch_クリア,
+            this.CmsTbDgvCmdSearch_全クリア,
             this.CmsTbDgvCmdSearch_貼り付け});
 			this.CmsTbDgvCmdSearch.Name = "CmsResult";
 			this.CmsTbDgvCmdSearch.Size = new System.Drawing.Size(116, 48);
 			// 
-			// CmsTbDgvCmdSearch_クリア
+			// CmsTbDgvCmdSearch_全クリア
 			// 
-			this.CmsTbDgvCmdSearch_クリア.Image = ((System.Drawing.Image)(resources.GetObject("CmsTbDgvCmdSearch_クリア.Image")));
-			this.CmsTbDgvCmdSearch_クリア.Name = "CmsTbDgvCmdSearch_クリア";
-			this.CmsTbDgvCmdSearch_クリア.Size = new System.Drawing.Size(115, 22);
-			this.CmsTbDgvCmdSearch_クリア.Text = "クリア";
-			this.CmsTbDgvCmdSearch_クリア.Click += new System.EventHandler(this.CmsTbDgvCmdSearch_クリア_Click);
+			this.CmsTbDgvCmdSearch_全クリア.Image = ((System.Drawing.Image)(resources.GetObject("CmsTbDgvCmdSearch_全クリア.Image")));
+			this.CmsTbDgvCmdSearch_全クリア.Name = "CmsTbDgvCmdSearch_全クリア";
+			this.CmsTbDgvCmdSearch_全クリア.Size = new System.Drawing.Size(115, 22);
+			this.CmsTbDgvCmdSearch_全クリア.Text = "全クリア";
+			this.CmsTbDgvCmdSearch_全クリア.Click += new System.EventHandler(this.CmsTbDgvCmdSearch_全クリア_Click);
 			// 
 			// CmsTbDgvCmdSearch_貼り付け
 			// 
@@ -924,7 +931,7 @@
 			// CmsCmdMemo
 			// 
 			this.CmsCmdMemo.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CmsCmdMemo_クリア,
+            this.CmsCmdMemo_全クリア,
             this.CmsCmdMemo_全コピー,
             this.CmsCmdMemo_上書き,
             this.toolStripSeparator2,
@@ -932,13 +939,13 @@
 			this.CmsCmdMemo.Name = "CmsResult";
 			this.CmsCmdMemo.Size = new System.Drawing.Size(116, 98);
 			// 
-			// CmsCmdMemo_クリア
+			// CmsCmdMemo_全クリア
 			// 
-			this.CmsCmdMemo_クリア.Image = ((System.Drawing.Image)(resources.GetObject("CmsCmdMemo_クリア.Image")));
-			this.CmsCmdMemo_クリア.Name = "CmsCmdMemo_クリア";
-			this.CmsCmdMemo_クリア.Size = new System.Drawing.Size(115, 22);
-			this.CmsCmdMemo_クリア.Text = "クリア";
-			this.CmsCmdMemo_クリア.Click += new System.EventHandler(this.CmsCmdMemo_クリア_Click);
+			this.CmsCmdMemo_全クリア.Image = ((System.Drawing.Image)(resources.GetObject("CmsCmdMemo_全クリア.Image")));
+			this.CmsCmdMemo_全クリア.Name = "CmsCmdMemo_全クリア";
+			this.CmsCmdMemo_全クリア.Size = new System.Drawing.Size(115, 22);
+			this.CmsCmdMemo_全クリア.Text = "全クリア";
+			this.CmsCmdMemo_全クリア.Click += new System.EventHandler(this.CmsCmdMemo_全クリア_Click);
 			// 
 			// CmsCmdMemo_全コピー
 			// 
@@ -1189,10 +1196,10 @@
 			// 
 			this.CmsTextSelect.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.CmsTextSelect_Cancel,
+            this.CmsTextSelect_クリア,
             this.toolStripSeparator9,
             this.CmsTextSelect_コピー,
             this.CmsTextSelect_切り取り,
-            this.CmsTextSelect_削除,
             this.toolStripSeparator6,
             this.CmsTextSelect_貼り付け,
             this.toolStripSeparator10,
@@ -1201,27 +1208,35 @@
             this.toolStripSeparator3,
             this.CmsTextSelect_ネット検索});
 			this.CmsTextSelect.Name = "CmsResult";
-			this.CmsTextSelect.Size = new System.Drawing.Size(177, 204);
+			this.CmsTextSelect.Size = new System.Drawing.Size(181, 226);
 			// 
 			// CmsTextSelect_Cancel
 			// 
 			this.CmsTextSelect_Cancel.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.CmsTextSelect_Cancel.Image = ((System.Drawing.Image)(resources.GetObject("CmsTextSelect_Cancel.Image")));
 			this.CmsTextSelect_Cancel.Name = "CmsTextSelect_Cancel";
-			this.CmsTextSelect_Cancel.Size = new System.Drawing.Size(176, 22);
+			this.CmsTextSelect_Cancel.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_Cancel.Text = "選択";
 			this.CmsTextSelect_Cancel.Click += new System.EventHandler(this.CmsTextSelect_Cancel_Click);
+			// 
+			// CmsTextSelect_クリア
+			// 
+			this.CmsTextSelect_クリア.Image = ((System.Drawing.Image)(resources.GetObject("CmsTextSelect_クリア.Image")));
+			this.CmsTextSelect_クリア.Name = "CmsTextSelect_クリア";
+			this.CmsTextSelect_クリア.Size = new System.Drawing.Size(180, 22);
+			this.CmsTextSelect_クリア.Text = "クリア";
+			this.CmsTextSelect_クリア.Click += new System.EventHandler(this.CmsTextSelect_クリア_Click);
 			// 
 			// toolStripSeparator9
 			// 
 			this.toolStripSeparator9.Name = "toolStripSeparator9";
-			this.toolStripSeparator9.Size = new System.Drawing.Size(173, 6);
+			this.toolStripSeparator9.Size = new System.Drawing.Size(177, 6);
 			// 
 			// CmsTextSelect_コピー
 			// 
 			this.CmsTextSelect_コピー.Image = ((System.Drawing.Image)(resources.GetObject("CmsTextSelect_コピー.Image")));
 			this.CmsTextSelect_コピー.Name = "CmsTextSelect_コピー";
-			this.CmsTextSelect_コピー.Size = new System.Drawing.Size(176, 22);
+			this.CmsTextSelect_コピー.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_コピー.Text = "コピー";
 			this.CmsTextSelect_コピー.Click += new System.EventHandler(this.CmsTextSelect_コピー_Click);
 			// 
@@ -1229,41 +1244,33 @@
 			// 
 			this.CmsTextSelect_切り取り.Image = ((System.Drawing.Image)(resources.GetObject("CmsTextSelect_切り取り.Image")));
 			this.CmsTextSelect_切り取り.Name = "CmsTextSelect_切り取り";
-			this.CmsTextSelect_切り取り.Size = new System.Drawing.Size(176, 22);
+			this.CmsTextSelect_切り取り.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_切り取り.Text = "切り取り";
 			this.CmsTextSelect_切り取り.Click += new System.EventHandler(this.CmsTextSelect_切り取り_Click);
-			// 
-			// CmsTextSelect_削除
-			// 
-			this.CmsTextSelect_削除.Image = ((System.Drawing.Image)(resources.GetObject("CmsTextSelect_削除.Image")));
-			this.CmsTextSelect_削除.Name = "CmsTextSelect_削除";
-			this.CmsTextSelect_削除.Size = new System.Drawing.Size(176, 22);
-			this.CmsTextSelect_削除.Text = "削除";
-			this.CmsTextSelect_削除.Click += new System.EventHandler(this.CmsTextSelect_削除_Click);
 			// 
 			// toolStripSeparator6
 			// 
 			this.toolStripSeparator6.Name = "toolStripSeparator6";
-			this.toolStripSeparator6.Size = new System.Drawing.Size(173, 6);
+			this.toolStripSeparator6.Size = new System.Drawing.Size(177, 6);
 			// 
 			// CmsTextSelect_貼り付け
 			// 
 			this.CmsTextSelect_貼り付け.Image = ((System.Drawing.Image)(resources.GetObject("CmsTextSelect_貼り付け.Image")));
 			this.CmsTextSelect_貼り付け.Name = "CmsTextSelect_貼り付け";
-			this.CmsTextSelect_貼り付け.Size = new System.Drawing.Size(176, 22);
+			this.CmsTextSelect_貼り付け.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_貼り付け.Text = "貼り付け";
 			this.CmsTextSelect_貼り付け.Click += new System.EventHandler(this.CmsTextSelect_貼り付け_Click);
 			// 
 			// toolStripSeparator10
 			// 
 			this.toolStripSeparator10.Name = "toolStripSeparator10";
-			this.toolStripSeparator10.Size = new System.Drawing.Size(173, 6);
+			this.toolStripSeparator10.Size = new System.Drawing.Size(177, 6);
 			// 
 			// CmsTextSelect_DQで囲む
 			// 
 			this.CmsTextSelect_DQで囲む.Image = ((System.Drawing.Image)(resources.GetObject("CmsTextSelect_DQで囲む.Image")));
 			this.CmsTextSelect_DQで囲む.Name = "CmsTextSelect_DQで囲む";
-			this.CmsTextSelect_DQで囲む.Size = new System.Drawing.Size(176, 22);
+			this.CmsTextSelect_DQで囲む.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_DQで囲む.Text = "選択範囲を \" で囲む";
 			this.CmsTextSelect_DQで囲む.Click += new System.EventHandler(this.CmsTextSelect_DQで囲む_Click);
 			// 
@@ -1271,14 +1278,14 @@
 			// 
 			this.CmsTextSelect_DQを消去.Image = ((System.Drawing.Image)(resources.GetObject("CmsTextSelect_DQを消去.Image")));
 			this.CmsTextSelect_DQを消去.Name = "CmsTextSelect_DQを消去";
-			this.CmsTextSelect_DQを消去.Size = new System.Drawing.Size(176, 22);
+			this.CmsTextSelect_DQを消去.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_DQを消去.Text = "選択範囲の \" を消去";
 			this.CmsTextSelect_DQを消去.Click += new System.EventHandler(this.CmsTextSelect_DQを消去_Click);
 			// 
 			// toolStripSeparator3
 			// 
 			this.toolStripSeparator3.Name = "toolStripSeparator3";
-			this.toolStripSeparator3.Size = new System.Drawing.Size(173, 6);
+			this.toolStripSeparator3.Size = new System.Drawing.Size(177, 6);
 			// 
 			// CmsTextSelect_ネット検索
 			// 
@@ -1290,7 +1297,7 @@
             this.CmsTextSelect_ネット検索_Wikipedia});
 			this.CmsTextSelect_ネット検索.Image = ((System.Drawing.Image)(resources.GetObject("CmsTextSelect_ネット検索.Image")));
 			this.CmsTextSelect_ネット検索.Name = "CmsTextSelect_ネット検索";
-			this.CmsTextSelect_ネット検索.Size = new System.Drawing.Size(176, 22);
+			this.CmsTextSelect_ネット検索.Size = new System.Drawing.Size(180, 22);
 			this.CmsTextSelect_ネット検索.Text = "ネット検索";
 			// 
 			// CmsTextSelect_ネット検索_Google
@@ -1401,7 +1408,6 @@
 			this.ShowIcon = false;
 			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
-			this.Text = "iwm_Commandliner3";
 			this.Load += new System.EventHandler(this.Form1_Load);
 			this.Resize += new System.EventHandler(this.Form1_Resize);
 			((System.ComponentModel.ISupportInitialize)(this.DgvMacro)).EndInit();
@@ -1437,15 +1443,15 @@
 		private System.Windows.Forms.Label Lbl2;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmd_全コピー;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator1;
-		private System.Windows.Forms.ToolStripMenuItem CmsCmd_クリア;
-		private System.Windows.Forms.ToolStripMenuItem CmsResult_クリア;
+		private System.Windows.Forms.ToolStripMenuItem CmsCmd_全クリア;
+		private System.Windows.Forms.ToolStripMenuItem CmsResult_全クリア;
 		private System.Windows.Forms.TextBox TbDgvCmdSearch;
 		private System.Windows.Forms.DataGridView DgvCmd;
 		private System.Windows.Forms.TextBox TbResult;
 		private System.Windows.Forms.Button BtnCmdExec;
 		private System.Windows.Forms.Button BtnResultMem;
 		private System.Windows.Forms.ContextMenuStrip CmsCmdMemo;
-		private System.Windows.Forms.ToolStripMenuItem CmsCmdMemo_クリア;
+		private System.Windows.Forms.ToolStripMenuItem CmsCmdMemo_全クリア;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmdMemo_全コピー;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmdMemo_貼り付け;
@@ -1487,7 +1493,7 @@
 		private System.Windows.Forms.ContextMenuStrip CmsTbCurDir;
 		private System.Windows.Forms.ToolStripMenuItem CmsTbCurDir_全コピー;
 		private System.Windows.Forms.ContextMenuStrip CmsTbDgvCmdSearch;
-		private System.Windows.Forms.ToolStripMenuItem CmsTbDgvCmdSearch_クリア;
+		private System.Windows.Forms.ToolStripMenuItem CmsTbDgvCmdSearch_全クリア;
 		private System.Windows.Forms.ToolStripMenuItem CmsTbDgvCmdSearch_貼り付け;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmd_上書き;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmdMemo_上書き;
@@ -1500,7 +1506,7 @@
 		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_ネット検索_Google;
 		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_ネット検索_YouTube;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmd_フォルダ選択;
-		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_削除;
+		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_クリア;
 		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_ネット検索_Wikipedia;
 		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_貼り付け;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator6;
@@ -1522,6 +1528,7 @@
 		private System.Windows.Forms.ToolStripMenuItem CmsCmd_マクロ変数_マイクロ秒;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator10;
 		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_DQを消去;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator11;
 	}
 }
 

@@ -22,8 +22,9 @@ namespace iwm_Commandliner3
 		//-----------
 		// 大域定数
 		//-----------
-		private const string VERSION = "Ver.20210601 'A-29' (C)2018-2021 iwm-iwama";
+		private const string VERSION = "Ver.20210613 'A-29' (C)2018-2021 iwm-iwama";
 		// 履歴
+		//  Ver.20210613
 		//  Ver.20210601
 		//  Ver.20210529
 		//  Ver.20210521
@@ -37,39 +38,39 @@ namespace iwm_Commandliner3
 		private readonly string[] TEXT_CODE = { "Shift_JIS", "UTF-8" };
 
 		private readonly object[,] MACRO = {
-			// [マクロ]     [説明]                                                                          [引数]
-			{ "#clear",     "全クリア     #clear",                                                            0 },
-			{ "#cls",       "出力欄クリア #cls",                                                              0 },
-			{ "#cd",        "フォルダ変更 #cd \"..\" ※フォルダがないときは新規作成します。",                 1 },
-			{ "#code",      "文字コード   #code \"Shift_JIS\" | \"UTF-8\"",                                   1 },
-			{ "#grep",      "検索         #grep \"\\d{4}\" 　※正規表現",                                     1 },
-			{ "#except",    "不一致検索   #except \"\\d{4}\" ※正規表現",                                     1 },
-			{ "#replace",   "置換         #replace \"(\\d{2})(\\d{2})\" \"$1+$2\" ※正規表現",                2 },
-			{ "#split",     "分割         #split \"\\t\" \"[LN],[0],[1]\" ※正規表現 [LN]行番号 [0..]分割列", 2 },
-			{ "#trim",      "行前後の空白クリア",                                                             0 },
-			{ "#toUpper",   "大文字に変換",                                                                   0 },
-			{ "#toLower",   "小文字に変換",                                                                   0 },
-			{ "#toWide",    "全角に変換",                                                                     0 },
-			{ "#toZenNum",  "全角に変換(数字のみ)",                                                           0 },
-			{ "#toZenKana", "全角に変換(カナのみ)",                                                           0 },
-			{ "#toNarrow",  "半角に変換",                                                                     0 },
-			{ "#toHanNum",  "半角に変換(数字のみ)",                                                           0 },
-			{ "#toHanKana", "半角に変換(カナのみ)",                                                           0 },
-			{ "#erase",     "文字クリア   #erase \"0\" \"5\" ※\"[開始位置]\" \"[文字長]\"",                  2 },
-			{ "#sort",      "ソート(昇順)",                                                                   0 },
-			{ "#sort-r",    "ソート(降順)",                                                                   0 },
-			{ "#uniq",      "重複行をクリア",                                                                 0 },
-			{ "#rmBlankLn", "空白行削除",                                                                     0 },
-			{ "#rmNL",      "改行をクリア",                                                                   0 },
-			{ "#wget",      "ファイル取得 #wget \"http://.../index.html\"",                                   1 },
-			{ "#fread",     "ファイル読込 #fread \"ファイル名\"",                                             1 },
-			{ "#fwrite",    "ファイル書込 #fwrite \"ファイル名\"",                                            1 },
-			{ "#stream",    "行毎に処理   #stream \"wget\" \"-q\" ※\"[外部コマンド]\" \"[オプション]\"",     2 },
-			{ "#calc",      "計算機       #calc \"pi / 180\"",                                                1 },
-			{ "#now",       "現在日時",                                                                       0 },
-			{ "#help",      "キー操作説明",                                                                   0 },
-			{ "#version",   "バージョン",                                                                     0 },
-			{ "#exit",      "終了",                                                                           0 }
+			// [マクロ]     [説明]                                                                           [引数]
+			{ "#clear",     "全クリア       #clear",                                                            0 },
+			{ "#cls",       "出力欄クリア   #cls",                                                              0 },
+			{ "#cd",        "フォルダ変更   #cd \"..\" ※フォルダがないときは新規作成します。",                 1 },
+			{ "#code",      "文字コード     #code \"Shift_JIS\" | \"UTF-8\"",                                   1 },
+			{ "#grep",      "検索           #grep \"\\d{4}\" 　※正規表現",                                     1 },
+			{ "#except",    "不一致検索     #except \"\\d{4}\" ※正規表現",                                     1 },
+			{ "#replace",   "置換           #replace \"(\\d{2})(\\d{2})\" \"$1+$2\" ※正規表現 $1..9",          2 },
+			{ "#split",     "分割           #split \"\\t\" \"[LN],[0],[1]\" ※正規表現 [LN]行番号 [0..]分割列", 2 },
+			{ "#trim",      "行前後の空白クリア",                                                               0 },
+			{ "#toUpper",   "大文字に変換",                                                                     0 },
+			{ "#toLower",   "小文字に変換",                                                                     0 },
+			{ "#toWide",    "全角に変換",                                                                       0 },
+			{ "#toZenNum",  "全角に変換(数字のみ)",                                                             0 },
+			{ "#toZenKana", "全角に変換(カナのみ)",                                                             0 },
+			{ "#toNarrow",  "半角に変換",                                                                       0 },
+			{ "#toHanNum",  "半角に変換(数字のみ)",                                                             0 },
+			{ "#toHanKana", "半角に変換(カナのみ)",                                                             0 },
+			{ "#erase",     "文字クリア     #erase \"0\" \"5\" ※\"[開始位置]\" \"[文字長]\"",                  2 },
+			{ "#sort",      "ソート(昇順)",                                                                     0 },
+			{ "#sort-r",    "ソート(降順)",                                                                     0 },
+			{ "#uniq",      "重複行をクリア",                                                                   0 },
+			{ "#rmBlankLn", "空白行削除",                                                                       0 },
+			{ "#rmNL",      "改行をクリア",                                                                     0 },
+			{ "#rename",    "ファイル名置換 #rename \"(name)(\\d)\" \"$1-$2\" ※正規表現 $1..9",                2 },
+			{ "#wget",      "ファイル取得   #wget \"http://.../index.html\"",                                   1 },
+			{ "#fread",     "ファイル読込   #fread \"ファイル名\"",                                             1 },
+			{ "#fwrite",    "ファイル書込   #fwrite \"ファイル名\"",                                            1 },
+			{ "#stream",    "行毎に処理     #stream \"cmd\" \"/c\" ※\"[外部コマンド]\" \"[オプション]\"",      2 },
+			{ "#calc",      "計算機         #calc \"pi / 180\"",                                                1 },
+			{ "#help",      "キー操作説明",                                                                     0 },
+			{ "#version",   "バージョン",                                                                       0 },
+			{ "#exit",      "終了",                                                                             0 }
 		};
 
 		private readonly string CmdFile_FILTER = "Command (*.iwmcmd)|*.iwmcmd|All files (*.*)|*.*";
@@ -123,6 +124,12 @@ namespace iwm_Commandliner3
 			"--------------" + NL +
 			"  #{ymd}  年月日     (例) 20210501" + NL +
 			"  #{hns}  時分秒     (例) 113400" + NL +
+			"  #{y}    年         (例) 2021" + NL +
+			"  #{m}    月         (例) 05" + NL +
+			"  #{d}    日         (例) 01" + NL +
+			"  #{h}    時         (例) 11" + NL +
+			"  #{n}    分         (例) 34" + NL +
+			"  #{s}    秒         (例) 00" + NL +
 			"  #{msec} マイクロ秒 (例) 999" + NL +
 			"  #{環境変数}        (例) #{OS} => Windows_NT" + NL +
 			NL +
@@ -186,6 +193,8 @@ namespace iwm_Commandliner3
 
 		private void Form1_Load(object sender, EventArgs e)
 		{
+			Text = GetType().Namespace;
+
 			StartPosition = FormStartPosition.Manual;
 			Form1_StartPosition();
 
@@ -595,7 +604,7 @@ namespace iwm_Commandliner3
 		//---------
 		private string GblCmsCmdBatch = "";
 
-		private void CmsCmd_クリア_Click(object sender, EventArgs e)
+		private void CmsCmd_全クリア_Click(object sender, EventArgs e)
 		{
 			// [Ctrl]+[Z] 有効化
 			TbCmd.SelectAll();
@@ -817,7 +826,7 @@ namespace iwm_Commandliner3
 		//-------------
 		// CmsCmdMemo
 		//-------------
-		private void CmsCmdMemo_クリア_Click(object sender, EventArgs e)
+		private void CmsCmdMemo_全クリア_Click(object sender, EventArgs e)
 		{
 			// [Ctrl]+[Z] 有効化
 			RtbCmdMemo.SelectAll();
@@ -1210,7 +1219,7 @@ namespace iwm_Commandliner3
 		//--------------------
 		// CmsTbDgvCmdSearch
 		//--------------------
-		private void CmsTbDgvCmdSearch_クリア_Click(object sender, EventArgs e)
+		private void CmsTbDgvCmdSearch_全クリア_Click(object sender, EventArgs e)
 		{
 			// [Ctrl]+[Z] 有効化
 			TbDgvCmdSearch.SelectAll();
@@ -1380,6 +1389,12 @@ namespace iwm_Commandliner3
 				cmd = Regex.Replace(cmd, "#{ymd}", dt.ToString("yyyyMMdd"), RegexOptions.IgnoreCase);
 				cmd = Regex.Replace(cmd, "#{hns}", dt.ToString("HHmmss"), RegexOptions.IgnoreCase);
 				cmd = Regex.Replace(cmd, "#{msec}", dt.ToString("fff"), RegexOptions.IgnoreCase);
+				cmd = Regex.Replace(cmd, "#{y}", dt.ToString("yyyy"), RegexOptions.IgnoreCase);
+				cmd = Regex.Replace(cmd, "#{m}", dt.ToString("MM"), RegexOptions.IgnoreCase);
+				cmd = Regex.Replace(cmd, "#{d}", dt.ToString("dd"), RegexOptions.IgnoreCase);
+				cmd = Regex.Replace(cmd, "#{h}", dt.ToString("HH"), RegexOptions.IgnoreCase);
+				cmd = Regex.Replace(cmd, "#{n}", dt.ToString("mm"), RegexOptions.IgnoreCase);
+				cmd = Regex.Replace(cmd, "#{s}", dt.ToString("ss"), RegexOptions.IgnoreCase);
 
 				// 環境変数
 				rgx = new Regex("#{(?<pattern>.+?)}", RegexOptions.None);
@@ -1583,6 +1598,11 @@ namespace iwm_Commandliner3
 						TbResult.Text = Regex.Replace(TbResult.Text, RgxNL, "");
 						break;
 
+					// ファイル名置換
+					case "#rename":
+						TbResult.Text = RtnFnRename(TbResult.Text, aOp[1], aOp[2]);
+						break;
+
 					// ファイル取得／ファイル読込
 					case "#wget":
 					case "#fread":
@@ -1669,7 +1689,7 @@ namespace iwm_Commandliner3
 								}
 								catch
 								{
-									_ = MessageBox.Show("#stream の引数を再確認してください!!");
+									_ = MessageBox.Show("#stream の引数を再確認してください.");
 									break;
 								}
 							}
@@ -1679,11 +1699,6 @@ namespace iwm_Commandliner3
 					// 計算機
 					case "#calc":
 						TbResult.Text += NL + RtnEvalCalc(aOp[1]) + NL;
-						break;
-
-					// 現在日時
-					case "#now":
-						TbResult.Text += NL + DateTime.Now.ToString("yyyy/MM/dd(ddd) HH:mm:ss") + NL;
 						break;
 
 					// キー操作説明
@@ -1902,7 +1917,7 @@ namespace iwm_Commandliner3
 			SubTbResultCnt();
 		}
 
-		private void CmsResult_クリア_Click(object sender, EventArgs e)
+		private void CmsResult_全クリア_Click(object sender, EventArgs e)
 		{
 			// [Ctrl]+[Z] 有効化
 			TbResult.SelectAll();
@@ -2260,6 +2275,20 @@ namespace iwm_Commandliner3
 			CmsTextSelect.Close();
 		}
 
+		private void CmsTextSelect_クリア_Click(object sender, EventArgs e)
+		{
+			switch (OBJ)
+			{
+				case TextBox tb:
+					tb.SelectedText = "";
+					break;
+
+				case RichTextBox rtb:
+					rtb.SelectedText = "";
+					break;
+			}
+		}
+
 		private void CmsTextSelect_コピー_Click(object sender, EventArgs e)
 		{
 			switch (OBJ)
@@ -2284,20 +2313,6 @@ namespace iwm_Commandliner3
 
 				case RichTextBox rtb:
 					rtb.Cut();
-					break;
-			}
-		}
-
-		private void CmsTextSelect_削除_Click(object sender, EventArgs e)
-		{
-			switch (OBJ)
-			{
-				case TextBox tb:
-					tb.SelectedText = "";
-					break;
-
-				case RichTextBox rtb:
-					rtb.SelectedText = "";
 					break;
 			}
 		}
@@ -2497,6 +2512,11 @@ namespace iwm_Commandliner3
 			sNew = sNew.Replace("\\\"", "\"");
 			sNew = sNew.Replace("\\\'", "\'");
 
+			// Regex.Replace("12345", "(123)(45)", "$19$2")
+			// => NG "$1945"
+			// => OK "123945"
+			sNew = Regex.Replace(sNew, "(\\$[1-9])([0-9])", "$1\a$2");
+
 			Regex rgx;
 
 			try
@@ -2513,8 +2533,7 @@ namespace iwm_Commandliner3
 
 			foreach (string _s1 in str.Split(AryNL, StringSplitOptions.None))
 			{
-				string _s2 = rgx.Replace(_s1, sNew);
-
+				string _s2 = rgx.Replace(_s1, sNew).Replace("\a", "");
 				if (_s1 != _s2)
 				{
 					++iCnt;
@@ -2532,6 +2551,65 @@ namespace iwm_Commandliner3
 			RtbCmdMemo.ScrollToCaret();
 
 			return SB.ToString();
+		}
+
+		//-------------------------------
+		// 正規表現によるファイル名置換
+		//-------------------------------
+		private string RtnFnRename(string str, string sOld, string sNew)
+		{
+			string sPartDir = "";
+			string sPartFileOld = "";
+
+			foreach (string _s1 in str.Split(AryNL, StringSplitOptions.None))
+			{
+				if (File.Exists(_s1))
+				{
+					string _s2 = Path.GetDirectoryName(_s1);
+					if (_s2.Length == 0)
+					{
+						_s2 = Environment.CurrentDirectory;
+					}
+					sPartDir += _s2 + NL;
+					sPartFileOld += Path.GetFileName(_s1) + NL;
+				}
+			}
+
+			string rtn = "";
+			string memo = "";
+			string[] aPartDir = sPartDir.Trim().Split(AryNL, StringSplitOptions.None);
+			string[] aPartFileOld = sPartFileOld.Trim().Split(AryNL, StringSplitOptions.None);
+			int i1 = 0;
+
+			foreach (string _s1 in RtnTextReplace(sPartFileOld, sOld, sNew).Trim().Split(AryNL, StringSplitOptions.None))
+			{
+				string _sNew = $"{aPartDir[i1]}\\{_s1}";
+				string _sOld = $"{aPartDir[i1]}\\{aPartFileOld[i1]}";
+				++i1;
+
+				memo += $"{_sOld}{NL}=> {_s1}{NL}";
+
+				if (File.Exists(_sNew))
+				{
+					memo += "=> [Err] 重複するファイル名が存在します." + NL;
+				}
+				else
+				{
+					File.Move(_sOld, _sNew);
+					rtn += _sNew + NL;
+				}
+			}
+
+			int iBgn = RtbCmdMemo.TextLength;
+			RtbCmdMemo.Text += memo;
+			int iEnd = RtbCmdMemo.TextLength;
+			RtbCmdMemo.SelectionStart = iBgn;
+			RtbCmdMemo.SelectionLength = iEnd - iBgn;
+			RtbCmdMemo.SelectionColor = Color.Cyan;
+			RtbCmdMemo.SelectionStart = iEnd;
+			RtbCmdMemo.ScrollToCaret();
+
+			return rtn;
 		}
 
 		//---------------------
