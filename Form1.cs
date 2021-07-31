@@ -23,8 +23,10 @@ namespace iwm_Commandliner3
 		// 大域定数
 		//--------------------------------------------------------------------------------
 		private const string ProgramID = "iwm_Commandliner3.2";
-		private const string VERSION = "Ver.20210715 'A-29' (C)2018-2021 iwm-iwama";
+		private const string VERSION = "Ver.20210731 'A-29' (C)2018-2021 iwm-iwama";
 		// 履歴
+		//  Ver.20210731
+		//  Ver.20210715
 		//  Ver.20210613
 		//  Ver.20210601
 		//  Ver.20210529
@@ -32,51 +34,56 @@ namespace iwm_Commandliner3
 		//  Ver.20210505
 		//  Ver.20210414
 
+		private const string ConfigFn = "config.iwmcmd";
+
 		private const string NL = "\r\n";
-		private const string RgxNL = "\r*\n";
+		private const string RgxNL = "\r??\n";
+		private const string RgxCmdNL = "(;|\\s)*\n";
 
 		private readonly string[] TEXT_CODE = { "Shift_JIS", "UTF-8" };
 
 		private readonly object[,] MACRO = {
-			// [マクロ]      [説明]                                                                           [引数]
-			{ "#clear",      "全クリア       #clear",                                                            0 },
-			{ "#cls",        "出力クリア     #cls",                                                              0 },
-			{ "#cd",         "フォルダ変更   #cd \"..\" ※フォルダがないときは新規作成します。",                 1 },
-			{ "#code",       "文字コード     #code \"Shift_JIS\" | \"UTF-8\"",                                   1 },
-			{ "#print",      "印字           #print \"#{result,2}\" ※\"出力\" 1..5",                            1 },
-			{ "#result",     "出力変更       #result \"2\" ※\"出力\" 1..5",                                     1 },
-			{ "#grep",       "検索           #grep \"\\d{4}\"   ※正規表現",                                     1 },
-			{ "#except",     "不一致検索     #except \"\\d{4}\" ※正規表現",                                     1 },
-			{ "#replace",    "置換           #replace \"(\\d{2})(\\d{2})\" \"$1+$2\" ※正規表現 $1..9",          2 },
-			{ "#split",      "分割           #split \"\\t\" \"[LN],[0],[1]\" ※正規表現 [LN]行番号 [0..]分割列", 2 },
-			{ "#trim",       "行前後の空白クリア",                                                               0 },
-			{ "#toUpper",    "大文字に変換",                                                                     0 },
-			{ "#toLower",    "小文字に変換",                                                                     0 },
-			{ "#toWide",     "全角に変換",                                                                       0 },
-			{ "#toZenNum",   "全角に変換(数字のみ)",                                                             0 },
-			{ "#toZenKana",  "全角に変換(カナのみ)",                                                             0 },
-			{ "#toNarrow",   "半角に変換",                                                                       0 },
-			{ "#toHanNum",   "半角に変換(数字のみ)",                                                             0 },
-			{ "#toHanKana",  "半角に変換(カナのみ)",                                                             0 },
-			{ "#erase",      "文字クリア     #erase \"0\" \"5\" ※\"[開始位置]\" \"[文字長]\"",                  2 },
-			{ "#sort",       "ソート(昇順)",                                                                     0 },
-			{ "#sort-r",     "ソート(降順)",                                                                     0 },
-			{ "#uniq",       "重複行をクリア ※データ全体の重複をクリアするときは #sort と併用",                 0 },
-			{ "#rmBlankLn",  "空白行削除",                                                                       0 },
-			{ "#rmNL",       "改行をクリア",                                                                     0 },
-			{ "#wget",       "ファイル取得   #wget \"http://.../index.html\"",                                   1 },
-			{ "#fread",      "ファイル読込   #fread \"ファイル名\"",                                             1 },
-			{ "#fwrite",     "ファイル書込   #fwrite \"ファイル名\"",                                            1 },
-			{ "#dfList",     "フォルダ・ファイル一覧 #dfList \"フォルダ名\"",                                    1 },
-			{ "#dList",      "フォルダ一覧           #dList \"フォルダ名\"",                                     1 },
-			{ "#fList",      "ファイル一覧           #fList \"フォルダ名\"",                                     1 },
-			{ "#rename",     "ファイル名置換 #rename \"(.+)\" \"#{line,4}_$1\" ※正規表現 $1..9",                2 },
-			{ "#stream",     "行毎に処理     #stream \"dir #{}\" ※ #{} は出力行データ変数",                     1 },
-			{ "#calc",       "計算機         #calc \"pi / 180\"",                                                1 },
-			{ "#macroList",  "マクロ一覧",                                                                       0 },
-			{ "#help",       "操作説明",                                                                         0 },
-			{ "#version",    "バージョン",                                                                       0 },
-			{ "#exit",       "終了",                                                                             0 }
+			// [マクロ]     [説明]                                                                           [引数]
+			{ "#clear",     "全クリア       #clear",                                                            0 },
+			{ "#cls",       "出力クリア     #cls",                                                              0 },
+			{ "#cd",        "フォルダ変更   #cd \"..\" ※フォルダがないときは新規作成します。",                 1 },
+			{ "#code",      "文字コード     #code \"Shift_JIS\" | \"UTF-8\"",                                   1 },
+			{ "#print",     "印字           #print \"#{result,2}\" ※\"出力\" 1..5",                            1 },
+			{ "#result",    "出力変更       #result \"2\" ※\"出力\" 1..5",                                     1 },
+			{ "#grep",      "検索           #grep \"\\d{4}\"   ※正規表現",                                     1 },
+			{ "#except",    "不一致検索     #except \"\\d{4}\" ※正規表現",                                     1 },
+			{ "#replace",   "置換           #replace \"(\\d{2})(\\d{2})\" \"$1+$2\" ※正規表現 $1..9",          2 },
+			{ "#split",     "分割           #split \"\\t\" \"[LN],[0],[1]\" ※正規表現 [LN]行番号 [0..]分割列", 2 },
+			{ "#trim",      "行前後の空白クリア",                                                               0 },
+			{ "#toUpper",   "大文字に変換",                                                                     0 },
+			{ "#toLower",   "小文字に変換",                                                                     0 },
+			{ "#toWide",    "全角に変換",                                                                       0 },
+			{ "#toZenNum",  "全角に変換(数字のみ)",                                                             0 },
+			{ "#toZenKana", "全角に変換(カナのみ)",                                                             0 },
+			{ "#toNarrow",  "半角に変換",                                                                       0 },
+			{ "#toHanNum",  "半角に変換(数字のみ)",                                                             0 },
+			{ "#toHanKana", "半角に変換(カナのみ)",                                                             0 },
+			{ "#erase",     "文字クリア     #erase \"0\" \"5\" ※\"[開始位置]\" \"[文字長]\"",                  2 },
+			{ "#sort",      "ソート(昇順)",                                                                     0 },
+			{ "#sort-r",    "ソート(降順)",                                                                     0 },
+			{ "#uniq",      "重複行をクリア ※データ全体の重複をクリアするときは #sort と併用",                 0 },
+			{ "#rmBlankLn", "空白行削除",                                                                       0 },
+			{ "#rmNL",      "改行をクリア",                                                                     0 },
+			{ "#wget",      "ファイル取得   #wget \"http://.../index.html\"",                                   1 },
+			{ "#fread",     "ファイル読込   #fread \"ファイル名\"",                                             1 },
+			{ "#fwrite",    "ファイル書込   #fwrite \"ファイル名\"",                                            1 },
+			{ "#dfList",    "フォルダ・ファイル一覧 #dfList \"フォルダ名\"",                                    1 },
+			{ "#dList",     "フォルダ一覧           #dList \"フォルダ名\"",                                     1 },
+			{ "#fList",     "ファイル一覧           #fList \"フォルダ名\"",                                     1 },
+			{ "#rename",    "ファイル名置換 #rename \"(.+)\" \"#{line,4}_$1\" ※正規表現 $1..9",                2 },
+			{ "#stream",    "行毎に処理     #stream \"dir \\\"#{}\\\"\" ※ #{} は出力行データ変数",             1 },
+			{ "#calc",      "計算機         #calc \"pi / 180\"",                                                1 },
+			{ "#pos",       "フォーム位置   #pos \"50\" \"100\" ※\"[横位置(X)]\" \"[縦位置(Y)]\"",             2 },
+			{ "#size",      "フォームサイズ #size \"600\" \"600\" ※\"[幅(Width)]\" \"[高さ(Height)]\" ",       2 },
+			{ "#macroList", "マクロ一覧",                                                                       0 },
+			{ "#help",      "操作説明",                                                                         0 },
+			{ "#version",   "バージョン",                                                                       0 },
+			{ "#exit",      "終了",                                                                             0 }
 		};
 
 		private const string CmdFile_FILTER = "Command (*.iwmcmd)|*.iwmcmd|All files (*.*)|*.*";
@@ -176,7 +183,14 @@ namespace iwm_Commandliner3
 			"[F9]  出力を直前に戻す" + NL +
 			"[F10] システムメニュー" + NL +
 			"[F11] →メモ→出力の順にフォーカス移動" + NL +
-			"[F12] 出力変更" + NL
+			"[F12] 出力変更" + NL +
+			NL +
+			"----------------" + NL +
+			"> 設定ファイル <" + NL +
+			"----------------" + NL +
+			"作業フォルダに " + ConfigFn + " ファイルが存在するときは、自動的に読み込みます。" + NL +
+			"フォーム位置・サイズを指定するときに使用します。" + NL +
+			NL
 		;
 
 		private const string HELP_CmsCmd =
@@ -256,6 +270,17 @@ namespace iwm_Commandliner3
 
 			// 初フォーカス
 			SubTbCmdFocus(-1);
+
+			// 設定ファイルが存在するとき
+			if (File.Exists(ConfigFn))
+			{
+				using (StreamReader sr = new StreamReader(ConfigFn, Encoding.GetEncoding("Shift_JIS")))
+				{
+					TbCmd.Text = Regex.Replace(sr.ReadToEnd(), RgxCmdNL, ";");
+				}
+				BtnCmdExec_Click(sender, e);
+				TbCmd.Text = "";
+			}
 
 			// 引数によるバッチ処理
 			if (Let.cmd.Length > 0)
@@ -758,12 +783,12 @@ namespace iwm_Commandliner3
 			CmsCmd_InsertText("#{}");
 		}
 
-		private void CmsCmd_定数など_SJIS_Click(object sender, EventArgs e)
+		private void CmsCmd_文字コード_SJIS_Click(object sender, EventArgs e)
 		{
 			CmsCmd_InsertText("Shift_JIS");
 		}
 
-		private void CmsCmd_定数など_UTF8_Click(object sender, EventArgs e)
+		private void CmsCmd_文字コード_UTF8_Click(object sender, EventArgs e)
 		{
 			CmsCmd_InsertText("UTF-8");
 		}
@@ -894,7 +919,7 @@ namespace iwm_Commandliner3
 			{
 				TbCmd.Text = Regex.Replace(
 					File.ReadAllText(ofd.FileName, Encoding.GetEncoding(TEXT_CODE[0])),
-					$"([\\s|;]*({RgxNL}+))+",
+					RgxCmdNL,
 					"; "
 				);
 				SubTbCmdFocus(-1);
@@ -1469,7 +1494,7 @@ namespace iwm_Commandliner3
 			// メモに追加
 			if (TbCmd.TextLength > 0)
 			{
-				SubCmdMemoAddText($"{TbCmd.Text};");
+				SubCmdMemoAddText(TbCmd.Text);
 			}
 
 			// マクロ・コマンド履歴に追加
@@ -1579,7 +1604,7 @@ namespace iwm_Commandliner3
 			// 変数
 			Regex rgx;
 			Match match;
-			int i1 = 0;
+			int i1 = 0, i2 = 0;
 			string s1 = "";
 
 			// 変換
@@ -1714,14 +1739,11 @@ namespace iwm_Commandliner3
 
 					// 出力変更
 					case "#result":
-						// 出力コピー
-						if (aOp[1].Length > 0)
+						_ = int.TryParse(aOp[1], out i1);
+						--i1;
+						if (RtnAryResultBtnRangeChk(i1))
 						{
-							i1 = int.Parse(aOp[1]) - 1;
-							if (RtnAryResultBtnRangeChk(i1))
-							{
-								SubTbResultChange(i1, true);
-							}
+							SubTbResultChange(i1, true);
 						}
 						break;
 
@@ -2033,6 +2055,21 @@ namespace iwm_Commandliner3
 						TbResult.Text += NL + RtnEvalCalc(aOp[1]) + NL;
 						break;
 
+					// フォーム位置
+					case "#pos":
+						_ = int.TryParse(aOp[1], out i1);
+						_ = int.TryParse(aOp[2], out i2);
+						SetDesktopLocation(i1, i2);
+						break;
+
+					// フォームサイズ
+					case "#size":
+						_ = int.TryParse(aOp[1], out i1);
+						_ = int.TryParse(aOp[2], out i2);
+						Width = i1;
+						Height = i2;
+						break;
+
 					// マクロ一覧
 					case "#macrolist":
 						s1 =
@@ -2154,7 +2191,8 @@ namespace iwm_Commandliner3
 					int _i1 = 0;
 					if (_a1.Length >= 2 && Regex.IsMatch(_a1[1], @"\d+"))
 					{
-						_i1 = int.Parse(_a1[1]) - 1;
+						_ = int.TryParse(_a1[1], out _i1);
+						--_i1;
 						if (_i1 >= 0 && _i1 <= 4)
 						{
 							cmd = Regex.Replace(cmd, "#{" + _s1 + "}", AryResultBuf[_i1], RegexOptions.IgnoreCase);
@@ -2171,7 +2209,7 @@ namespace iwm_Commandliner3
 					int _frmt_zeros = 0;
 					if (_a1.Length >= 2 && Regex.IsMatch(_a1[1], @"\d+"))
 					{
-						_frmt_zeros = int.Parse(_a1[1]);
+						_ = int.TryParse(_a1[1], out _frmt_zeros);
 					}
 					cmd = Regex.Replace(cmd, "#{" + _s1 + "}", String.Format("{0:D" + _frmt_zeros + "}", iLine), RegexOptions.IgnoreCase);
 				}
@@ -3442,18 +3480,8 @@ namespace iwm_Commandliner3
 		//--------------------------------------------------------------------------------
 		private string RtnTextEraseInLine(string str, string sBgnPos, string sEndPos)
 		{
-			int iBgnPos;
-			int iEndPos;
-
-			try
-			{
-				iBgnPos = int.Parse(sBgnPos);
-				iEndPos = int.Parse(sEndPos);
-			}
-			catch
-			{
-				return str;
-			}
+			_ = int.TryParse(sBgnPos, out int iBgnPos);
+			_ = int.TryParse(sEndPos, out int iEndPos);
 
 			_ = SB.Clear();
 
@@ -3590,7 +3618,7 @@ namespace iwm_Commandliner3
 					_s2 = _s2.Replace($"{_s1}(", "");
 					_s2 = _s2.Replace(")", "");
 
-					double _d1 = double.Parse(_s2);
+					_ = double.TryParse(_s2, out double _d1);
 
 					switch (_s1)
 					{
@@ -3619,11 +3647,16 @@ namespace iwm_Commandliner3
 			foreach (Match _m1 in Regex.Matches(rtn, @"pow\(\d+\.*\d*\,\d+\)"))
 			{
 				string _s2 = _m1.Value;
+
 				_s2 = _s2.Replace("pow(", "");
 				_s2 = _s2.Replace(")", "");
 
 				string[] _a1 = _s2.Split(',');
-				rtn = rtn.Replace(_m1.Value, Math.Pow(double.Parse(_a1[0]), int.Parse(_a1[1])).ToString());
+
+				_ = double.TryParse(_a1[0], out double _d1);
+				_ = int.TryParse(_a1[1], out int _i1);
+
+				rtn = rtn.Replace(_m1.Value, Math.Pow(_d1, _i1).ToString());
 			}
 
 			using (DataTable dt = new DataTable())
@@ -3702,7 +3735,7 @@ namespace iwm_Commandliner3
 
 					using (StreamReader sr = new StreamReader(ARGS[0], Encoding.GetEncoding("Shift_JIS")))
 					{
-						Let.cmd = Regex.Replace(sr.ReadToEnd(), RgxNL, ";");
+						Let.cmd = Regex.Replace(sr.ReadToEnd(), RgxCmdNL, ";");
 					}
 				}
 				Application.Run(new Form1());
