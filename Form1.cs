@@ -23,8 +23,9 @@ namespace iwm_Commandliner3
 		// 大域定数
 		//--------------------------------------------------------------------------------
 		private const string ProgramID = "iwm_Commandliner3.2";
-		private const string VERSION = "Ver.20210731 'A-29' (C)2018-2021 iwm-iwama";
+		private const string VERSION = "Ver.20210801 'A-29' (C)2018-2021 iwm-iwama";
 		// 履歴
+		//  Ver.20210801
 		//  Ver.20210731
 		//  Ver.20210715
 		//  Ver.20210613
@@ -79,7 +80,9 @@ namespace iwm_Commandliner3
 			{ "#stream",    "行毎に処理     #stream \"dir \\\"#{}\\\"\" ※ #{} は出力行データ変数",             1 },
 			{ "#calc",      "計算機         #calc \"pi / 180\"",                                                1 },
 			{ "#pos",       "フォーム位置   #pos \"50\" \"100\" ※\"[横位置(X)]\" \"[縦位置(Y)]\"",             2 },
-			{ "#size",      "フォームサイズ #size \"600\" \"600\" ※\"[幅(Width)]\" \"[高さ(Height)]\" ",       2 },
+			{ "#size",      "フォームサイズ #size \"600\" \"600\" ※\"[幅(Width)]\" \"[高さ(Height)]\"",        2 },
+			{ "#focus0",    "出力のフォーカス位置を先頭にする",                                                 0 },
+			{ "#focus9",    "出力のフォーカス位置を末尾にする",                                                 0 },
 			{ "#macroList", "マクロ一覧",                                                                       0 },
 			{ "#help",      "操作説明",                                                                         0 },
 			{ "#version",   "バージョン",                                                                       0 },
@@ -102,7 +105,7 @@ namespace iwm_Commandliner3
 
 		// 履歴
 		private List<string> ListCmdHistory = new List<string>();
-		private Dictionary<string, string> DictResultHistory = new Dictionary<string, string>();
+		private readonly SortedDictionary<string, string> DictResultHistory = new SortedDictionary<string, string>();
 
 		// Object
 		private Process PS = null;
@@ -1491,33 +1494,13 @@ namespace iwm_Commandliner3
 				}
 			}
 
-			// メモに追加
-			if (TbCmd.TextLength > 0)
-			{
-				SubCmdMemoAddText(TbCmd.Text);
-			}
-
 			// マクロ・コマンド履歴に追加
-			ListCmdHistory.Add(TbCmd.Text.Trim());
-			List<string> lTmp = new List<string>();
-			string flg = "";
-
-			ListCmdHistory.Sort();
-			foreach (string _s1 in ListCmdHistory)
+			// メモに追加
+			string s1 = TbCmd.Text.Trim();
+			if (s1.Length > 0)
 			{
-				if (_s1 != flg)
-				{
-					lTmp.Add(_s1);
-					flg = _s1;
-				}
-			}
-			ListCmdHistory = lTmp;
-
-			CbCmdHistory.Items.Clear();
-			_ = CbCmdHistory.Items.Add("");
-			foreach (string _s1 in ListCmdHistory)
-			{
-				_ = CbCmdHistory.Items.Add(_s1);
+				ListCmdHistory.Add(s1);
+				SubCmdMemoAddText(s1);
 			}
 
 			// 出力履歴に追加
@@ -1668,10 +1651,6 @@ namespace iwm_Commandliner3
 							AryResultBuf[_i1] = "";
 						}
 						SubTbResultChange(0, true);
-
-						// 出力履歴クリア／マクロ・コマンド履歴は残す
-						DictResultHistory.Clear();
-						CbResultHistory.Items.Clear();
 
 						GC.Collect();
 						break;
@@ -2070,6 +2049,18 @@ namespace iwm_Commandliner3
 						Height = i2;
 						break;
 
+					// フォーカス位置を先頭にする
+					case "#focus0":
+						TbResult.SelectionStart = 0;
+						TbResult.ScrollToCaret();
+						break;
+
+					// フォーカス位置を末尾にする
+					case "#focus9":
+						TbResult.SelectionStart = TbResult.TextLength;
+						TbResult.ScrollToCaret();
+						break;
+
 					// マクロ一覧
 					case "#macrolist":
 						s1 =
@@ -2139,7 +2130,7 @@ namespace iwm_Commandliner3
 				TbResult.AppendText(s1);
 			}
 
-			TbResult.SelectionStart = TbResult.TextLength;
+			// TbResult.SelectionStart = NUM 不可
 			TbResult.ScrollToCaret();
 
 			SubLblWaitOn(false);
@@ -2276,43 +2267,23 @@ namespace iwm_Commandliner3
 				return;
 			}
 
-			// 最後の10件のみ表示
-			// Key重複回避
-			Thread.Sleep(10);
-			DictResultHistory.Add(DateTime.Now.ToString("HH:mm:ss_fff"), TbResult.Text);
+			// 異なるデータのみ追加
+			bool bExist = false;
 
-			int cntTail = DictResultHistory.Count() - 10;
-			int cnt = 0;
-			Dictionary<string, string> dKeyValue = new Dictionary<string, string>();
-			List<string> lKey = new List<string>();
-
-			CbResultHistory.Items.Clear();
-			_ = CbResultHistory.Items.Add("");
-
-			foreach (KeyValuePair<string, string> dict in DictResultHistory.OrderBy(c => c.Key))
+			foreach (KeyValuePair<string, string> _dict in DictResultHistory)
 			{
-				dKeyValue.Add(dict.Key, dict.Value);
-			}
-			DictResultHistory = dKeyValue;
-
-			foreach (KeyValuePair<string, string> dict in DictResultHistory)
-			{
-				if (cnt < cntTail)
+				if (_dict.Value == TbResult.Text)
 				{
-					lKey.Add(dict.Key);
+					bExist = true;
+					break;
 				}
-				++cnt;
 			}
 
-			foreach (string _s1 in lKey)
+			if (!bExist)
 			{
-				DictResultHistory.Remove(_s1);
-			}
-
-			foreach (KeyValuePair<string, string> dict in DictResultHistory)
-			{
-				string _s1 = dict.Value.Substring(0, dict.Value.Length < 80 ? dict.Value.Length : 70).TrimStart();
-				_ = CbResultHistory.Items.Add(string.Format("{0}  {1}", dict.Key, _s1.Replace(NL, @"\n")));
+				// Key重複回避のため一応遅延
+				Thread.Sleep(10);
+				DictResultHistory.Add(DateTime.Now.ToString("HH:mm:ss_fff"), TbResult.Text);
 			}
 		}
 
@@ -2557,6 +2528,7 @@ namespace iwm_Commandliner3
 					// 旧タブのデータ保存
 					AryResultBuf[AryResultIndex] = TbResult.Text;
 					AryResultStartIndex[AryResultIndex] = TbResult.SelectionStart;
+					TbResult_Leave(null, null);
 
 					// 新タブのデータ読込
 					TbResult.Text = AryResultBuf[index];
@@ -2709,11 +2681,21 @@ namespace iwm_Commandliner3
 		{
 			Lbl_F1.ForeColor = Color.Gold;
 
-			if (CbCmdHistory.Items.Count == 0)
+			// ListCmdHistory から重複排除
+			ListCmdHistory.Sort();
+			ListCmdHistory = ListCmdHistory.Distinct().ToList();
+
+			// CbCmdHistory を再編成
+			CbCmdHistory.Items.Clear();
+			_ = CbCmdHistory.Items.Add("");
+
+			foreach (string _s1 in ListCmdHistory)
 			{
-				CbCmdHistory.Items.Add("");
+				_ = CbCmdHistory.Items.Add(_s1);
 			}
+
 			int i1 = 1;
+
 			foreach (string s1 in ListCmdHistory)
 			{
 				if (s1 == TbCmd.Text)
@@ -2722,11 +2704,13 @@ namespace iwm_Commandliner3
 				}
 				++i1;
 			}
+
 			CbCmdHistory.SelectedIndex = ListCmdHistory.Count >= i1 ? i1 : 0;
 		}
 
 		private void CbCmdHistory_Leave(object sender, EventArgs e)
 		{
+			GC.Collect();
 			Lbl_F1.ForeColor = Color.Gray;
 		}
 
@@ -2807,26 +2791,53 @@ namespace iwm_Commandliner3
 		{
 			Lbl_F8.ForeColor = Color.Gold;
 
-			if (CbResultHistory.Items.Count == 0)
+			// 最近の10件のみ表示
+			int cntTail = DictResultHistory.Count() - 10;
+			int cnt = 0;
+			List<string> lRmKey = new List<string>();
+
+			foreach (KeyValuePair<string, string> _dict in DictResultHistory)
 			{
-				CbResultHistory.Items.Add("");
+				if (cnt < cntTail)
+				{
+					lRmKey.Add(_dict.Key);
+				}
+				++cnt;
 			}
 
-			// 直近のデータから走査
-			int i1 = DictResultHistory.Count;
-			foreach (KeyValuePair<string, string> kv1 in DictResultHistory.Reverse())
+			// DictResultHistory から11件目以降のデータを削除
+			foreach (string _s1 in lRmKey)
 			{
-				if (kv1.Value == TbResult.Text)
+				_ = DictResultHistory.Remove(_s1);
+			}
+
+			// CbResultHistory を再編成
+			CbResultHistory.Items.Clear();
+			_ = CbResultHistory.Items.Add("");
+
+			foreach (KeyValuePair<string, string> _dict in DictResultHistory)
+			{
+				string _s1 = _dict.Value.Substring(0, _dict.Value.Length < 80 ? _dict.Value.Length : 70).TrimStart();
+				_ = CbResultHistory.Items.Add(string.Format("{0}  {1}", _dict.Key, _s1.Replace(NL, @"\n")));
+			}
+
+			int i1 = 0;
+
+			foreach (KeyValuePair<string, string> _dict in DictResultHistory)
+			{
+				if (_dict.Value == TbResult.Text)
 				{
 					break;
 				}
-				--i1;
+				++i1;
 			}
-			CbResultHistory.SelectedIndex = i1;
+
+			CbResultHistory.SelectedIndex = i1 < DictResultHistory.Count ? i1 + 1 : 0;
 		}
 
 		private void CbResultHistory_Leave(object sender, EventArgs e)
 		{
+			GC.Collect();
 			Lbl_F8.ForeColor = Color.Gray;
 		}
 
@@ -2835,9 +2846,10 @@ namespace iwm_Commandliner3
 			if (CbResultHistory.Text.Length > 0)
 			{
 				TbResult.Text = DictResultHistory[CbResultHistory.Text.Substring(0, 12)];
-				TbResult.SelectionStart = TbResult.TextLength;
+				// TbResult.SelectionStart = NUM 不可
 				TbResult.ScrollToCaret();
 			}
+
 			CbResultHistory.Text = "";
 			SubTbCmdFocus(GblTbCmdPos);
 		}
@@ -2885,11 +2897,13 @@ namespace iwm_Commandliner3
 		private void BtnResultMem_Click(object sender, EventArgs e)
 		{
 			int i1 = CbResultHistory.Items.Count - 2;
+
 			if (i1 >= 0)
 			{
 				CbResultHistory.SelectedIndex = i1;
 				CbResultHistory_DropDownClosed(sender, e);
 			}
+
 			SubTbCmdFocus(GblTbCmdPos);
 		}
 
