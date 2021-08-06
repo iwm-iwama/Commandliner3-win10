@@ -70,6 +70,8 @@
 			this.toolStripSeparator13 = new System.Windows.Forms.ToolStripSeparator();
 			this.CmsCmd_マクロ変数_出力の行番号 = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsCmd_マクロ変数_出力の行データ = new System.Windows.Forms.ToolStripMenuItem();
+			this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
+			this.CmsCmd_マクロ変数_連想配列 = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsCmd_文字コード = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsCmd_文字コード_SJIS = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsCmd_文字コード_UTF8 = new System.Windows.Forms.ToolStripMenuItem();
@@ -421,7 +423,9 @@
             this.CmsCmd_マクロ変数_出力のデータ,
             this.toolStripSeparator13,
             this.CmsCmd_マクロ変数_出力の行番号,
-            this.CmsCmd_マクロ変数_出力の行データ});
+            this.CmsCmd_マクロ変数_出力の行データ,
+            this.toolStripSeparator16,
+            this.CmsCmd_マクロ変数_連想配列});
 			this.CmsCmd_マクロ変数.Image = ((System.Drawing.Image)(resources.GetObject("CmsCmd_マクロ変数.Image")));
 			this.CmsCmd_マクロ変数.Name = "CmsCmd_マクロ変数";
 			this.CmsCmd_マクロ変数.Size = new System.Drawing.Size(165, 22);
@@ -555,6 +559,19 @@
 			this.CmsCmd_マクロ変数_出力の行データ.Size = new System.Drawing.Size(335, 22);
 			this.CmsCmd_マクロ変数_出力の行データ.Text = "出力の行データ #{}";
 			this.CmsCmd_マクロ変数_出力の行データ.Click += new System.EventHandler(this.CmsCmd_マクロ変数_出力の行データ_Click);
+			// 
+			// toolStripSeparator16
+			// 
+			this.toolStripSeparator16.Name = "toolStripSeparator16";
+			this.toolStripSeparator16.Size = new System.Drawing.Size(332, 6);
+			// 
+			// CmsCmd_マクロ変数_連想配列
+			// 
+			this.CmsCmd_マクロ変数_連想配列.Image = ((System.Drawing.Image)(resources.GetObject("CmsCmd_マクロ変数_連想配列.Image")));
+			this.CmsCmd_マクロ変数_連想配列.Name = "CmsCmd_マクロ変数_連想配列";
+			this.CmsCmd_マクロ変数_連想配列.Size = new System.Drawing.Size(335, 22);
+			this.CmsCmd_マクロ変数_連想配列.Text = "連想配列 #{%[STR]}";
+			this.CmsCmd_マクロ変数_連想配列.Click += new System.EventHandler(this.CmsCmd_マクロ変数_連想配列_Click);
 			// 
 			// CmsCmd_文字コード
 			// 
@@ -945,7 +962,9 @@
 			this.ToolTip1.SetToolTip(this.TbDgvCmdSearch, "正規表現による検索");
 			this.TbDgvCmdSearch.WordWrap = false;
 			this.TbDgvCmdSearch.TextChanged += new System.EventHandler(this.TbDgvCmdSearch_TextChanged);
+			this.TbDgvCmdSearch.Enter += new System.EventHandler(this.TbDgvCmdSearch_Enter);
 			this.TbDgvCmdSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TbDgvCmdSearch_KeyUp);
+			this.TbDgvCmdSearch.Leave += new System.EventHandler(this.TbDgvCmdSearch_Leave);
 			// 
 			// CmsTbDgvCmdSearch
 			// 
@@ -1937,6 +1956,8 @@
 		private System.Windows.Forms.ToolStripMenuItem CmsCmd_文字コード_SJIS;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmd_文字コード_UTF8;
 		private System.Windows.Forms.ToolStripMenuItem CmsResult_ファイル名を貼り付け;
+		private System.Windows.Forms.ToolStripSeparator toolStripSeparator16;
+		private System.Windows.Forms.ToolStripMenuItem CmsCmd_マクロ変数_連想配列;
 	}
 }
 
