@@ -206,10 +206,10 @@ namespace iwm_Commandliner3
 			"  #{result,[NUM]}    出力[NUM]のデータ" + NL +
 			"  #{%[STR]}          #set で登録された連想配列データ" + NL +
 			NL +
-			"  ★ #replace, #rename, #stream で使用可" + NL +
+			" ★ #replace, #rename, #stream で使用可" + NL +
 			"    #{line,[NUM]}    出力の行番号（[NUM]でゼロ埋め桁数指定）" + NL +
 			NL +
-			"  ★ #stream のみで使用可" + NL +
+			" ★ #stream のみで使用可" + NL +
 			"    #{}              出力の行データ" + NL +
 			NL +
 			"----------------" + NL +
@@ -1861,8 +1861,8 @@ namespace iwm_Commandliner3
 					// 置換
 					case "#replace":
 						// マクロ変数に変換
+						// aOp[2] は RtnTextReplace() でマクロ変数に変換
 						aOp[1] = RtnCnvMacroVar(aOp[1]);
-						aOp[2] = RtnCnvMacroVar(aOp[2]);
 						TbResult.Text = RtnTextReplace(TbResult.Text, aOp[1], aOp[2], true);
 						break;
 
@@ -2087,9 +2087,8 @@ namespace iwm_Commandliner3
 					// ファイル名置換
 					case "#rename":
 						// マクロ変数に変換
+						// aOp[2] は RtnFnRename() でマクロ変数に変換
 						aOp[1] = RtnCnvMacroVar(aOp[1]);
-						aOp[2] = RtnCnvMacroVar(aOp[2]);
-
 						TbResult.Text = RtnFnRename(TbResult.Text, aOp[1], aOp[2]);
 						break;
 
