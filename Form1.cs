@@ -23,9 +23,9 @@ namespace iwm_Commandliner3
 		// 大域定数
 		//--------------------------------------------------------------------------------
 		private const string ProgramID = "iwm_Commandliner3.2";
-		private const string VERSION = "Ver.20210806 'A-29' (C)2018-2021 iwm-iwama";
+		private const string VERSION = "Ver.20210807 'A-29' (C)2018-2021 iwm-iwama";
 		// 履歴
-		//  Ver.20210806
+		//  Ver.20210807
 		//  Ver.20210801
 		//  Ver.20210731
 		//  Ver.20210715
@@ -1860,9 +1860,6 @@ namespace iwm_Commandliner3
 
 					// 置換
 					case "#replace":
-						// マクロ変数に変換
-						// aOp[2] は RtnTextReplace() でマクロ変数に変換
-						aOp[1] = RtnCnvMacroVar(aOp[1]);
 						TbResult.Text = RtnTextReplace(TbResult.Text, aOp[1], aOp[2], true);
 						break;
 
@@ -2086,9 +2083,6 @@ namespace iwm_Commandliner3
 
 					// ファイル名置換
 					case "#rename":
-						// マクロ変数に変換
-						// aOp[2] は RtnFnRename() でマクロ変数に変換
-						aOp[1] = RtnCnvMacroVar(aOp[1]);
 						TbResult.Text = RtnFnRename(TbResult.Text, aOp[1], aOp[2]);
 						break;
 
@@ -3570,11 +3564,11 @@ namespace iwm_Commandliner3
 		//--------------------------------------------------------------------------------
 		private string RtnFnRename(string str, string sOld, string sNew)
 		{
-			// 置換後のファイル名から改行を消除
-			sNew = Regex.Replace(sNew, @"(\\n|#\{\\n\})", "");
-
 			// 前後の " を消除
 			str = Regex.Replace(str, "^\"+(.+)\"+", "$1");
+
+			// 置換後のファイル名から改行を消除
+			sNew = Regex.Replace(sNew, @"(\\n|#\{\\n\})", "");
 
 			string sPartDir = "";
 			string sPartFileOld = "";
