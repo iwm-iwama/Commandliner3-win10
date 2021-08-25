@@ -23,8 +23,9 @@ namespace iwm_Commandliner3
 		// 大域定数
 		//--------------------------------------------------------------------------------
 		private const string ProgramID = "iwm_Commandliner3.2";
-		private const string VERSION = "Ver.20210822 'A-29' (C)2018-2021 iwm-iwama";
+		private const string VERSION = "Ver.20210825 'A-29' (C)2018-2021 iwm-iwama";
 		// 履歴 3.2
+		//  Ver.20210825
 		//  Ver.20210822
 		//  Ver.20210807
 		//  Ver.20210801
@@ -1993,71 +1994,23 @@ namespace iwm_Commandliner3
 					case "#dlist":
 					case "#flist":
 						aOp[1] = aOp[1].Length > 0 ? RtnCnvMacroVar(aOp[1]) : ".";
-
-						MyEvent = new MyEventHandler(MyEventDataReceived);
-
-						PS = new Process();
-						PS.StartInfo.UseShellExecute = false;
-						PS.StartInfo.RedirectStandardInput = true;
-						PS.StartInfo.RedirectStandardOutput = true;
-						PS.StartInfo.RedirectStandardError = true;
-						PS.StartInfo.CreateNoWindow = true;
-						PS.StartInfo.StandardOutputEncoding = Encoding.GetEncoding(CbTextCode.Text);
-						PS.OutputDataReceived += new DataReceivedEventHandler(ProcessDataReceived);
-
-						PS.StartInfo.FileName = "cmd.exe";
-						PS.StartInfo.Arguments = $"/c dir /s /b {aOp[1]}\\";
-
-						_ = PS.Start();
-						s1 = PS.StandardOutput.ReadToEnd().Trim();
-						PS.Close();
-
-						List<string> _l1 = new List<string>();
-						_l1 = Regex.Split(s1, RgxNL).ToList();
-						_l1.Sort();
-
 						switch (aOp[0].ToLower())
 						{
 							case "#dflist":
-								_ = sb.Clear();
-								foreach (string _s1 in _l1)
-								{
-									_ = sb.Append(_s1);
-									_ = sb.Append(Directory.Exists(_s1) ? @"\" : "");
-									_ = sb.Append(NL);
-								}
+								i1 = 0;
 								break;
 
 							case "#dlist":
-								_ = sb.Clear();
-								foreach (string _s1 in _l1)
-								{
-									if (Directory.Exists(_s1))
-									{
-										_ = sb.Append(_s1);
-										_ = sb.Append(@"\");
-										_ = sb.Append(NL);
-									}
-								}
+								i1 = 1;
 								break;
 
 							case "#flist":
-								_ = sb.Clear();
-								foreach (string _s1 in _l1)
-								{
-									if (!Directory.Exists(_s1))
-									{
-										_ = sb.Append(_s1);
-										_ = sb.Append(NL);
-									}
-								}
+								i1 = 2;
 								break;
 						}
-
-						TbResult.AppendText(sb.ToString());
+						TbResult.Text += RtnDirFileList(aOp[1], i1);
 						TbResult.SelectionStart = TbResult.TextLength;
 						TbResult.ScrollToCaret();
-
 						break;
 
 					// ファイル名置換
@@ -3980,6 +3933,112 @@ namespace iwm_Commandliner3
 			}
 
 			return false;
+		}
+
+		//------------------
+		// Dir / File 取得
+		//------------------
+		private readonly List<string> GblRtnDirList = new List<string>();
+		private readonly List<string> GblRtnFileList = new List<string>();
+
+		private string RtnDirFileList(string path, int iDirFile)
+		{
+			// iDirFile
+			//   0 = Dir + File
+			//   1 = Dir
+			//   2 = File
+
+			string s1 = Path.GetFullPath(path + "\\");
+
+			if (!Directory.Exists(s1))
+			{
+				return "";
+			}
+
+			GblRtnDirList.Clear();
+			GblRtnFileList.Clear();
+
+			// Dir
+			GblRtnDirList.Add(s1);
+			SubDirList(s1);
+
+			// File
+			if (iDirFile == 0 || iDirFile == 2)
+			{
+				SubFileList();
+			}
+
+			string rtn;
+			int iCnt;
+
+			if (iDirFile == 2)
+			{
+				GblRtnFileList.Sort();
+				rtn = string.Join(NL, GblRtnFileList);
+				iCnt = GblRtnFileList.Count();
+			}
+			else if (iDirFile == 1)
+			{
+				GblRtnDirList.Sort();
+				rtn = string.Join(NL, GblRtnDirList);
+				iCnt = GblRtnDirList.Count();
+			}
+			else
+			{
+				GblRtnDirList.AddRange(GblRtnFileList);
+				GblRtnDirList.Sort();
+				rtn = string.Join(NL, GblRtnDirList);
+				iCnt = GblRtnDirList.Count();
+			}
+
+			GblRtnDirList.Clear();
+			GblRtnFileList.Clear();
+			GC.Collect();
+
+			int iBgn = RtbCmdMemo.TextLength;
+			RtbCmdMemo.AppendText($"{iCnt}行 該当{NL}");
+			int iEnd = RtbCmdMemo.TextLength;
+			RtbCmdMemo.SelectionStart = iBgn;
+			RtbCmdMemo.SelectionLength = iEnd - iBgn;
+			RtbCmdMemo.SelectionColor = Color.Cyan;
+			RtbCmdMemo.SelectionStart = iEnd;
+			RtbCmdMemo.ScrollToCaret();
+
+			return rtn + NL;
+		}
+
+		// 再帰
+		private void SubDirList(string path)
+		{
+			// Dir 取得
+			// SearchOption.AllDirectories はシステムフォルダ・アクセス時にエラーが出るので使用不可
+			foreach (string _s1 in Directory.GetDirectories(path, "*"))
+			{
+				GblRtnDirList.Add(_s1 + "\\");
+
+				// 以下の例外処理はシステムフォルダ対策
+				try
+				{
+					SubDirList(_s1);
+				}
+				catch
+				{
+					// エラー・キーは削除
+					_ = GblRtnDirList.Remove(_s1 + "\\");
+				}
+			}
+		}
+
+		private void SubFileList()
+		{
+			// File 取得
+			foreach (string _s1 in GblRtnDirList)
+			{
+				foreach (string _s2 in Directory.GetFiles(_s1, "*"))
+				{
+					GblRtnFileList.Add(_s2);
+				}
+			}
 		}
 
 		//--------------------------------------------------------------------------------
