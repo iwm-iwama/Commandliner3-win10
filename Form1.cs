@@ -23,9 +23,9 @@ namespace iwm_Commandliner3
 		// 大域定数
 		//--------------------------------------------------------------------------------
 		private const string ProgramID = "iwm_Commandliner3.2";
-		private const string VERSION = "Ver.20210826 'A-29' (C)2018-2021 iwm-iwama";
+		private const string VERSION = "Ver.20210830 'A-29' (C)2018-2021 iwm-iwama";
 		// 履歴 3.2
-		//  Ver.20210826
+		//  Ver.20210830
 		//  Ver.20210822
 		//  Ver.20210807
 		//  Ver.20210801
@@ -759,104 +759,105 @@ namespace iwm_Commandliner3
 
 		private void CmsCmd_マクロ変数_タブ_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("#{tab}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{tab}");
 		}
 
 		private void CmsCmd_マクロ変数_改行_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("#{nl}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{nl}");
 		}
 
 		private void CmsCmd_マクロ変数_ダブルクォーテーション_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("#{dq}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{dq}");
 		}
 
 		private void CmsCmd_マクロ変数_セミコロン_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("#{sc}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{sc}");
 		}
 
 		private void CmsCmd_マクロ変数_日付_Click(object sender, EventArgs e)
 		{
 			CmsCmd.Close();
-			CmsCmd_InsertText("#{ymd}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{ymd}");
 		}
 
 		private void CmsCmd_マクロ変数_時間_Click(object sender, EventArgs e)
 		{
 			CmsCmd.Close();
-			CmsCmd_InsertText("#{hns}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{hns}");
 		}
 
 		private void CmsCmd_マクロ変数_マイクロ秒_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("#{msec}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{msec}");
 		}
 
 		private void CmsCmd_マクロ変数_年_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("#{y}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{y}");
 		}
 
 		private void CmsCmd_マクロ変数_月_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("#{m}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{m}");
 		}
 
 		private void CmsCmd_マクロ変数_日_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("#{d}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{d}");
 		}
 
 		private void CmsCmd_マクロ変数_時_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("#{h}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{h}");
 		}
 
 		private void CmsCmd_マクロ変数_分_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("#{n}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{n}");
 		}
 
 		private void CmsCmd_マクロ変数_秒_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("#{s}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{s}");
 		}
 
 		private void CmsCmd_マクロ変数_簡易計算_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("#{calc,}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{calc,}");
 		}
 
 		private void CmsCmd_マクロ変数_出力のデータ_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("#{result,}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{result,}");
 		}
 
 		private void CmsCmd_マクロ変数_出力の行番号_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("#{line,,}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{line,,}");
 		}
 
 		private void CmsCmd_マクロ変数_出力の行データ_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("#{}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{}");
+
 		}
 
 		private void CmsCmd_マクロ変数_連想配列_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("#{%}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{%}");
 		}
 
 		private void CmsCmd_文字コード_SJIS_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("Shift_JIS");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "Shift_JIS");
 		}
 
 		private void CmsCmd_文字コード_UTF8_Click(object sender, EventArgs e)
 		{
-			CmsCmd_InsertText("UTF-8");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "UTF-8");
 		}
 
 		private void CmsCmd_フォルダ選択_Click(object sender, EventArgs e)
@@ -1026,13 +1027,6 @@ namespace iwm_Commandliner3
 				TbCmd.Text = Regex.Replace(File.ReadAllText(GblCmsCmdInputFn, Encoding.GetEncoding(TEXT_CODE[0])), RgxCmdNL, "; ");
 				SubTbCmdFocus(-1);
 			}
-		}
-
-		private void CmsCmd_InsertText(string str)
-		{
-			int iPos = TbCmd.SelectionStart;
-			TbCmd.Text = TbCmd.Text.Substring(0, iPos) + str + TbCmd.Text.Substring(iPos);
-			TbCmd.SelectionStart = iPos + str.Length;
 		}
 
 		//--------------------------------------------------------------------------------
@@ -1710,7 +1704,7 @@ namespace iwm_Commandliner3
 
 		private List<string> RtnCmdList(string str)
 		{
-			return Regex.Split(RtnCmdFormat(str), NL).ToList();
+			return Regex.Split(RtnCmdFormat(str), RgxNL).ToList();
 		}
 
 		// コメント /* ～ */
@@ -3661,7 +3655,7 @@ namespace iwm_Commandliner3
 			else
 			{
 				SubCmdMemoAddRem($"{iCnt}行 該当", Color.Cyan);
-				return sb.Length > NL.Length ? sb.ToString().Substring(0, sb.Length - NL.Length) : "";
+				return sb.ToString().TrimEnd() + NL;
 			}
 		}
 
@@ -3866,12 +3860,12 @@ namespace iwm_Commandliner3
 		private string RtnTextTrim(string str)
 		{
 			StringBuilder sb = new StringBuilder();
-			foreach (string _s1 in str.Split('\n'))
+			foreach (string _s1 in Regex.Split(str, RgxNL))
 			{
 				_ = sb.Append(_s1.Trim());
 				_ = sb.Append(NL);
 			}
-			return sb.ToString().Substring(0, sb.Length - NL.Length);
+			return sb.ToString().TrimEnd() + NL;
 		}
 
 		//--------------------------------------------------------------------------------
