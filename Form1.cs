@@ -23,8 +23,9 @@ namespace iwm_Commandliner3
 		// 大域定数
 		//--------------------------------------------------------------------------------
 		private const string ProgramID = "iwm_Commandliner3.2";
-		private const string VERSION = "Ver.20210830 'A-29' (C)2018-2021 iwm-iwama";
+		private const string VERSION = "Ver.20210906 'A-29' (C)2018-2021 iwm-iwama";
 		// 履歴 3.2
+		//  Ver.20210906
 		//  Ver.20210830
 		//  Ver.20210822
 		//  Ver.20210807
@@ -273,12 +274,7 @@ namespace iwm_Commandliner3
 			{
 				_ = DgvMacro.Rows.Add(MACRO[_i1, 0], MACRO[_i1, 1]);
 			}
-			GblDgvMacroOpen = true;
-			BtnDgvMacro_Click(sender, e);
-
 			SubDgvCmdLoad();
-			GblDgvCmdOpen = true;
-			BtnDgvCmd_Click(sender, e);
 
 			// Encode
 			foreach (string _s1 in TEXT_CODE)
@@ -333,6 +329,9 @@ namespace iwm_Commandliner3
 				GblDgvCmdOpen = false;
 				BtnDgvCmd_Click(sender, e);
 			}
+
+			// RtbCmdMemo　開かれているときだけ調整
+			SubRtbCmdMemoResize(RtbCmdMemo.Height > GblRtbCmdMemoHeightDefault);
 		}
 
 		private void SubForm1_StartPosition()
@@ -411,6 +410,27 @@ namespace iwm_Commandliner3
 				++i1;
 			}
 			ToolTip1.SetToolTip(TbCurDir, s1);
+		}
+
+		private void TbCurDir_MouseLeave(object sender, EventArgs e)
+		{
+			TbCurDir.BackColor = Color.DimGray;
+		}
+
+		private void TbCurDir_DragEnter(object sender, DragEventArgs e)
+		{
+			TbCurDir.BackColor = Color.RoyalBlue;
+			e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : DragDropEffects.None;
+		}
+
+		private void TbCurDir_DragDrop(object sender, DragEventArgs e)
+		{
+			string s1 = ((string[])e.Data.GetData(DataFormats.FileDrop))[0];
+			if (Directory.Exists(s1))
+			{
+				Directory.SetCurrentDirectory(s1);
+				TbCurDir.Text = s1;
+			}
 		}
 
 		//--------------------------------------------------------------------------------
@@ -547,6 +567,10 @@ namespace iwm_Commandliner3
 
 			switch (e.KeyCode)
 			{
+				case Keys.Escape:
+					SubRtbCmdMemoResize(false);
+					break;
+
 				case Keys.F1:
 					CbCmdHistory.DroppedDown = true;
 					_ = CbCmdHistory.Focus();
@@ -829,9 +853,10 @@ namespace iwm_Commandliner3
 			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{calc,}");
 		}
 
-		private void CmsCmd_マクロ変数_出力のデータ_Click(object sender, EventArgs e)
+		private void CmsCmd_マクロ変数_出力の行データ_Click(object sender, EventArgs e)
 		{
-			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{result,}");
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{}");
+
 		}
 
 		private void CmsCmd_マクロ変数_出力の行番号_Click(object sender, EventArgs e)
@@ -839,10 +864,9 @@ namespace iwm_Commandliner3
 			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{line,,}");
 		}
 
-		private void CmsCmd_マクロ変数_出力の行データ_Click(object sender, EventArgs e)
+		private void CmsCmd_マクロ変数_出力のデータ_Click(object sender, EventArgs e)
 		{
-			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{}");
-
+			_ = NativeMethods.SendMessage(TbCmd.Handle, EM_REPLACESEL, 1, "#{result,}");
 		}
 
 		private void CmsCmd_マクロ変数_連想配列_Click(object sender, EventArgs e)
@@ -1027,6 +1051,10 @@ namespace iwm_Commandliner3
 				TbCmd.Text = Regex.Replace(File.ReadAllText(GblCmsCmdInputFn, Encoding.GetEncoding(TEXT_CODE[0])), RgxCmdNL, "; ");
 				SubTbCmdFocus(-1);
 			}
+			else
+			{
+				CmsCmd_コマンドを読込_Click(sender, e);
+			}
 		}
 
 		//--------------------------------------------------------------------------------
@@ -1037,6 +1065,7 @@ namespace iwm_Commandliner3
 			switch (e.KeyCode)
 			{
 				case Keys.Escape:
+					SubRtbCmdMemoResize(false);
 					SubTbCmdFocus(GblTbCmdPos);
 					break;
 
@@ -1090,11 +1119,39 @@ namespace iwm_Commandliner3
 			RtbCmdMemo.Paste();
 		}
 
+		private void CmsCmdMemo_拡大_Click(object sender, EventArgs e)
+		{
+			SubRtbCmdMemoResize(true);
+		}
+
+		private void CmsCmdMemo_元に戻す_Click(object sender, EventArgs e)
+		{
+			SubRtbCmdMemoResize(false);
+		}
+
+		private readonly int GblRtbCmdMemoHeightDefault = 52;
+
+		private void SubRtbCmdMemoResize(bool bSizeMax)
+		{
+			RtbCmdMemo.BringToFront();
+
+			if (bSizeMax)
+			{
+				RtbCmdMemo.BackColor = Color.MidnightBlue;
+				RtbCmdMemo.Height = Height - 115;
+			}
+			else
+			{
+				RtbCmdMemo.BackColor = Color.Black;
+				RtbCmdMemo.Height = GblRtbCmdMemoHeightDefault;
+			}
+		}
+
 		//--------------------------------------------------------------------------------
 		// DgvMacro
 		//--------------------------------------------------------------------------------
 		private int GblDgvMacroRow = 0;
-		private bool GblDgvMacroOpen = true; // DgvMacro.enabled より速い
+		private bool GblDgvMacroOpen = false; // DgvMacro.enabled より速い
 
 		private void BtnDgvMacro_Click(object sender, EventArgs e)
 		{
@@ -1102,8 +1159,7 @@ namespace iwm_Commandliner3
 			{
 				GblDgvMacroOpen = false;
 				DgvMacro.Enabled = false;
-				BtnDgvMacro.BackColor = Color.LightYellow;
-				BtnDgvMacro.ForeColor = Color.LightYellow;
+				BtnDgvMacro.BackColor = Color.RoyalBlue;
 				DgvMacro.ScrollBars = ScrollBars.None;
 				DgvMacro.Width = 68;
 				DgvMacro.Height = 23;
@@ -1114,8 +1170,7 @@ namespace iwm_Commandliner3
 			{
 				GblDgvMacroOpen = true;
 				DgvMacro.Enabled = true;
-				BtnDgvMacro.BackColor = Color.Gold;
-				BtnDgvMacro.ForeColor = Color.Black;
+				BtnDgvMacro.BackColor = Color.Crimson;
 				DgvMacro.ScrollBars = ScrollBars.Both;
 				DgvMacro.Width = Width - 112;
 
@@ -1315,7 +1370,7 @@ namespace iwm_Commandliner3
 		// DgvCmd
 		//--------------------------------------------------------------------------------
 		private int GblDgvCmdRow = 0;
-		private bool GblDgvCmdOpen = true; // DgvCmd.enabled より速い
+		private bool GblDgvCmdOpen = false; // DgvCmd.enabled より速い
 
 		private void BtnDgvCmd_Click(object sender, EventArgs e)
 		{
@@ -1323,8 +1378,7 @@ namespace iwm_Commandliner3
 			{
 				GblDgvCmdOpen = false;
 				DgvCmd.Enabled = false;
-				BtnDgvCmd.BackColor = Color.LightYellow;
-				BtnDgvCmd.ForeColor = Color.LightYellow;
+				BtnDgvCmd.BackColor = Color.RoyalBlue;
 				DgvCmd.ScrollBars = ScrollBars.None;
 				DgvCmd.Width = 68;
 				DgvCmd.Height = 23;
@@ -1336,8 +1390,7 @@ namespace iwm_Commandliner3
 			{
 				GblDgvCmdOpen = true;
 				DgvCmd.Enabled = true;
-				BtnDgvCmd.BackColor = Color.Gold;
-				BtnDgvCmd.ForeColor = Color.Black;
+				BtnDgvCmd.BackColor = Color.Crimson;
 				DgvCmd.ScrollBars = ScrollBars.Both;
 				DgvCmd.Width = Width - 197;
 
@@ -1460,6 +1513,8 @@ namespace iwm_Commandliner3
 
 		private void SubDgvCmdLoad()
 		{
+			TbDgvCmdSearch.Visible = false;
+
 			List<string> l1 = new List<string>();
 
 			foreach (string _s1 in Environment.GetEnvironmentVariable("Path").ToLower().Replace("/", "\\").Split(';'))
@@ -2061,6 +2116,8 @@ namespace iwm_Commandliner3
 							break;
 						}
 
+						BtnCmdExecStream.Visible = true;
+
 						int iStreamBgn = RtbCmdMemo.TextLength;
 						int iRead = 0;
 						int iNL = NL.Length;
@@ -2385,6 +2442,7 @@ namespace iwm_Commandliner3
 		private void TbResult_Enter(object sender, EventArgs e)
 		{
 			LblResult.Visible = true;
+			SubRtbCmdMemoResize(false);
 		}
 
 		private void TbResult_Leave(object sender, EventArgs e)
@@ -2544,6 +2602,44 @@ namespace iwm_Commandliner3
 				_ = sb.Append(NL);
 			}
 			_ = NativeMethods.SendMessage(TbResult.Handle, EM_REPLACESEL, 1, sb.ToString());
+		}
+
+		private void CmsResult_出力画面へコピー_1_Click(object sender, EventArgs e)
+		{
+			SubCmsResult_出力画面へコピー(0);
+		}
+
+		private void CmsResult_出力画面へコピー_2_Click(object sender, EventArgs e)
+		{
+			SubCmsResult_出力画面へコピー(1);
+		}
+
+		private void CmsResult_出力画面へコピー_3_Click(object sender, EventArgs e)
+		{
+			SubCmsResult_出力画面へコピー(2);
+		}
+
+		private void CmsResult_出力画面へコピー_4_Click(object sender, EventArgs e)
+		{
+			SubCmsResult_出力画面へコピー(3);
+		}
+
+		private void CmsResult_出力画面へコピー_5_Click(object sender, EventArgs e)
+		{
+			SubCmsResult_出力画面へコピー(4);
+		}
+
+		private void SubCmsResult_出力画面へコピー(int iIndex)
+		{
+			if (GblAryResultIndex == iIndex)
+			{
+				return;
+			}
+
+			GblAryResultBuf[iIndex] = TbResult.Text;
+
+			// 非選択タブのうちデータのあるタブは色を変える
+			Controls[GblAryResultBtn[iIndex]].BackColor = GblAryResultBuf[iIndex].Length > 0 ? Color.Maroon : Color.DimGray;
 		}
 
 		private void CmsResult_名前を付けて保存_Click(object sender, EventArgs e)
@@ -3045,7 +3141,7 @@ namespace iwm_Commandliner3
 		// フォントサイズ
 		//--------------------------------------------------------------------------------
 		private const decimal NudTbResult_BaseSize = 10;
-		private decimal NudTbResult_CurSize = 0;
+		private decimal NudTbResult_CurSize = NudTbResult_BaseSize;
 
 		private void NudTbResult_DoubleClick(object sender, EventArgs e)
 		{
