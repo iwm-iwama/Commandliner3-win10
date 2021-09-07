@@ -23,9 +23,9 @@ namespace iwm_Commandliner3
 		// 大域定数
 		//--------------------------------------------------------------------------------
 		private const string ProgramID = "iwm_Commandliner3.2";
-		private const string VERSION = "Ver.20210906 'A-29' (C)2018-2021 iwm-iwama";
+		private const string VERSION = "Ver.20210907 'A-29' (C)2018-2021 iwm-iwama";
 		// 履歴 3.2
-		//  Ver.20210906
+		//  Ver.20210907
 		//  Ver.20210830
 		//  Ver.20210822
 		//  Ver.20210807
@@ -3653,6 +3653,17 @@ namespace iwm_Commandliner3
 				iTimesEnd = iTimesBgn;
 			}
 
+			// １個以上
+			if (iTimesBgn == 0)
+			{
+				iTimesBgn = 1;
+			}
+
+			if (iTimesEnd == 0)
+			{
+				iTimesEnd = 1;
+			}
+
 			// Swap
 			if (iTimesBgn > iTimesEnd)
 			{
@@ -3663,11 +3674,11 @@ namespace iwm_Commandliner3
 
 			foreach (string _s1 in Regex.Split(str, RgxNL))
 			{
-				int _i1 = Regex.Split(_s1, sSearch, RegexOptions.IgnoreCase).Count() - 1;
-
 				// 正規表現文法エラーはないか？
 				try
 				{
+					int _i1 = Regex.Split(_s1, sSearch, RegexOptions.IgnoreCase).Count() - 1;
+
 					if (_s1.Trim().Length > 0 && _i1 >= iTimesBgn && _i1 <= iTimesEnd)
 					{
 						_ = sb.Append(_s1);
