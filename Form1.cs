@@ -3653,17 +3653,6 @@ namespace iwm_Commandliner3
 				iTimesEnd = iTimesBgn;
 			}
 
-			// １個以上
-			if (iTimesBgn == 0)
-			{
-				iTimesBgn = 1;
-			}
-
-			if (iTimesEnd == 0)
-			{
-				iTimesEnd = 1;
-			}
-
 			// Swap
 			if (iTimesBgn > iTimesEnd)
 			{
