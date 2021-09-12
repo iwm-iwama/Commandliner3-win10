@@ -109,7 +109,7 @@
 			this.BtnAllClear = new System.Windows.Forms.Button();
 			this.BtnDgvMacro = new System.Windows.Forms.Button();
 			this.BtnDgvCmd = new System.Windows.Forms.Button();
-			this.BtnMemoCopy = new System.Windows.Forms.Button();
+			this.BtnCmdExecUndo = new System.Windows.Forms.Button();
 			this.TbDgvCmdSearch = new System.Windows.Forms.TextBox();
 			this.CmsTbDgvCmdSearch = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.CmsTbDgvCmdSearch_全クリア = new System.Windows.Forms.ToolStripMenuItem();
@@ -1018,24 +1018,24 @@
 			this.BtnDgvCmd.UseVisualStyleBackColor = false;
 			this.BtnDgvCmd.Click += new System.EventHandler(this.BtnDgvCmd_Click);
 			// 
-			// BtnMemoCopy
+			// BtnCmdExecUndo
 			// 
-			this.BtnMemoCopy.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.BtnMemoCopy.BackColor = System.Drawing.Color.DimGray;
-			this.BtnMemoCopy.ContextMenuStrip = this.CmsNull;
-			this.BtnMemoCopy.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.BtnMemoCopy.Font = new System.Drawing.Font("Yu Gothic UI", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-			this.BtnMemoCopy.ForeColor = System.Drawing.Color.White;
-			this.BtnMemoCopy.Location = new System.Drawing.Point(444, 134);
-			this.BtnMemoCopy.Margin = new System.Windows.Forms.Padding(0);
-			this.BtnMemoCopy.Name = "BtnMemoCopy";
-			this.BtnMemoCopy.Size = new System.Drawing.Size(22, 22);
-			this.BtnMemoCopy.TabIndex = 0;
-			this.BtnMemoCopy.TabStop = false;
-			this.BtnMemoCopy.Text = "▼";
-			this.ToolTip1.SetToolTip(this.BtnMemoCopy, "[F6] メモを出力にコピー");
-			this.BtnMemoCopy.UseVisualStyleBackColor = false;
-			this.BtnMemoCopy.Click += new System.EventHandler(this.BtnMemoCopy_Click);
+			this.BtnCmdExecUndo.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+			this.BtnCmdExecUndo.BackColor = System.Drawing.Color.DimGray;
+			this.BtnCmdExecUndo.ContextMenuStrip = this.CmsNull;
+			this.BtnCmdExecUndo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BtnCmdExecUndo.Font = new System.Drawing.Font("Yu Gothic UI", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+			this.BtnCmdExecUndo.ForeColor = System.Drawing.Color.White;
+			this.BtnCmdExecUndo.Location = new System.Drawing.Point(444, 134);
+			this.BtnCmdExecUndo.Margin = new System.Windows.Forms.Padding(0);
+			this.BtnCmdExecUndo.Name = "BtnCmdExecUndo";
+			this.BtnCmdExecUndo.Size = new System.Drawing.Size(22, 22);
+			this.BtnCmdExecUndo.TabIndex = 0;
+			this.BtnCmdExecUndo.TabStop = false;
+			this.BtnCmdExecUndo.Text = "◀";
+			this.ToolTip1.SetToolTip(this.BtnCmdExecUndo, "[F6] 出力を実行前に戻す");
+			this.BtnCmdExecUndo.UseVisualStyleBackColor = false;
+			this.BtnCmdExecUndo.Click += new System.EventHandler(this.BtnCmdExecUndo_Click);
 			// 
 			// TbDgvCmdSearch
 			// 
@@ -1899,7 +1899,7 @@
 			this.Controls.Add(this.LblCmd);
 			this.Controls.Add(this.LblResult);
 			this.Controls.Add(this.LblCmdMemo);
-			this.Controls.Add(this.BtnMemoCopy);
+			this.Controls.Add(this.BtnCmdExecUndo);
 			this.Controls.Add(this.TbInfo);
 			this.Controls.Add(this.LblCurDir);
 			this.Controls.Add(this.Lbl_F1);
@@ -1995,7 +1995,7 @@
 		private System.Windows.Forms.Label LblCmd;
 		private System.Windows.Forms.Label LblCmdMemo;
 		private System.Windows.Forms.Label LblResult;
-		private System.Windows.Forms.Button BtnMemoCopy;
+		private System.Windows.Forms.Button BtnCmdExecUndo;
 		private System.Windows.Forms.Label Lbl_F6;
 		private System.Windows.Forms.Label LblCurDir;
 		private System.Windows.Forms.ContextMenuStrip CmsCbTextCode;

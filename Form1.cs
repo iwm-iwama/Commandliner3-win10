@@ -23,8 +23,9 @@ namespace iwm_Commandliner3
 		// 大域定数
 		//--------------------------------------------------------------------------------
 		private const string ProgramID = "iwm_Commandliner3.2";
-		private const string VERSION = "Ver.20210907 'A-29' (C)2018-2021 iwm-iwama";
+		private const string VERSION = "Ver.20210912 'A-29' (C)2018-2021 iwm-iwama";
 		// 履歴 3.2
+		//  Ver.20210912
 		//  Ver.20210907
 		//  Ver.20210830
 		//  Ver.20210822
@@ -161,7 +162,7 @@ namespace iwm_Commandliner3
 			"[F3]  コマンド選択" + NL +
 			"[F4]  出力文字コード" + NL +
 			"[F5]  実行" + NL +
-			"[F6]  メモを出力にコピー" + NL +
+			"[F6]  出力を実行前に戻す" + NL +
 			"[F7]  出力をクリア" + NL +
 			"[F8]  出力履歴" + NL +
 			"[F9]  （割り当てなし）" + NL +
@@ -594,7 +595,7 @@ namespace iwm_Commandliner3
 					break;
 
 				case Keys.F6:
-					BtnMemoCopy_Click(sender, e);
+					BtnCmdExecUndo_Click(sender, e);
 					break;
 
 				case Keys.F7:
@@ -1693,6 +1694,9 @@ namespace iwm_Commandliner3
 		//--------------------------------------------------------------------------------
 		private void BtnCmdExec_Click(object sender, EventArgs e)
 		{
+			// 出力を記憶（実行前）
+			GblCmdExecOld = TbResult.Text;
+
 			// Trim() で置換すると GblTbCmdPos が変わるので不可
 			if (TbCmd.Text.Trim().Length == 0)
 			{
@@ -1727,6 +1731,9 @@ namespace iwm_Commandliner3
 
 			// タイトル表示を戻す
 			Text = ProgramID;
+
+			// 出力を記憶（実行後）
+			GblCmdExecNew = TbResult.Text;
 
 			Cursor.Current = Cursors.Default;
 
@@ -2404,22 +2411,15 @@ namespace iwm_Commandliner3
 		}
 
 		//--------------------------------------------------------------------------------
-		// BtnMemoCopy
+		// BtnCmdExecUndo
 		//--------------------------------------------------------------------------------
-		private void BtnMemoCopy_Click(object sender, EventArgs e)
+		private string GblCmdExecOld = "";
+		private string GblCmdExecNew = "";
+
+		private void BtnCmdExecUndo_Click(object sender, EventArgs e)
 		{
-			RichTextBox From = RtbCmdMemo;
-			TextBox To = TbResult;
-
-			if (From.Text.Trim().Length > 0)
-			{
-				To.SelectionStart = To.TextLength;
-				_ = NativeMethods.SendMessage(TbResult.Handle, EM_REPLACESEL, 1, Regex.Replace(From.Text, RgxNL, NL));
-			}
-
-			To.Select(To.TextLength, 0);
-			_ = To.Focus();
-			TbResult.ScrollToCaret();
+			TbResult.Text = TbResult.Text == GblCmdExecNew ? GblCmdExecOld : GblCmdExecNew;
+			SubTbCmdFocus(GblTbCmdPos);
 		}
 
 		//--------------------------------------------------------------------------------
