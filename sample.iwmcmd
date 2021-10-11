@@ -2,9 +2,7 @@
 /*
 	•¡”sƒRƒƒ“ƒg
 */
-#code "Shift_JIS";
 #cls;
 dir;
 #grep "^20";
 #replace "^20(\d+)" "'$1";
-  

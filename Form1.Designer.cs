@@ -34,6 +34,7 @@
 			this.DgvTb11 = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.CmsNull = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.DgvTb12 = new System.Windows.Forms.DataGridViewTextBoxColumn();
+			this.ID = new System.Windows.Forms.DataGridViewTextBoxColumn();
 			this.CmsResult = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.CmsResult_全選択 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator8 = new System.Windows.Forms.ToolStripSeparator();
@@ -52,6 +53,8 @@
 			this.CmsResult_出力画面へコピー_5 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripSeparator();
 			this.CmsResult_名前を付けて保存 = new System.Windows.Forms.ToolStripMenuItem();
+			this.CmsResult_名前を付けて保存_SJIS = new System.Windows.Forms.ToolStripMenuItem();
+			this.CmsResult_名前を付けて保存_UTF8N = new System.Windows.Forms.ToolStripMenuItem();
 			this.TbCmd = new System.Windows.Forms.TextBox();
 			this.CmsCmd = new System.Windows.Forms.ContextMenuStrip(this.components);
 			this.CmsCmd_全クリア = new System.Windows.Forms.ToolStripMenuItem();
@@ -81,10 +84,7 @@
 			this.CmsCmd_マクロ変数_出力の行番号 = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsCmd_マクロ変数_出力のデータ = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator16 = new System.Windows.Forms.ToolStripSeparator();
-			this.CmsCmd_マクロ変数_連想配列 = new System.Windows.Forms.ToolStripMenuItem();
-			this.CmsCmd_文字コード = new System.Windows.Forms.ToolStripMenuItem();
-			this.CmsCmd_文字コード_SJIS = new System.Windows.Forms.ToolStripMenuItem();
-			this.CmsCmd_文字コード_UTF8 = new System.Windows.Forms.ToolStripMenuItem();
+			this.CmsCmd_マクロ変数_一時変数 = new System.Windows.Forms.ToolStripMenuItem();
 			this.toolStripSeparator4 = new System.Windows.Forms.ToolStripSeparator();
 			this.CmsCmd_フォルダ選択 = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsCmd_ファイル選択 = new System.Windows.Forms.ToolStripMenuItem();
@@ -101,9 +101,6 @@
 			this.CmsTbCurDir_全コピー = new System.Windows.Forms.ToolStripMenuItem();
 			this.ToolTip1 = new System.Windows.Forms.ToolTip(this.components);
 			this.BtnCmdExec = new System.Windows.Forms.Button();
-			this.CbTextCode = new System.Windows.Forms.ComboBox();
-			this.CmsCbTextCode = new System.Windows.Forms.ContextMenuStrip(this.components);
-			this.CmsCbTextCode_全コピー = new System.Windows.Forms.ToolStripMenuItem();
 			this.CbCmdHistory = new System.Windows.Forms.ComboBox();
 			this.CbResultHistory = new System.Windows.Forms.ComboBox();
 			this.BtnAllClear = new System.Windows.Forms.Button();
@@ -133,7 +130,6 @@
 			this.Lbl_F1 = new System.Windows.Forms.Label();
 			this.Lbl_F2 = new System.Windows.Forms.Label();
 			this.Lbl_F3 = new System.Windows.Forms.Label();
-			this.Lbl_F4 = new System.Windows.Forms.Label();
 			this.Lbl_F5 = new System.Windows.Forms.Label();
 			this.Lbl_F7 = new System.Windows.Forms.Label();
 			this.Lbl_F8 = new System.Windows.Forms.Label();
@@ -178,7 +174,6 @@
 			this.CmsResult.SuspendLayout();
 			this.CmsCmd.SuspendLayout();
 			this.CmsTbCurDir.SuspendLayout();
-			this.CmsCbTextCode.SuspendLayout();
 			this.CmsTbDgvCmdSearch.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.NudTbResult)).BeginInit();
 			((System.ComponentModel.ISupportInitialize)(this.DgvCmd)).BeginInit();
@@ -191,13 +186,15 @@
 			// 
 			this.DgvMacro.AllowUserToAddRows = false;
 			this.DgvMacro.AllowUserToDeleteRows = false;
+			this.DgvMacro.AllowUserToOrderColumns = true;
 			this.DgvMacro.AllowUserToResizeColumns = false;
 			this.DgvMacro.AllowUserToResizeRows = false;
 			this.DgvMacro.BackgroundColor = System.Drawing.Color.LightGray;
 			this.DgvMacro.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
 			this.DgvMacro.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.DgvTb11,
-            this.DgvTb12});
+            this.DgvTb12,
+            this.ID});
 			this.DgvMacro.ContextMenuStrip = this.CmsNull;
 			this.DgvMacro.GridColor = System.Drawing.Color.LightGray;
 			this.DgvMacro.Location = new System.Drawing.Point(87, 133);
@@ -228,7 +225,7 @@
 			this.DgvTb11.MinimumWidth = 85;
 			this.DgvTb11.Name = "DgvTb11";
 			this.DgvTb11.ReadOnly = true;
-			this.DgvTb11.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+			this.DgvTb11.Resizable = System.Windows.Forms.DataGridViewTriState.False;
 			this.DgvTb11.Width = 85;
 			// 
 			// CmsNull
@@ -242,11 +239,22 @@
 			this.DgvTb12.ContextMenuStrip = this.CmsNull;
 			this.DgvTb12.FillWeight = 150F;
 			this.DgvTb12.HeaderText = "説明";
-			this.DgvTb12.MinimumWidth = 545;
+			this.DgvTb12.MinimumWidth = 600;
 			this.DgvTb12.Name = "DgvTb12";
 			this.DgvTb12.ReadOnly = true;
-			this.DgvTb12.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
-			this.DgvTb12.Width = 545;
+			this.DgvTb12.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.DgvTb12.Width = 600;
+			// 
+			// ID
+			// 
+			this.ID.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
+			this.ID.HeaderText = "ID";
+			this.ID.MaxInputLength = 16;
+			this.ID.MinimumWidth = 30;
+			this.ID.Name = "ID";
+			this.ID.ReadOnly = true;
+			this.ID.Resizable = System.Windows.Forms.DataGridViewTriState.False;
+			this.ID.Width = 30;
 			// 
 			// CmsResult
 			// 
@@ -389,12 +397,30 @@
 			// 
 			// CmsResult_名前を付けて保存
 			// 
+			this.CmsResult_名前を付けて保存.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CmsResult_名前を付けて保存_SJIS,
+            this.CmsResult_名前を付けて保存_UTF8N});
 			this.CmsResult_名前を付けて保存.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.CmsResult_名前を付けて保存.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_名前を付けて保存.Image")));
 			this.CmsResult_名前を付けて保存.Name = "CmsResult_名前を付けて保存";
 			this.CmsResult_名前を付けて保存.Size = new System.Drawing.Size(170, 22);
 			this.CmsResult_名前を付けて保存.Text = "名前を付けて保存";
-			this.CmsResult_名前を付けて保存.Click += new System.EventHandler(this.CmsResult_名前を付けて保存_Click);
+			// 
+			// CmsResult_名前を付けて保存_SJIS
+			// 
+			this.CmsResult_名前を付けて保存_SJIS.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_名前を付けて保存_SJIS.Image")));
+			this.CmsResult_名前を付けて保存_SJIS.Name = "CmsResult_名前を付けて保存_SJIS";
+			this.CmsResult_名前を付けて保存_SJIS.Size = new System.Drawing.Size(116, 22);
+			this.CmsResult_名前を付けて保存_SJIS.Text = "Shift_JIS";
+			this.CmsResult_名前を付けて保存_SJIS.Click += new System.EventHandler(this.CmsResult_名前を付けて保存_SJIS_Click);
+			// 
+			// CmsResult_名前を付けて保存_UTF8N
+			// 
+			this.CmsResult_名前を付けて保存_UTF8N.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_名前を付けて保存_UTF8N.Image")));
+			this.CmsResult_名前を付けて保存_UTF8N.Name = "CmsResult_名前を付けて保存_UTF8N";
+			this.CmsResult_名前を付けて保存_UTF8N.Size = new System.Drawing.Size(116, 22);
+			this.CmsResult_名前を付けて保存_UTF8N.Text = "UTF-8N";
+			this.CmsResult_名前を付けて保存_UTF8N.Click += new System.EventHandler(this.CmsResult_名前を付けて保存_UTF8N_Click);
 			// 
 			// TbCmd
 			// 
@@ -406,12 +432,12 @@
 			this.TbCmd.ContextMenuStrip = this.CmsCmd;
 			this.TbCmd.Font = new System.Drawing.Font("ＭＳ ゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.TbCmd.ForeColor = System.Drawing.Color.Black;
-			this.TbCmd.Location = new System.Drawing.Point(11, 24);
+			this.TbCmd.Location = new System.Drawing.Point(9, 21);
 			this.TbCmd.Margin = new System.Windows.Forms.Padding(0);
 			this.TbCmd.Multiline = true;
 			this.TbCmd.Name = "TbCmd";
 			this.TbCmd.ScrollBars = System.Windows.Forms.ScrollBars.Horizontal;
-			this.TbCmd.Size = new System.Drawing.Size(483, 45);
+			this.TbCmd.Size = new System.Drawing.Size(490, 44);
 			this.TbCmd.TabIndex = 0;
 			this.TbCmd.WordWrap = false;
 			this.TbCmd.TextChanged += new System.EventHandler(this.TbCmd_TextChanged);
@@ -434,7 +460,6 @@
             this.toolStripSeparator1,
             this.CmsCmd_貼り付け,
             this.CmsCmd_マクロ変数,
-            this.CmsCmd_文字コード,
             this.toolStripSeparator4,
             this.CmsCmd_フォルダ選択,
             this.CmsCmd_ファイル選択,
@@ -443,7 +468,7 @@
             this.CmsCmd_コマンドを保存,
             this.CmsCmd_コマンドを読込});
 			this.CmsCmd.Name = "CmsResult";
-			this.CmsCmd.Size = new System.Drawing.Size(166, 264);
+			this.CmsCmd.Size = new System.Drawing.Size(166, 242);
 			// 
 			// CmsCmd_全クリア
 			// 
@@ -500,7 +525,7 @@
             this.CmsCmd_マクロ変数_出力の行番号,
             this.CmsCmd_マクロ変数_出力のデータ,
             this.toolStripSeparator16,
-            this.CmsCmd_マクロ変数_連想配列});
+            this.CmsCmd_マクロ変数_一時変数});
 			this.CmsCmd_マクロ変数.Image = ((System.Drawing.Image)(resources.GetObject("CmsCmd_マクロ変数.Image")));
 			this.CmsCmd_マクロ変数.Name = "CmsCmd_マクロ変数";
 			this.CmsCmd_マクロ変数.Size = new System.Drawing.Size(165, 22);
@@ -670,39 +695,13 @@
 			this.toolStripSeparator16.Name = "toolStripSeparator16";
 			this.toolStripSeparator16.Size = new System.Drawing.Size(301, 6);
 			// 
-			// CmsCmd_マクロ変数_連想配列
+			// CmsCmd_マクロ変数_一時変数
 			// 
-			this.CmsCmd_マクロ変数_連想配列.Image = ((System.Drawing.Image)(resources.GetObject("CmsCmd_マクロ変数_連想配列.Image")));
-			this.CmsCmd_マクロ変数_連想配列.Name = "CmsCmd_マクロ変数_連想配列";
-			this.CmsCmd_マクロ変数_連想配列.Size = new System.Drawing.Size(304, 22);
-			this.CmsCmd_マクロ変数_連想配列.Text = "連想配列 #{%[キー]}";
-			this.CmsCmd_マクロ変数_連想配列.Click += new System.EventHandler(this.CmsCmd_マクロ変数_連想配列_Click);
-			// 
-			// CmsCmd_文字コード
-			// 
-			this.CmsCmd_文字コード.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CmsCmd_文字コード_SJIS,
-            this.CmsCmd_文字コード_UTF8});
-			this.CmsCmd_文字コード.Image = ((System.Drawing.Image)(resources.GetObject("CmsCmd_文字コード.Image")));
-			this.CmsCmd_文字コード.Name = "CmsCmd_文字コード";
-			this.CmsCmd_文字コード.Size = new System.Drawing.Size(165, 22);
-			this.CmsCmd_文字コード.Text = "文字コード";
-			// 
-			// CmsCmd_文字コード_SJIS
-			// 
-			this.CmsCmd_文字コード_SJIS.Image = ((System.Drawing.Image)(resources.GetObject("CmsCmd_文字コード_SJIS.Image")));
-			this.CmsCmd_文字コード_SJIS.Name = "CmsCmd_文字コード_SJIS";
-			this.CmsCmd_文字コード_SJIS.Size = new System.Drawing.Size(116, 22);
-			this.CmsCmd_文字コード_SJIS.Text = "Shift_JIS";
-			this.CmsCmd_文字コード_SJIS.Click += new System.EventHandler(this.CmsCmd_文字コード_SJIS_Click);
-			// 
-			// CmsCmd_文字コード_UTF8
-			// 
-			this.CmsCmd_文字コード_UTF8.Image = ((System.Drawing.Image)(resources.GetObject("CmsCmd_文字コード_UTF8.Image")));
-			this.CmsCmd_文字コード_UTF8.Name = "CmsCmd_文字コード_UTF8";
-			this.CmsCmd_文字コード_UTF8.Size = new System.Drawing.Size(116, 22);
-			this.CmsCmd_文字コード_UTF8.Text = "UTF-8";
-			this.CmsCmd_文字コード_UTF8.Click += new System.EventHandler(this.CmsCmd_文字コード_UTF8_Click);
+			this.CmsCmd_マクロ変数_一時変数.Image = ((System.Drawing.Image)(resources.GetObject("CmsCmd_マクロ変数_一時変数.Image")));
+			this.CmsCmd_マクロ変数_一時変数.Name = "CmsCmd_マクロ変数_一時変数";
+			this.CmsCmd_マクロ変数_一時変数.Size = new System.Drawing.Size(304, 22);
+			this.CmsCmd_マクロ変数_一時変数.Text = "一時変数 #{%[キー]}";
+			this.CmsCmd_マクロ変数_一時変数.Click += new System.EventHandler(this.CmsCmd_マクロ変数_一時変数_Click);
 			// 
 			// toolStripSeparator4
 			// 
@@ -802,11 +801,11 @@
 			this.TbCurDir.Cursor = System.Windows.Forms.Cursors.Default;
 			this.TbCurDir.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.TbCurDir.ForeColor = System.Drawing.Color.White;
-			this.TbCurDir.Location = new System.Drawing.Point(11, 4);
+			this.TbCurDir.Location = new System.Drawing.Point(12, 3);
 			this.TbCurDir.Margin = new System.Windows.Forms.Padding(0);
 			this.TbCurDir.Name = "TbCurDir";
 			this.TbCurDir.ReadOnly = true;
-			this.TbCurDir.Size = new System.Drawing.Size(482, 13);
+			this.TbCurDir.Size = new System.Drawing.Size(488, 13);
 			this.TbCurDir.TabIndex = 0;
 			this.TbCurDir.TabStop = false;
 			this.TbCurDir.Text = "TbCurDir";
@@ -851,7 +850,7 @@
 			this.BtnCmdExec.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnCmdExec.Font = new System.Drawing.Font("Yu Gothic UI", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.BtnCmdExec.ForeColor = System.Drawing.Color.White;
-			this.BtnCmdExec.Location = new System.Drawing.Point(415, 134);
+			this.BtnCmdExec.Location = new System.Drawing.Point(417, 134);
 			this.BtnCmdExec.Margin = new System.Windows.Forms.Padding(0);
 			this.BtnCmdExec.Name = "BtnCmdExec";
 			this.BtnCmdExec.Size = new System.Drawing.Size(22, 22);
@@ -861,44 +860,6 @@
 			this.ToolTip1.SetToolTip(this.BtnCmdExec, " [F5] 実行");
 			this.BtnCmdExec.UseVisualStyleBackColor = false;
 			this.BtnCmdExec.Click += new System.EventHandler(this.BtnCmdExec_Click);
-			// 
-			// CbTextCode
-			// 
-			this.CbTextCode.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.CbTextCode.BackColor = System.Drawing.Color.DimGray;
-			this.CbTextCode.ContextMenuStrip = this.CmsCbTextCode;
-			this.CbTextCode.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.CbTextCode.DropDownWidth = 72;
-			this.CbTextCode.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.CbTextCode.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-			this.CbTextCode.ForeColor = System.Drawing.Color.White;
-			this.CbTextCode.FormattingEnabled = true;
-			this.CbTextCode.Location = new System.Drawing.Point(325, 135);
-			this.CbTextCode.Margin = new System.Windows.Forms.Padding(0);
-			this.CbTextCode.Name = "CbTextCode";
-			this.CbTextCode.Size = new System.Drawing.Size(72, 20);
-			this.CbTextCode.TabIndex = 0;
-			this.CbTextCode.TabStop = false;
-			this.ToolTip1.SetToolTip(this.CbTextCode, "[F4] 出力文字コード");
-			this.CbTextCode.SelectedIndexChanged += new System.EventHandler(this.CbTextCode_SelectedIndexChanged);
-			this.CbTextCode.Enter += new System.EventHandler(this.CbTextCode_Enter);
-			this.CbTextCode.KeyUp += new System.Windows.Forms.KeyEventHandler(this.CbTextCode_KeyUp);
-			this.CbTextCode.Leave += new System.EventHandler(this.CbTextCode_Leave);
-			// 
-			// CmsCbTextCode
-			// 
-			this.CmsCbTextCode.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CmsCbTextCode_全コピー});
-			this.CmsCbTextCode.Name = "CmsResult";
-			this.CmsCbTextCode.Size = new System.Drawing.Size(112, 26);
-			// 
-			// CmsCbTextCode_全コピー
-			// 
-			this.CmsCbTextCode_全コピー.Image = ((System.Drawing.Image)(resources.GetObject("CmsCbTextCode_全コピー.Image")));
-			this.CmsCbTextCode_全コピー.Name = "CmsCbTextCode_全コピー";
-			this.CmsCbTextCode_全コピー.Size = new System.Drawing.Size(111, 22);
-			this.CmsCbTextCode_全コピー.Text = "全コピー";
-			this.CmsCbTextCode_全コピー.Click += new System.EventHandler(this.CmsCbTextCode_全コピー_Click);
 			// 
 			// CbCmdHistory
 			// 
@@ -935,14 +896,14 @@
 			this.CbResultHistory.ContextMenuStrip = this.CmsNull;
 			this.CbResultHistory.DropDownHeight = 140;
 			this.CbResultHistory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.CbResultHistory.DropDownWidth = 482;
+			this.CbResultHistory.DropDownWidth = 486;
 			this.CbResultHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.CbResultHistory.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.CbResultHistory.ForeColor = System.Drawing.Color.Black;
 			this.CbResultHistory.FormattingEnabled = true;
 			this.CbResultHistory.IntegralHeight = false;
 			this.CbResultHistory.ItemHeight = 12;
-			this.CbResultHistory.Location = new System.Drawing.Point(11, 411);
+			this.CbResultHistory.Location = new System.Drawing.Point(11, 413);
 			this.CbResultHistory.Margin = new System.Windows.Forms.Padding(0);
 			this.CbResultHistory.MaxDropDownItems = 10;
 			this.CbResultHistory.Name = "CbResultHistory";
@@ -965,7 +926,7 @@
 			this.BtnAllClear.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnAllClear.Font = new System.Drawing.Font("Yu Gothic UI", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.BtnAllClear.ForeColor = System.Drawing.Color.White;
-			this.BtnAllClear.Location = new System.Drawing.Point(472, 134);
+			this.BtnAllClear.Location = new System.Drawing.Point(475, 134);
 			this.BtnAllClear.Margin = new System.Windows.Forms.Padding(0);
 			this.BtnAllClear.Name = "BtnAllClear";
 			this.BtnAllClear.Size = new System.Drawing.Size(22, 22);
@@ -1008,7 +969,7 @@
 			this.BtnDgvCmd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnDgvCmd.Font = new System.Drawing.Font("Yu Gothic UI", 3.75F);
 			this.BtnDgvCmd.ForeColor = System.Drawing.Color.Black;
-			this.BtnDgvCmd.Location = new System.Drawing.Point(158, 138);
+			this.BtnDgvCmd.Location = new System.Drawing.Point(160, 138);
 			this.BtnDgvCmd.Margin = new System.Windows.Forms.Padding(0);
 			this.BtnDgvCmd.Name = "BtnDgvCmd";
 			this.BtnDgvCmd.Size = new System.Drawing.Size(14, 14);
@@ -1026,7 +987,7 @@
 			this.BtnCmdExecUndo.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnCmdExecUndo.Font = new System.Drawing.Font("Yu Gothic UI", 6F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.BtnCmdExecUndo.ForeColor = System.Drawing.Color.White;
-			this.BtnCmdExecUndo.Location = new System.Drawing.Point(444, 134);
+			this.BtnCmdExecUndo.Location = new System.Drawing.Point(446, 134);
 			this.BtnCmdExecUndo.Margin = new System.Windows.Forms.Padding(0);
 			this.BtnCmdExecUndo.Name = "BtnCmdExecUndo";
 			this.BtnCmdExecUndo.Size = new System.Drawing.Size(22, 22);
@@ -1043,7 +1004,7 @@
 			this.TbDgvCmdSearch.ContextMenuStrip = this.CmsTbDgvCmdSearch;
 			this.TbDgvCmdSearch.Font = new System.Drawing.Font("ＭＳ ゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.TbDgvCmdSearch.ForeColor = System.Drawing.Color.Black;
-			this.TbDgvCmdSearch.Location = new System.Drawing.Point(237, 135);
+			this.TbDgvCmdSearch.Location = new System.Drawing.Point(239, 134);
 			this.TbDgvCmdSearch.Margin = new System.Windows.Forms.Padding(0);
 			this.TbDgvCmdSearch.Name = "TbDgvCmdSearch";
 			this.TbDgvCmdSearch.Size = new System.Drawing.Size(80, 20);
@@ -1055,6 +1016,7 @@
 			this.TbDgvCmdSearch.Enter += new System.EventHandler(this.TbDgvCmdSearch_Enter);
 			this.TbDgvCmdSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TbDgvCmdSearch_KeyUp);
 			this.TbDgvCmdSearch.Leave += new System.EventHandler(this.TbDgvCmdSearch_Leave);
+			this.TbDgvCmdSearch.MouseHover += new System.EventHandler(this.TbDgvCmdSearch_MouseHover);
 			// 
 			// CmsTbDgvCmdSearch
 			// 
@@ -1089,7 +1051,7 @@
 			this.NudTbResult.Cursor = System.Windows.Forms.Cursors.Default;
 			this.NudTbResult.Font = new System.Drawing.Font("ＭＳ ゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.NudTbResult.ForeColor = System.Drawing.Color.White;
-			this.NudTbResult.Location = new System.Drawing.Point(437, 411);
+			this.NudTbResult.Location = new System.Drawing.Point(445, 413);
 			this.NudTbResult.Margin = new System.Windows.Forms.Padding(0);
 			this.NudTbResult.Maximum = new decimal(new int[] {
             22,
@@ -1102,7 +1064,7 @@
             0,
             0});
 			this.NudTbResult.Name = "NudTbResult";
-			this.NudTbResult.Size = new System.Drawing.Size(45, 20);
+			this.NudTbResult.Size = new System.Drawing.Size(40, 20);
 			this.NudTbResult.TabIndex = 0;
 			this.NudTbResult.TabStop = false;
 			this.NudTbResult.Value = new decimal(new int[] {
@@ -1123,7 +1085,7 @@
 			this.Lbl2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
 			this.Lbl2.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Lbl2.ForeColor = System.Drawing.Color.White;
-			this.Lbl2.Location = new System.Drawing.Point(481, 412);
+			this.Lbl2.Location = new System.Drawing.Point(484, 414);
 			this.Lbl2.Margin = new System.Windows.Forms.Padding(0);
 			this.Lbl2.Name = "Lbl2";
 			this.Lbl2.Size = new System.Drawing.Size(20, 15);
@@ -1135,6 +1097,7 @@
 			// 
 			this.DgvCmd.AllowUserToAddRows = false;
 			this.DgvCmd.AllowUserToDeleteRows = false;
+			this.DgvCmd.AllowUserToOrderColumns = true;
 			this.DgvCmd.AllowUserToResizeColumns = false;
 			this.DgvCmd.AllowUserToResizeRows = false;
 			this.DgvCmd.BackgroundColor = System.Drawing.Color.LightGray;
@@ -1144,7 +1107,7 @@
             this.DgvTb21});
 			this.DgvCmd.ContextMenuStrip = this.CmsNull;
 			this.DgvCmd.GridColor = System.Drawing.Color.LightGray;
-			this.DgvCmd.Location = new System.Drawing.Point(172, 133);
+			this.DgvCmd.Location = new System.Drawing.Point(174, 133);
 			this.DgvCmd.Margin = new System.Windows.Forms.Padding(0);
 			this.DgvCmd.MultiSelect = false;
 			this.DgvCmd.Name = "DgvCmd";
@@ -1171,7 +1134,6 @@
 			this.DgvTb21.Name = "DgvTb21";
 			this.DgvTb21.ReadOnly = true;
 			this.DgvTb21.Resizable = System.Windows.Forms.DataGridViewTriState.False;
-			this.DgvTb21.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
 			this.DgvTb21.Width = 400;
 			// 
 			// TbResult
@@ -1186,13 +1148,13 @@
 			this.TbResult.ContextMenuStrip = this.CmsResult;
 			this.TbResult.Font = new System.Drawing.Font("ＭＳ ゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.TbResult.ForeColor = System.Drawing.Color.Lime;
-			this.TbResult.Location = new System.Drawing.Point(10, 161);
+			this.TbResult.Location = new System.Drawing.Point(9, 161);
 			this.TbResult.Margin = new System.Windows.Forms.Padding(0);
 			this.TbResult.MaxLength = 2147483647;
 			this.TbResult.Multiline = true;
 			this.TbResult.Name = "TbResult";
 			this.TbResult.ScrollBars = System.Windows.Forms.ScrollBars.Both;
-			this.TbResult.Size = new System.Drawing.Size(484, 239);
+			this.TbResult.Size = new System.Drawing.Size(490, 240);
 			this.TbResult.TabIndex = 0;
 			this.TbResult.TabStop = false;
 			this.TbResult.WordWrap = false;
@@ -1284,7 +1246,7 @@
 			this.LblWait.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.LblWait.Font = new System.Drawing.Font("ＭＳ ゴシック", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.LblWait.ForeColor = System.Drawing.Color.White;
-			this.LblWait.Location = new System.Drawing.Point(197, 24);
+			this.LblWait.Location = new System.Drawing.Point(197, 21);
 			this.LblWait.Margin = new System.Windows.Forms.Padding(0);
 			this.LblWait.Name = "LblWait";
 			this.LblWait.Padding = new System.Windows.Forms.Padding(14, 3, 8, 4);
@@ -1302,8 +1264,8 @@
 			this.TbInfo.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.TbInfo.ContextMenuStrip = this.CmsNull;
 			this.TbInfo.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-			this.TbInfo.ForeColor = System.Drawing.Color.White;
-			this.TbInfo.Location = new System.Drawing.Point(95, 424);
+			this.TbInfo.ForeColor = System.Drawing.Color.Gainsboro;
+			this.TbInfo.Location = new System.Drawing.Point(95, 423);
 			this.TbInfo.Margin = new System.Windows.Forms.Padding(0);
 			this.TbInfo.Name = "TbInfo";
 			this.TbInfo.ReadOnly = true;
@@ -1333,7 +1295,7 @@
 			this.Lbl_F2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.Lbl_F2.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Lbl_F2.ForeColor = System.Drawing.Color.White;
-			this.Lbl_F2.Location = new System.Drawing.Point(86, 125);
+			this.Lbl_F2.Location = new System.Drawing.Point(87, 125);
 			this.Lbl_F2.Margin = new System.Windows.Forms.Padding(0);
 			this.Lbl_F2.Name = "Lbl_F2";
 			this.Lbl_F2.Size = new System.Drawing.Size(17, 11);
@@ -1346,26 +1308,12 @@
 			this.Lbl_F3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.Lbl_F3.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Lbl_F3.ForeColor = System.Drawing.Color.White;
-			this.Lbl_F3.Location = new System.Drawing.Point(171, 125);
+			this.Lbl_F3.Location = new System.Drawing.Point(174, 125);
 			this.Lbl_F3.Margin = new System.Windows.Forms.Padding(0);
 			this.Lbl_F3.Name = "Lbl_F3";
 			this.Lbl_F3.Size = new System.Drawing.Size(17, 11);
 			this.Lbl_F3.TabIndex = 0;
 			this.Lbl_F3.Text = "F3";
-			// 
-			// Lbl_F4
-			// 
-			this.Lbl_F4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-			this.Lbl_F4.AutoSize = true;
-			this.Lbl_F4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.Lbl_F4.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-			this.Lbl_F4.ForeColor = System.Drawing.Color.White;
-			this.Lbl_F4.Location = new System.Drawing.Point(324, 125);
-			this.Lbl_F4.Margin = new System.Windows.Forms.Padding(0);
-			this.Lbl_F4.Name = "Lbl_F4";
-			this.Lbl_F4.Size = new System.Drawing.Size(17, 11);
-			this.Lbl_F4.TabIndex = 0;
-			this.Lbl_F4.Text = "F4";
 			// 
 			// Lbl_F5
 			// 
@@ -1374,7 +1322,7 @@
 			this.Lbl_F5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.Lbl_F5.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Lbl_F5.ForeColor = System.Drawing.Color.White;
-			this.Lbl_F5.Location = new System.Drawing.Point(414, 125);
+			this.Lbl_F5.Location = new System.Drawing.Point(416, 125);
 			this.Lbl_F5.Margin = new System.Windows.Forms.Padding(0);
 			this.Lbl_F5.Name = "Lbl_F5";
 			this.Lbl_F5.Size = new System.Drawing.Size(17, 11);
@@ -1388,7 +1336,7 @@
 			this.Lbl_F7.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.Lbl_F7.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Lbl_F7.ForeColor = System.Drawing.Color.White;
-			this.Lbl_F7.Location = new System.Drawing.Point(471, 125);
+			this.Lbl_F7.Location = new System.Drawing.Point(474, 125);
 			this.Lbl_F7.Margin = new System.Windows.Forms.Padding(0);
 			this.Lbl_F7.Name = "Lbl_F7";
 			this.Lbl_F7.Size = new System.Drawing.Size(17, 11);
@@ -1402,7 +1350,7 @@
 			this.Lbl_F8.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.Lbl_F8.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Lbl_F8.ForeColor = System.Drawing.Color.White;
-			this.Lbl_F8.Location = new System.Drawing.Point(10, 401);
+			this.Lbl_F8.Location = new System.Drawing.Point(10, 403);
 			this.Lbl_F8.Margin = new System.Windows.Forms.Padding(0);
 			this.Lbl_F8.Name = "Lbl_F8";
 			this.Lbl_F8.Size = new System.Drawing.Size(17, 11);
@@ -1415,7 +1363,7 @@
 			this.LblCmd.BackColor = System.Drawing.Color.DimGray;
 			this.LblCmd.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.LblCmd.ForeColor = System.Drawing.Color.Red;
-			this.LblCmd.Location = new System.Drawing.Point(0, 28);
+			this.LblCmd.Location = new System.Drawing.Point(-1, 23);
 			this.LblCmd.Margin = new System.Windows.Forms.Padding(0);
 			this.LblCmd.Name = "LblCmd";
 			this.LblCmd.Size = new System.Drawing.Size(17, 11);
@@ -1429,7 +1377,7 @@
 			this.LblCmdMemo.BackColor = System.Drawing.Color.DimGray;
 			this.LblCmdMemo.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.LblCmdMemo.ForeColor = System.Drawing.Color.Red;
-			this.LblCmdMemo.Location = new System.Drawing.Point(0, 74);
+			this.LblCmdMemo.Location = new System.Drawing.Point(-1, 71);
 			this.LblCmdMemo.Margin = new System.Windows.Forms.Padding(0);
 			this.LblCmdMemo.Name = "LblCmdMemo";
 			this.LblCmdMemo.Size = new System.Drawing.Size(17, 11);
@@ -1443,7 +1391,7 @@
 			this.LblResult.BackColor = System.Drawing.Color.DimGray;
 			this.LblResult.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.LblResult.ForeColor = System.Drawing.Color.Red;
-			this.LblResult.Location = new System.Drawing.Point(0, 165);
+			this.LblResult.Location = new System.Drawing.Point(-1, 163);
 			this.LblResult.Margin = new System.Windows.Forms.Padding(0);
 			this.LblResult.Name = "LblResult";
 			this.LblResult.Size = new System.Drawing.Size(17, 11);
@@ -1458,7 +1406,7 @@
 			this.Lbl_F6.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.Lbl_F6.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.Lbl_F6.ForeColor = System.Drawing.Color.White;
-			this.Lbl_F6.Location = new System.Drawing.Point(443, 125);
+			this.Lbl_F6.Location = new System.Drawing.Point(445, 125);
 			this.Lbl_F6.Margin = new System.Windows.Forms.Padding(0);
 			this.Lbl_F6.Name = "Lbl_F6";
 			this.Lbl_F6.Size = new System.Drawing.Size(17, 11);
@@ -1471,7 +1419,7 @@
 			this.LblCurDir.BackColor = System.Drawing.Color.DimGray;
 			this.LblCurDir.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.LblCurDir.ForeColor = System.Drawing.Color.Red;
-			this.LblCurDir.Location = new System.Drawing.Point(0, 8);
+			this.LblCurDir.Location = new System.Drawing.Point(-1, 6);
 			this.LblCurDir.Margin = new System.Windows.Forms.Padding(0);
 			this.LblCurDir.Name = "LblCurDir";
 			this.LblCurDir.Size = new System.Drawing.Size(17, 11);
@@ -1659,13 +1607,14 @@
 			this.RtbCmdMemo.DetectUrls = false;
 			this.RtbCmdMemo.Font = new System.Drawing.Font("ＭＳ ゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.RtbCmdMemo.ForeColor = System.Drawing.Color.Yellow;
-			this.RtbCmdMemo.Location = new System.Drawing.Point(10, 70);
+			this.RtbCmdMemo.Location = new System.Drawing.Point(9, 66);
 			this.RtbCmdMemo.Margin = new System.Windows.Forms.Padding(0);
 			this.RtbCmdMemo.Name = "RtbCmdMemo";
-			this.RtbCmdMemo.Size = new System.Drawing.Size(485, 52);
+			this.RtbCmdMemo.Size = new System.Drawing.Size(490, 56);
 			this.RtbCmdMemo.TabIndex = 0;
 			this.RtbCmdMemo.TabStop = false;
 			this.RtbCmdMemo.Text = "";
+			this.RtbCmdMemo.WordWrap = false;
 			this.RtbCmdMemo.Enter += new System.EventHandler(this.RtbCmdMemo_Enter);
 			this.RtbCmdMemo.KeyUp += new System.Windows.Forms.KeyEventHandler(this.RtbCmdMemo_KeyUp);
 			this.RtbCmdMemo.Leave += new System.EventHandler(this.RtbCmdMemo_Leave);
@@ -1767,15 +1716,15 @@
 			this.PanelResult.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.PanelResult.BackColor = System.Drawing.Color.Transparent;
+			this.PanelResult.BackColor = System.Drawing.Color.Black;
 			this.PanelResult.Controls.Add(this.BtnPasteCancel);
 			this.PanelResult.Controls.Add(this.BtnPasteFilename);
 			this.PanelResult.Controls.Add(this.BtnPasteTextfile);
-			this.PanelResult.ForeColor = System.Drawing.Color.Black;
-			this.PanelResult.Location = new System.Drawing.Point(10, 161);
+			this.PanelResult.ForeColor = System.Drawing.Color.White;
+			this.PanelResult.Location = new System.Drawing.Point(9, 161);
 			this.PanelResult.Margin = new System.Windows.Forms.Padding(0);
 			this.PanelResult.Name = "PanelResult";
-			this.PanelResult.Size = new System.Drawing.Size(467, 222);
+			this.PanelResult.Size = new System.Drawing.Size(473, 223);
 			this.PanelResult.TabIndex = 0;
 			this.PanelResult.DragDrop += new System.Windows.Forms.DragEventHandler(this.PanelResult_DragDrop);
 			this.PanelResult.DragEnter += new System.Windows.Forms.DragEventHandler(this.PanelResult_DragEnter);
@@ -1791,11 +1740,11 @@
 			this.BtnPasteCancel.FlatAppearance.BorderSize = 2;
 			this.BtnPasteCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnPasteCancel.Font = new System.Drawing.Font("ＭＳ ゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-			this.BtnPasteCancel.ForeColor = System.Drawing.Color.Black;
-			this.BtnPasteCancel.Location = new System.Drawing.Point(21, 170);
+			this.BtnPasteCancel.ForeColor = System.Drawing.Color.DimGray;
+			this.BtnPasteCancel.Location = new System.Drawing.Point(26, 160);
 			this.BtnPasteCancel.Margin = new System.Windows.Forms.Padding(0);
 			this.BtnPasteCancel.Name = "BtnPasteCancel";
-			this.BtnPasteCancel.Size = new System.Drawing.Size(425, 32);
+			this.BtnPasteCancel.Size = new System.Drawing.Size(420, 35);
 			this.BtnPasteCancel.TabIndex = 3;
 			this.BtnPasteCancel.TabStop = false;
 			this.BtnPasteCancel.Text = "キャンセル";
@@ -1811,14 +1760,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.BtnPasteFilename.BackColor = System.Drawing.Color.WhiteSmoke;
 			this.BtnPasteFilename.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
-			this.BtnPasteFilename.FlatAppearance.BorderSize = 2;
 			this.BtnPasteFilename.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnPasteFilename.Font = new System.Drawing.Font("ＭＳ ゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-			this.BtnPasteFilename.ForeColor = System.Drawing.Color.RoyalBlue;
-			this.BtnPasteFilename.Location = new System.Drawing.Point(20, 95);
+			this.BtnPasteFilename.ForeColor = System.Drawing.Color.DimGray;
+			this.BtnPasteFilename.Location = new System.Drawing.Point(26, 95);
 			this.BtnPasteFilename.Margin = new System.Windows.Forms.Padding(0);
 			this.BtnPasteFilename.Name = "BtnPasteFilename";
-			this.BtnPasteFilename.Size = new System.Drawing.Size(427, 65);
+			this.BtnPasteFilename.Size = new System.Drawing.Size(420, 45);
 			this.BtnPasteFilename.TabIndex = 2;
 			this.BtnPasteFilename.TabStop = false;
 			this.BtnPasteFilename.Text = "[ファイル名]を取得";
@@ -1834,14 +1782,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.BtnPasteTextfile.BackColor = System.Drawing.Color.WhiteSmoke;
 			this.BtnPasteTextfile.FlatAppearance.BorderColor = System.Drawing.Color.Crimson;
-			this.BtnPasteTextfile.FlatAppearance.BorderSize = 2;
 			this.BtnPasteTextfile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnPasteTextfile.Font = new System.Drawing.Font("ＭＳ ゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-			this.BtnPasteTextfile.ForeColor = System.Drawing.Color.Crimson;
-			this.BtnPasteTextfile.Location = new System.Drawing.Point(20, 20);
+			this.BtnPasteTextfile.ForeColor = System.Drawing.Color.DimGray;
+			this.BtnPasteTextfile.Location = new System.Drawing.Point(26, 25);
 			this.BtnPasteTextfile.Margin = new System.Windows.Forms.Padding(0);
 			this.BtnPasteTextfile.Name = "BtnPasteTextfile";
-			this.BtnPasteTextfile.Size = new System.Drawing.Size(427, 65);
+			this.BtnPasteTextfile.Size = new System.Drawing.Size(420, 50);
 			this.BtnPasteTextfile.TabIndex = 1;
 			this.BtnPasteTextfile.TabStop = false;
 			this.BtnPasteTextfile.Text = "[テキストファイル]を読込";
@@ -1860,10 +1807,10 @@
 			this.BtnCmdExecStream.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnCmdExecStream.Font = new System.Drawing.Font("Yu Gothic UI", 6F);
 			this.BtnCmdExecStream.ForeColor = System.Drawing.Color.White;
-			this.BtnCmdExecStream.Location = new System.Drawing.Point(230, 47);
+			this.BtnCmdExecStream.Location = new System.Drawing.Point(230, 44);
 			this.BtnCmdExecStream.Margin = new System.Windows.Forms.Padding(0);
 			this.BtnCmdExecStream.Name = "BtnCmdExecStream";
-			this.BtnCmdExecStream.Size = new System.Drawing.Size(45, 22);
+			this.BtnCmdExecStream.Size = new System.Drawing.Size(45, 21);
 			this.BtnCmdExecStream.TabIndex = 0;
 			this.BtnCmdExecStream.TabStop = false;
 			this.BtnCmdExecStream.Text = "✖";
@@ -1877,8 +1824,8 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.DimGray;
 			this.ClientSize = new System.Drawing.Size(504, 441);
-			this.Controls.Add(this.BtnCmdExecStream);
 			this.Controls.Add(this.LblWait);
+			this.Controls.Add(this.BtnCmdExecStream);
 			this.Controls.Add(this.PanelResult);
 			this.Controls.Add(this.BtnDgvMacro);
 			this.Controls.Add(this.DgvMacro);
@@ -1894,9 +1841,7 @@
 			this.Controls.Add(this.Lbl2);
 			this.Controls.Add(this.TbResult);
 			this.Controls.Add(this.TbCurDir);
-			this.Controls.Add(this.CbTextCode);
 			this.Controls.Add(this.BtnAllClear);
-			this.Controls.Add(this.LblCmd);
 			this.Controls.Add(this.LblResult);
 			this.Controls.Add(this.LblCmdMemo);
 			this.Controls.Add(this.BtnCmdExecUndo);
@@ -1905,7 +1850,6 @@
 			this.Controls.Add(this.Lbl_F1);
 			this.Controls.Add(this.Lbl_F2);
 			this.Controls.Add(this.Lbl_F3);
-			this.Controls.Add(this.Lbl_F4);
 			this.Controls.Add(this.Lbl_F5);
 			this.Controls.Add(this.Lbl_F6);
 			this.Controls.Add(this.Lbl_F7);
@@ -1915,13 +1859,14 @@
 			this.Controls.Add(this.BtnResult3);
 			this.Controls.Add(this.BtnResult4);
 			this.Controls.Add(this.BtnResult5);
+			this.Controls.Add(this.LblCmd);
 			this.DoubleBuffered = true;
 			this.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.KeyPreview = true;
 			this.MinimumSize = new System.Drawing.Size(520, 480);
 			this.Name = "Form1";
 			this.ShowIcon = false;
-			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
+			this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
 			this.StartPosition = System.Windows.Forms.FormStartPosition.Manual;
 			this.Load += new System.EventHandler(this.Form1_Load);
 			this.Resize += new System.EventHandler(this.Form1_Resize);
@@ -1929,7 +1874,6 @@
 			this.CmsResult.ResumeLayout(false);
 			this.CmsCmd.ResumeLayout(false);
 			this.CmsTbCurDir.ResumeLayout(false);
-			this.CmsCbTextCode.ResumeLayout(false);
 			this.CmsTbDgvCmdSearch.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.NudTbResult)).EndInit();
 			((System.ComponentModel.ISupportInitialize)(this.DgvCmd)).EndInit();
@@ -1969,7 +1913,6 @@
 		private System.Windows.Forms.ToolStripMenuItem CmsCmdMemo_全コピー;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator2;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmdMemo_貼り付け;
-		private System.Windows.Forms.ComboBox CbTextCode;
 		private System.Windows.Forms.ComboBox CbCmdHistory;
 		private System.Windows.Forms.ComboBox CbResultHistory;
 		private System.Windows.Forms.Label LblWait;
@@ -1988,7 +1931,6 @@
 		private System.Windows.Forms.Label Lbl_F1;
 		private System.Windows.Forms.Label Lbl_F2;
 		private System.Windows.Forms.Label Lbl_F3;
-		private System.Windows.Forms.Label Lbl_F4;
 		private System.Windows.Forms.Label Lbl_F5;
 		private System.Windows.Forms.Label Lbl_F7;
 		private System.Windows.Forms.Label Lbl_F8;
@@ -1998,8 +1940,6 @@
 		private System.Windows.Forms.Button BtnCmdExecUndo;
 		private System.Windows.Forms.Label Lbl_F6;
 		private System.Windows.Forms.Label LblCurDir;
-		private System.Windows.Forms.ContextMenuStrip CmsCbTextCode;
-		private System.Windows.Forms.ToolStripMenuItem CmsCbTextCode_全コピー;
 		private System.Windows.Forms.ContextMenuStrip CmsTbCurDir;
 		private System.Windows.Forms.ToolStripMenuItem CmsTbCurDir_全コピー;
 		private System.Windows.Forms.ContextMenuStrip CmsTbDgvCmdSearch;
@@ -2023,7 +1963,6 @@
 		private System.Windows.Forms.ToolStripMenuItem CmsResult_全選択;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator8;
 		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_Cancel;
-		private System.Windows.Forms.DataGridViewTextBoxColumn DgvTb21;
 		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_ネット検索_Google翻訳;
 		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_ネット検索_Googleマップ;
 		private System.Windows.Forms.RichTextBox RtbCmdMemo;
@@ -2041,8 +1980,6 @@
 		private System.Windows.Forms.Button BtnResult3;
 		private System.Windows.Forms.Button BtnResult4;
 		private System.Windows.Forms.Button BtnResult5;
-		private System.Windows.Forms.DataGridViewTextBoxColumn DgvTb11;
-		private System.Windows.Forms.DataGridViewTextBoxColumn DgvTb12;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmd_マクロ変数_年;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmd_マクロ変数_月;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmd_マクロ変数_日;
@@ -2064,12 +2001,9 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator14;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator15;
 		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_関連付けられたアプリケーションで開く;
-		private System.Windows.Forms.ToolStripMenuItem CmsCmd_文字コード;
-		private System.Windows.Forms.ToolStripMenuItem CmsCmd_文字コード_SJIS;
-		private System.Windows.Forms.ToolStripMenuItem CmsCmd_文字コード_UTF8;
 		private System.Windows.Forms.ToolStripMenuItem CmsResult_ファイル名を貼り付け;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator16;
-		private System.Windows.Forms.ToolStripMenuItem CmsCmd_マクロ変数_連想配列;
+		private System.Windows.Forms.ToolStripMenuItem CmsCmd_マクロ変数_一時変数;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmd_マクロ変数_セミコロン;
 		private System.Windows.Forms.ToolStripMenuItem CmsTextSelect_ネット検索_URLを開く;
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator17;
@@ -2086,6 +2020,12 @@
 		private System.Windows.Forms.ToolStripSeparator toolStripSeparator5;
 		private System.Windows.Forms.ToolStripMenuItem CmsCmdMemo_拡大;
 		private System.Windows.Forms.ToolStripMenuItem 元に戻すToolStripMenuItem;
+		private System.Windows.Forms.ToolStripMenuItem CmsResult_名前を付けて保存_SJIS;
+		private System.Windows.Forms.ToolStripMenuItem CmsResult_名前を付けて保存_UTF8N;
+		private System.Windows.Forms.DataGridViewTextBoxColumn DgvTb11;
+		private System.Windows.Forms.DataGridViewTextBoxColumn DgvTb12;
+		private System.Windows.Forms.DataGridViewTextBoxColumn ID;
+		private System.Windows.Forms.DataGridViewTextBoxColumn DgvTb21;
 	}
 }
 
