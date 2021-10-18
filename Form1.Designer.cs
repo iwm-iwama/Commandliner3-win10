@@ -166,9 +166,9 @@
 			this.BtnResult4 = new System.Windows.Forms.Button();
 			this.BtnResult5 = new System.Windows.Forms.Button();
 			this.PanelResult = new System.Windows.Forms.Panel();
-			this.BtnPasteCancel = new System.Windows.Forms.Button();
-			this.BtnPasteFilename = new System.Windows.Forms.Button();
 			this.BtnPasteTextfile = new System.Windows.Forms.Button();
+			this.BtnPasteFilename = new System.Windows.Forms.Button();
+			this.BtnPasteCancel = new System.Windows.Forms.Button();
 			this.BtnCmdExecStream = new System.Windows.Forms.Button();
 			((System.ComponentModel.ISupportInitialize)(this.DgvMacro)).BeginInit();
 			this.CmsResult.SuspendLayout();
@@ -1717,9 +1717,9 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.PanelResult.BackColor = System.Drawing.Color.Black;
-			this.PanelResult.Controls.Add(this.BtnPasteCancel);
-			this.PanelResult.Controls.Add(this.BtnPasteFilename);
 			this.PanelResult.Controls.Add(this.BtnPasteTextfile);
+			this.PanelResult.Controls.Add(this.BtnPasteFilename);
+			this.PanelResult.Controls.Add(this.BtnPasteCancel);
 			this.PanelResult.ForeColor = System.Drawing.Color.White;
 			this.PanelResult.Location = new System.Drawing.Point(9, 161);
 			this.PanelResult.Margin = new System.Windows.Forms.Padding(0);
@@ -1730,43 +1730,42 @@
 			this.PanelResult.DragEnter += new System.Windows.Forms.DragEventHandler(this.PanelResult_DragEnter);
 			this.PanelResult.DragLeave += new System.EventHandler(this.PanelResult_DragLeave);
 			// 
-			// BtnPasteCancel
+			// BtnPasteTextfile
 			// 
-			this.BtnPasteCancel.AllowDrop = true;
-			this.BtnPasteCancel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.BtnPasteCancel.BackColor = System.Drawing.Color.WhiteSmoke;
-			this.BtnPasteCancel.FlatAppearance.BorderColor = System.Drawing.Color.Yellow;
-			this.BtnPasteCancel.FlatAppearance.BorderSize = 2;
-			this.BtnPasteCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.BtnPasteCancel.Font = new System.Drawing.Font("ＭＳ ゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-			this.BtnPasteCancel.ForeColor = System.Drawing.Color.DimGray;
-			this.BtnPasteCancel.Location = new System.Drawing.Point(26, 160);
-			this.BtnPasteCancel.Margin = new System.Windows.Forms.Padding(0);
-			this.BtnPasteCancel.Name = "BtnPasteCancel";
-			this.BtnPasteCancel.Size = new System.Drawing.Size(420, 35);
-			this.BtnPasteCancel.TabIndex = 3;
-			this.BtnPasteCancel.TabStop = false;
-			this.BtnPasteCancel.Text = "キャンセル";
-			this.BtnPasteCancel.UseVisualStyleBackColor = false;
-			this.BtnPasteCancel.Click += new System.EventHandler(this.BtnPasteCancel_Click);
-			this.BtnPasteCancel.DragDrop += new System.Windows.Forms.DragEventHandler(this.BtnPasteCancel_DragDrop);
-			this.BtnPasteCancel.DragEnter += new System.Windows.Forms.DragEventHandler(this.BtnPasteCancel_DragEnter);
+			this.BtnPasteTextfile.AllowDrop = true;
+			this.BtnPasteTextfile.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.BtnPasteTextfile.BackColor = System.Drawing.Color.White;
+			this.BtnPasteTextfile.FlatAppearance.BorderColor = System.Drawing.Color.LightCoral;
+			this.BtnPasteTextfile.FlatAppearance.BorderSize = 2;
+			this.BtnPasteTextfile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BtnPasteTextfile.Font = new System.Drawing.Font("ＭＳ ゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+			this.BtnPasteTextfile.ForeColor = System.Drawing.Color.Black;
+			this.BtnPasteTextfile.Location = new System.Drawing.Point(21, 21);
+			this.BtnPasteTextfile.Margin = new System.Windows.Forms.Padding(0);
+			this.BtnPasteTextfile.Name = "BtnPasteTextfile";
+			this.BtnPasteTextfile.Size = new System.Drawing.Size(430, 55);
+			this.BtnPasteTextfile.TabIndex = 1;
+			this.BtnPasteTextfile.TabStop = false;
+			this.BtnPasteTextfile.Text = "[テキストファイル]を読込";
+			this.BtnPasteTextfile.UseVisualStyleBackColor = false;
+			this.BtnPasteTextfile.Click += new System.EventHandler(this.BtnPasteTextfile_Click);
+			this.BtnPasteTextfile.DragDrop += new System.Windows.Forms.DragEventHandler(this.BtnPasteTextfile_DragDrop);
+			this.BtnPasteTextfile.DragEnter += new System.Windows.Forms.DragEventHandler(this.BtnPasteTextfile_DragEnter);
 			// 
 			// BtnPasteFilename
 			// 
 			this.BtnPasteFilename.AllowDrop = true;
-			this.BtnPasteFilename.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.BtnPasteFilename.BackColor = System.Drawing.Color.WhiteSmoke;
-			this.BtnPasteFilename.FlatAppearance.BorderColor = System.Drawing.Color.RoyalBlue;
+			this.BtnPasteFilename.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.BtnPasteFilename.BackColor = System.Drawing.Color.White;
+			this.BtnPasteFilename.FlatAppearance.BorderColor = System.Drawing.Color.LightSkyBlue;
+			this.BtnPasteFilename.FlatAppearance.BorderSize = 2;
 			this.BtnPasteFilename.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnPasteFilename.Font = new System.Drawing.Font("ＭＳ ゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-			this.BtnPasteFilename.ForeColor = System.Drawing.Color.DimGray;
-			this.BtnPasteFilename.Location = new System.Drawing.Point(26, 95);
+			this.BtnPasteFilename.ForeColor = System.Drawing.Color.Black;
+			this.BtnPasteFilename.Location = new System.Drawing.Point(21, 91);
 			this.BtnPasteFilename.Margin = new System.Windows.Forms.Padding(0);
 			this.BtnPasteFilename.Name = "BtnPasteFilename";
-			this.BtnPasteFilename.Size = new System.Drawing.Size(420, 45);
+			this.BtnPasteFilename.Size = new System.Drawing.Size(430, 55);
 			this.BtnPasteFilename.TabIndex = 2;
 			this.BtnPasteFilename.TabStop = false;
 			this.BtnPasteFilename.Text = "[ファイル名]を取得";
@@ -1775,27 +1774,27 @@
 			this.BtnPasteFilename.DragDrop += new System.Windows.Forms.DragEventHandler(this.BtnPasteFilename_DragDrop);
 			this.BtnPasteFilename.DragEnter += new System.Windows.Forms.DragEventHandler(this.BtnPasteFilename_DragEnter);
 			// 
-			// BtnPasteTextfile
+			// BtnPasteCancel
 			// 
-			this.BtnPasteTextfile.AllowDrop = true;
-			this.BtnPasteTextfile.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.BtnPasteTextfile.BackColor = System.Drawing.Color.WhiteSmoke;
-			this.BtnPasteTextfile.FlatAppearance.BorderColor = System.Drawing.Color.Crimson;
-			this.BtnPasteTextfile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.BtnPasteTextfile.Font = new System.Drawing.Font("ＭＳ ゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
-			this.BtnPasteTextfile.ForeColor = System.Drawing.Color.DimGray;
-			this.BtnPasteTextfile.Location = new System.Drawing.Point(26, 25);
-			this.BtnPasteTextfile.Margin = new System.Windows.Forms.Padding(0);
-			this.BtnPasteTextfile.Name = "BtnPasteTextfile";
-			this.BtnPasteTextfile.Size = new System.Drawing.Size(420, 50);
-			this.BtnPasteTextfile.TabIndex = 1;
-			this.BtnPasteTextfile.TabStop = false;
-			this.BtnPasteTextfile.Text = "[テキストファイル]を読込";
-			this.BtnPasteTextfile.UseVisualStyleBackColor = false;
-			this.BtnPasteTextfile.Click += new System.EventHandler(this.BtnPasteTextfile_Click);
-			this.BtnPasteTextfile.DragDrop += new System.Windows.Forms.DragEventHandler(this.BtnPasteTextfile_DragDrop);
-			this.BtnPasteTextfile.DragEnter += new System.Windows.Forms.DragEventHandler(this.BtnPasteTextfile_DragEnter);
+			this.BtnPasteCancel.AllowDrop = true;
+			this.BtnPasteCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
+			this.BtnPasteCancel.BackColor = System.Drawing.Color.White;
+			this.BtnPasteCancel.FlatAppearance.BorderColor = System.Drawing.Color.LightSteelBlue;
+			this.BtnPasteCancel.FlatAppearance.BorderSize = 2;
+			this.BtnPasteCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BtnPasteCancel.Font = new System.Drawing.Font("ＭＳ ゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
+			this.BtnPasteCancel.ForeColor = System.Drawing.Color.Black;
+			this.BtnPasteCancel.Location = new System.Drawing.Point(21, 161);
+			this.BtnPasteCancel.Margin = new System.Windows.Forms.Padding(0);
+			this.BtnPasteCancel.Name = "BtnPasteCancel";
+			this.BtnPasteCancel.Size = new System.Drawing.Size(430, 30);
+			this.BtnPasteCancel.TabIndex = 3;
+			this.BtnPasteCancel.TabStop = false;
+			this.BtnPasteCancel.Text = "キャンセル";
+			this.BtnPasteCancel.UseVisualStyleBackColor = false;
+			this.BtnPasteCancel.Click += new System.EventHandler(this.BtnPasteCancel_Click);
+			this.BtnPasteCancel.DragDrop += new System.Windows.Forms.DragEventHandler(this.BtnPasteCancel_DragDrop);
+			this.BtnPasteCancel.DragEnter += new System.Windows.Forms.DragEventHandler(this.BtnPasteCancel_DragEnter);
 			// 
 			// BtnCmdExecStream
 			// 
