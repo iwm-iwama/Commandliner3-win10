@@ -23,8 +23,9 @@ namespace iwm_Commandliner3
 		// 大域定数
 		//--------------------------------------------------------------------------------
 		private const string ProgramID = "iwm_Commandliner3.2";
-		private const string VERSION = "Ver.20211017 'A-29' (C)2018-2021 iwm-iwama";
+		private const string VERSION = "Ver.20211111 'A-29' (C)2018-2021 iwm-iwama";
 		// Ver.3.2
+		//   20211111
 		//   20211017
 		//   20210912
 		//   20210907
@@ -412,14 +413,8 @@ namespace iwm_Commandliner3
 
 		private void TbCurDir_MouseHover(object sender, EventArgs e)
 		{
-			int i1 = 0;
-			string s1 = "";
-			foreach (string _s1 in TbCurDir.Text.Split('\\'))
-			{
-				s1 += $"[{i1}]  {_s1}{NL}";
-				++i1;
-			}
-			ToolTip1.SetToolTip(TbCurDir, s1);
+			TbCurDir.BackColor = Color.Black;
+			ToolTip1.SetToolTip(TbCurDir, TbCurDir.Text.Replace("\\", NL));
 		}
 
 		private void TbCurDir_MouseLeave(object sender, EventArgs e)
@@ -1514,14 +1509,17 @@ namespace iwm_Commandliner3
 			foreach (string _s1 in l1)
 			{
 				// PATH 以下の実行ファイルを取得
-				DirectoryInfo DI = new DirectoryInfo(_s1);
-				if (DI.Exists)
+				if (Directory.Exists(_s1))
 				{
-					foreach (FileInfo _fi1 in DI.GetFiles("*", SearchOption.TopDirectoryOnly))
+					DirectoryInfo DI = new DirectoryInfo(_s1);
+					if (DI.Exists)
 					{
-						if (Regex.IsMatch(_fi1.FullName, @"\.(exe|bat)$", RegexOptions.IgnoreCase))
+						foreach (FileInfo _fi1 in DI.GetFiles("*", SearchOption.TopDirectoryOnly))
 						{
-							ListDgvCmd.Add(Path.GetFileName(_fi1.FullName));
+							if (Regex.IsMatch(_fi1.FullName, @"\.(exe|bat)$", RegexOptions.IgnoreCase))
+							{
+								ListDgvCmd.Add(Path.GetFileName(_fi1.FullName));
+							}
 						}
 					}
 				}
@@ -4339,6 +4337,30 @@ namespace iwm_Commandliner3
 				}
 			}
 		}
+
+		//--------------------------------------------------------------------------------
+		// Debug Utility
+		//--------------------------------------------------------------------------------
+		/*
+		private void D(params string[] args)
+		{
+			foreach (string _s1 in args)
+			{
+				Debug.WriteLine(_s1);
+			}
+		}
+
+		private void M(params string[] args)
+		{
+			StringBuilder sb = new StringBuilder();
+			foreach (string _s1 in args)
+			{
+				_ = sb.Append(_s1);
+				_ = sb.Append("\r\n");
+			}
+			_ = MessageBox.Show(sb.ToString());
+		}
+		*/
 
 		//--------------------------------------------------------------------------------
 		// Main()
