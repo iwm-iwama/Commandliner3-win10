@@ -23,9 +23,9 @@ namespace iwm_Commandliner3
 		// 大域定数
 		//--------------------------------------------------------------------------------
 		private const string ProgramID = "iwm_Commandliner3.2";
-		private const string VERSION = "Ver.20211111 'A-29' (C)2018-2021 iwm-iwama";
+		private const string VERSION = "Ver.20211118 'A-29' (C)2018-2021 iwm-iwama";
 		// Ver.3.2
-		//   20211111
+		//   20211118
 		//   20211017
 		//   20210912
 		//   20210907
@@ -3539,7 +3539,7 @@ namespace iwm_Commandliner3
 				// 正規表現文法エラーはないか？
 				try
 				{
-					if (_s1.Length > 0 && bMatch == Regex.IsMatch(_s1, sSearch, RegexOptions.IgnoreCase))
+					if (bMatch == Regex.IsMatch(_s1, sSearch, RegexOptions.IgnoreCase))
 					{
 						_ = sb.Append(_s1);
 						_ = sb.Append(NL);
