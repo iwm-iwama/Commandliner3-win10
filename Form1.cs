@@ -140,6 +140,7 @@ namespace iwm_Commandliner3
 			"-------------------------------------" + NL +
 			"> マクロ・コマンド入力 特殊キー操作 <" + NL +
 			"-------------------------------------" + NL +
+			"[Ctrl]+[↑]          コンテキストメニュー表示" + NL +
 			"[Ctrl]+[↓]          履歴表示" + NL +
 			"[Ctrl]+[Space]       クリア" + NL +
 			"[Ctrl]+[Backspace]   カーソルより前方をクリア" + NL +
@@ -525,6 +526,14 @@ namespace iwm_Commandliner3
 				}
 				TbCmd.Text = TbCmdUndo;
 				SubTbCmdFocus(-1);
+				return;
+			}
+
+			// [Ctrl]+[↑]
+			if (e.KeyData == (Keys.Control | Keys.Up))
+			{
+				Cursor.Position = new Point(Left + (Width / 3), Top + SystemInformation.CaptionHeight + RtbCmdMemo.Location.Y);
+				CmsCmd.Show(Cursor.Position);
 				return;
 			}
 
