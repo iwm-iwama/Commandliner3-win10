@@ -877,7 +877,7 @@ namespace iwm_Commandliner3
 				int i1 = iPos + fbd.SelectedPath.Length + 3;
 				// " で囲む
 				// \ 付与
-				TbCmd.Text = TbCmd.Text.Substring(0, iPos) + "\"" + fbd.SelectedPath + "\\\"" + TbCmd.Text.Substring(iPos);
+				TbCmd.Text = TbCmd.Text.Substring(0, iPos) + "\"" + fbd.SelectedPath.TrimEnd('\\') + "\\\"" + TbCmd.Text.Substring(iPos);
 				TbCmd.SelectionStart = i1;
 			}
 		}
