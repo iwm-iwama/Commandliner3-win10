@@ -140,12 +140,13 @@ namespace iwm_Commandliner3
 			"-------------------------------------" + NL +
 			"> マクロ・コマンド入力 特殊キー操作 <" + NL +
 			"-------------------------------------" + NL +
-			"[Ctrl]+[↑]          履歴表示" + NL +
+			"[Ctrl]+[↓]          履歴表示" + NL +
 			"[Ctrl]+[Space]       クリア" + NL +
 			"[Ctrl]+[Backspace]   カーソルより前方をクリア" + NL +
 			"[Ctrl]+[Delete]      カーソルより後方をクリア" + NL +
 			NL +
-			"[PgUp] or [PgDn]     スペース位置へカーソル移動" + NL +
+			"[PgUp] or [PgDn]     カーソルを先頭／末尾へ移動" + NL +
+			"[↑] or [↓]         空白位置へカーソル移動" + NL +
 			NL +
 			"[F1]  マクロ・コマンド入力履歴" + NL +
 			"[F2]  マクロ選択" + NL +
@@ -527,8 +528,8 @@ namespace iwm_Commandliner3
 				return;
 			}
 
-			// [Ctrl]+[↑]
-			if (e.KeyData == (Keys.Control | Keys.Up))
+			// [Ctrl]+[↓]
+			if (e.KeyData == (Keys.Control | Keys.Down))
 			{
 				CbCmdHistory.DroppedDown = true;
 				_ = CbCmdHistory.Focus();
@@ -620,22 +621,22 @@ namespace iwm_Commandliner3
 					break;
 
 				case Keys.PageUp:
+					TbCmd.SelectionStart = 0;
+					break;
+
+				case Keys.PageDown:
+					TbCmd.SelectionStart = TbCmd.TextLength;
+					break;
+
+				case Keys.Up:
 					MC = Regex.Matches(TbCmd.Text.Substring(0, TbCmd.SelectionStart), @"\S+\s*$");
 					TbCmd.SelectionStart = MC.Count > 0 ? MC[0].Index : 0;
 					break;
 
-				case Keys.PageDown:
+				case Keys.Down:
 					iPos = TbCmd.SelectionStart;
 					MC = Regex.Matches(TbCmd.Text.Substring(iPos), @"\s\S+");
 					TbCmd.SelectionStart = MC.Count > 0 ? iPos + 1 + MC[0].Index : TbCmd.TextLength;
-					break;
-
-				case Keys.Up:
-					TbCmd.SelectionStart = 0;
-					break;
-
-				case Keys.Down:
-					TbCmd.SelectionStart = TbCmd.TextLength;
 					break;
 			}
 
@@ -1544,6 +1545,7 @@ namespace iwm_Commandliner3
 					break;
 
 				case Keys.PageUp:
+				case Keys.Up:
 					TbDgvCmdSearch.SelectionStart = 0;
 					break;
 
@@ -1551,7 +1553,6 @@ namespace iwm_Commandliner3
 					TbDgvCmdSearch.SelectionStart = TbDgvCmdSearch.TextLength;
 					break;
 
-				case Keys.Up:
 				case Keys.Down:
 					_ = DgvCmd.Focus();
 					break;
