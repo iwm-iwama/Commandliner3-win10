@@ -1472,11 +1472,6 @@ namespace iwm_Commandliner3
 			}
 		}
 
-		private void TbDgvCmdSearch_MouseEnter(object sender, EventArgs e)
-		{
-			_ = TbDgvCmdSearch.Focus();
-		}
-
 		private void TbDgvCmdSearch_Enter(object sender, EventArgs e)
 		{
 			TbDgvCmdSearch.BackColor = Color.LightYellow;

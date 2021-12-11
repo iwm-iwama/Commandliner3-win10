@@ -802,11 +802,11 @@
 			this.TbCurDir.Cursor = System.Windows.Forms.Cursors.Default;
 			this.TbCurDir.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.TbCurDir.ForeColor = System.Drawing.Color.White;
-			this.TbCurDir.Location = new System.Drawing.Point(12, 2);
+			this.TbCurDir.Location = new System.Drawing.Point(9, 2);
 			this.TbCurDir.Margin = new System.Windows.Forms.Padding(0);
 			this.TbCurDir.Name = "TbCurDir";
 			this.TbCurDir.ReadOnly = true;
-			this.TbCurDir.Size = new System.Drawing.Size(488, 13);
+			this.TbCurDir.Size = new System.Drawing.Size(490, 13);
 			this.TbCurDir.TabIndex = 0;
 			this.TbCurDir.TabStop = false;
 			this.TbCurDir.Text = "TbCurDir";
@@ -1022,7 +1022,6 @@
 			this.TbDgvCmdSearch.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbDgvCmdSearch_KeyPress);
 			this.TbDgvCmdSearch.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TbDgvCmdSearch_KeyUp);
 			this.TbDgvCmdSearch.Leave += new System.EventHandler(this.TbDgvCmdSearch_Leave);
-			this.TbDgvCmdSearch.MouseEnter += new System.EventHandler(this.TbDgvCmdSearch_MouseEnter);
 			// 
 			// CmsTbDgvCmdSearch
 			// 
@@ -1847,6 +1846,7 @@
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.DimGray;
 			this.ClientSize = new System.Drawing.Size(504, 441);
+			this.Controls.Add(this.TbCurDir);
 			this.Controls.Add(this.TbDgvCmdSearch);
 			this.Controls.Add(this.BtnDgvCmdSearch);
 			this.Controls.Add(this.SplitContainerResult);
@@ -1864,7 +1864,6 @@
 			this.Controls.Add(this.NudTbResult);
 			this.Controls.Add(this.Lbl2);
 			this.Controls.Add(this.TbResult);
-			this.Controls.Add(this.TbCurDir);
 			this.Controls.Add(this.BtnAllClear);
 			this.Controls.Add(this.LblResult);
 			this.Controls.Add(this.LblCmdMemo);
