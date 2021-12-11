@@ -714,20 +714,16 @@ namespace iwm_Commandliner3
 		private void TbCmd_DragDrop(object sender, DragEventArgs e)
 		{
 			int iPos = TbCmd.SelectionStart;
-
 			string s1 = "";
 			foreach (string _s1 in (string[])e.Data.GetData(DataFormats.FileDrop))
 			{
 				// " で囲む
 				// Dir のとき \ 付与
-				// 末尾に空白付与／確定後、取り除く
-				s1 += "\"" + _s1 + (Directory.Exists(_s1) ? "\\" : "") + "\" ";
+				// 末尾に空白付与
+				s1 += Directory.Exists(_s1) ? $"\"{_s1.TrimEnd('\\')}\\\" " : $"\"{_s1}\" ";
 			}
-			s1 = s1.TrimEnd();
-
-			int i1 = iPos + s1.Length;
 			TbCmd.Text = TbCmd.Text.Substring(0, iPos) + s1 + TbCmd.Text.Substring(iPos);
-			TbCmd.SelectionStart = i1;
+			TbCmd.SelectionStart = iPos + s1.Length + 1;
 		}
 
 		//--------------------------------------------------------------------------------
@@ -877,8 +873,9 @@ namespace iwm_Commandliner3
 				int i1 = iPos + fbd.SelectedPath.Length + 3;
 				// " で囲む
 				// \ 付与
-				TbCmd.Text = TbCmd.Text.Substring(0, iPos) + "\"" + fbd.SelectedPath.TrimEnd('\\') + "\\\"" + TbCmd.Text.Substring(iPos);
-				TbCmd.SelectionStart = i1;
+				// 末尾に空白付与
+				TbCmd.Text = TbCmd.Text.Substring(0, iPos) + $"\"{fbd.SelectedPath.TrimEnd('\\')}\\\" " + TbCmd.Text.Substring(iPos);
+				TbCmd.SelectionStart = i1 + 1;
 			}
 		}
 
@@ -895,10 +892,15 @@ namespace iwm_Commandliner3
 			if (ofd.ShowDialog() == DialogResult.OK)
 			{
 				int i1 = iPos + ofd.FileName.Length + 2;
-
-				// " で囲む
-				TbCmd.Text = TbCmd.Text.Substring(0, iPos) + "\"" + ofd.FileName + "\"" + TbCmd.Text.Substring(iPos);
-				TbCmd.SelectionStart = i1;
+				string s1 = "";
+				foreach (string _s1 in ofd.FileNames)
+				{
+					// " で囲む
+					// 末尾に空白付与
+					s1 += $"\"{_s1}\" ";
+				}
+				TbCmd.Text = TbCmd.Text.Substring(0, iPos) + s1 + TbCmd.Text.Substring(iPos);
+				TbCmd.SelectionStart = i1 + s1.Length + 1;
 			}
 		}
 

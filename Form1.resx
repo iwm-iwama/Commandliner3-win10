@@ -194,16 +194,6 @@
         K3ccvc9/Y61WC0Dq9Xrl8HdF0S9/6X2l+d6x/gAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="CmsResult_出力画面へコピー.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
-        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAAJRJREFUOE+tjjEK
-        QyEQBQX5FhaChYVgIVhYCBI8Qe5/iRwhR3hxYdlACGHBDEzz3AHNMWstnGjmnDjRjDFA8ofUSNd7B8m7
-        GulaayB5VyNdrRUk72qkK6WA5F2NdDlnkLyrkS6lBJJ3NdLFGEHyrka6EAJONN57nMgfenNd190599zi
-        w8d+u/HZd6y1dYtf8um/MOYF0deQjk6Od4kAAAAASUVORK5CYII=
-</value>
-  </data>
   <data name="CmsResult_出力画面へコピー_1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
@@ -254,16 +244,14 @@
         w8d+u/HZd6y1dYtf8um/MOYF0deQjk6Od4kAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="CmsResult_名前を付けて保存.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="CmsResult_出力画面へコピー.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
-        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAARZJREFUOE+NzA2O
-        gjAQBWBCJIgQKBAT+VeIBAJR4US92R5hj+ARehSOMDtly8KiCC/5knbaN9KQpmlI27YdgiX450t8f83j
-        8SD3+x3W3G635SV1XcMWVVW9X1KW5bMoig7BBu+X5HlOrtcrQ7BGVMakaQqXy4VmWUbwzPj9E1EbkyQJ
-        cHEc0/P5TPDMhtk7ovYb3/dJGIYwCIKARlHEZ2w6n+qLnufBktPpRPliPHfzN65fcDwe4RPx5zmfc/0C
-        x3Fgieu61LZtgudu/sb1C4YQjGVZMEFN0+QzNpv/EdUxhmGAQA+HA9F1nU1mL0RtjKZpgKiqqmS/3zNx
-        XyRq/7Pb7YiiKAzBGlEZI8vyN+oQbNBJkiT9ALuG53Sqd9ooAAAAAElFTkSuQmCC
+        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAAJRJREFUOE+tjjEK
+        QyEQBQX5FhaChYVgIVhYCBI8Qe5/iRwhR3hxYdlACGHBDEzz3AHNMWstnGjmnDjRjDFA8ofUSNd7B8m7
+        GulaayB5VyNdrRUk72qkK6WA5F2NdDlnkLyrkS6lBJJ3NdLFGEHyrka6EAJONN57nMgfenNd190599zi
+        w8d+u/HZd6y1dYtf8um/MOYF0deQjk6Od4kAAAAASUVORK5CYII=
 </value>
   </data>
   <data name="CmsResult_名前を付けて保存_SJIS.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -284,6 +272,18 @@
         2dkQEu0sy4K72gfmecZd7QPTNEF82cGD3crkkPZ0fRgGjOP4sIPH3lUmh9wvXTfGvO3hhHSoTAekf/36
         QN/3UJnC6LoOKlMYbdtCZQqjaRqoTGHUdQ2VKYyqqqAyhVEUBVSm62RZVuZ5DnWfubpGmqarCM+Vq2sk
         SbKJ8Ny4+k8cx/glr5Ao+gDTZnZdU2ZNhwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="CmsResult_名前を付けて保存.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
+        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAARZJREFUOE+NzA2O
+        gjAQBWBCJIgQKBAT+VeIBAJR4US92R5hj+ARehSOMDtly8KiCC/5knbaN9KQpmlI27YdgiX450t8f83j
+        8SD3+x3W3G635SV1XcMWVVW9X1KW5bMoig7BBu+X5HlOrtcrQ7BGVMakaQqXy4VmWUbwzPj9E1EbkyQJ
+        cHEc0/P5TPDMhtk7ovYb3/dJGIYwCIKARlHEZ2w6n+qLnufBktPpRPliPHfzN65fcDwe4RPx5zmfc/0C
+        x3Fgieu61LZtgudu/sb1C4YQjGVZMEFN0+QzNpv/EdUxhmGAQA+HA9F1nU1mL0RtjKZpgKiqqmS/3zNx
+        XyRq/7Pb7YiiKAzBGlEZI8vyN+oQbNBJkiT9ALuG53Sqd9ooAAAAAElFTkSuQmCC
 </value>
   </data>
   <metadata name="CmsCmd.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -333,73 +333,6 @@
         +ss0TaVRfIZhUOM4ahe0Z54c03Wd7vte4nmnu4Wb8do8OaZtW7u4mqZprAVVVcm6rhX5MzjfzRpAWZZs
         ATkLO51FUXxK8jxnf4Gche3nvkOapmwBuTNZlklkw/uOKEiShC0g5wLiOGYLyLmAKIrYAnIuIAxDHQSB
         NG8OIecCfN9/IvrESgWW+R/vL3HxPE+7MKv2CCEUonmEegErbanOr3DwnwAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="CmsCmd_マクロ変数.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAD2SURBVDhPlZHbqYNAFEVFUfGBBkVFf3yAIio6Wokl
-        WEJKSAcpIaVYyi1hSph7DpxAfjIZFyzY7H2+ZjQZ27bdQb6ua4Vixo7m3zBgWRY+z/MDfGHGjmY5wzBU
-        IJum6RjHkaOQd+xwo7Pv9H0vZNLZd7quq0DWtu0BcnLHDjc6k1PXNWuahoMP8IUZO5p/U5blHeQVgRk7
-        muUURbGD6l/2SZZlLM9zgVJ1jSRJTlCkafqkSp0oig5QgDyO4xvVagRBcAvDkIMCPKhWx/O8p+/7Ajyp
-        Use2beY4jkBd11X/6zemaZ6gsCzr+sMhuq7/oYZhXHg4TfsHsJtJRvucc3cAAAAASUVORK5CYII=
-</value>
-  </data>
-  <data name="CmsCmd_フォルダ選択.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
-        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAALJJREFUOE+lkEEK
-        hDAMRYMLUVQoKCgu3AmCVKsn8Uje0KPkCH+iqCPCzHTsg0fbnwba0MowDMs4jjiUMxthK/6i67q573vc
-        lXzRWqv92mfatmURD2VqmgYuUl3X0/6Yv3HpfVNVFVyksizhIuV5DluLophk5WtGaZrC1vXLWZYZ2fOZ
-        KaXwzW1QNySfz3qSJLB1bY6iyMRxzGcWhiFsDYJgkpWvGfm+DxfJ8zy4uA3lOUQvFjviTuZL+ZgAAAAA
-        SUVORK5CYII=
-</value>
-  </data>
-  <data name="CmsCmd_ファイル選択.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
-        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAAQJJREFUOE+NkumJ
-        hEAQhUX0hygqiuB9gaIoXhFNKJuJoRjKhtAh1JY9nrMtPQ8+WqrqPdpSYRxHc5omgsATODMLTxqGwez7
-        Hnh0Xfcc0rYtfEPTNOyQqqrgC0hd1wueP5vtVFEUwIGUZWlu4/+V5zlwWPa5LMte1HRVkiTwAEHmNE2p
-        aa/HcXwPCcMQGJAoio5r+75vXvtBEJwhnucBgxlJP2o3XNd9hziOAwzothn1GzTAsixgQL85o35g2/b7
-        BoZhAAOi6/qxAxP10T93oGkasFBVlSAzQocvvdO8SlEU4ED/g+35bl4lyzJwIJIk0dfZz5tEUSQIcFhn
-        FuR3s6EE4Q+1NeE2NPUeKAAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="CmsCmd_コマンドをグループ化.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADUSURBVDhPpY9NCoQwDIVLEcGFIFgUBKWCC4sLf04w
-        R/MGHmGO4BHmSB4hk4RSlIGx6oNHk7Tf04jHGsdxm6YJ7phY0fc9XPRnf4qu6+CJRdu2YIwZ7EbeIoZY
-        0TQN2NllMVvXtQvQWs/oxbanYraqKheA9UJ9WZZvO/orZouiOKyA/Uoz9OmfMJvn+SEgy7KVZujTAGbT
-        NHUBWC/UK6W8VmA2SRIXgPWM5i/jqelub360E8/iOP658BWzURTdDmA2DEMIguBlZ95CZiBWSCk3NNyz
-        3L4+/IvSDXCEZwAAAABJRU5ErkJggg==
-</value>
-  </data>
-  <data name="CmsCmd_コマンドを保存.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
-        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAARZJREFUOE+NzA2O
-        gjAQBWBCJIgQKBAT+VeIBAJR4US92R5hj+ARehSOMDtly8KiCC/5knbaN9KQpmlI27YdgiX450t8f83j
-        8SD3+x3W3G635SV1XcMWVVW9X1KW5bMoig7BBu+X5HlOrtcrQ7BGVMakaQqXy4VmWUbwzPj9E1EbkyQJ
-        cHEc0/P5TPDMhtk7ovYb3/dJGIYwCIKARlHEZ2w6n+qLnufBktPpRPliPHfzN65fcDwe4RPx5zmfc/0C
-        x3Fgieu61LZtgudu/sb1C4YQjGVZMEFN0+QzNpv/EdUxhmGAQA+HA9F1nU1mL0RtjKZpgKiqqmS/3zNx
-        XyRq/7Pb7YiiKAzBGlEZI8vyN+oQbNBJkiT9ALuG53Sqd9ooAAAAAElFTkSuQmCC
-</value>
-  </data>
-  <data name="CmsCmd_コマンドを読込.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
-        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAAQJJREFUOE+NkumJ
-        hEAQhUX0hygqiuB9gaIoXhFNKJuJoRjKhtAh1JY9nrMtPQ8+WqrqPdpSYRxHc5omgsATODMLTxqGwez7
-        Hnh0Xfcc0rYtfEPTNOyQqqrgC0hd1wueP5vtVFEUwIGUZWlu4/+V5zlwWPa5LMte1HRVkiTwAEHmNE2p
-        aa/HcXwPCcMQGJAoio5r+75vXvtBEJwhnucBgxlJP2o3XNd9hziOAwzothn1GzTAsixgQL85o35g2/b7
-        BoZhAAOi6/qxAxP10T93oGkasFBVlSAzQocvvdO8SlEU4ED/g+35bl4lyzJwIJIk0dfZz5tEUSQIcFhn
-        FuR3s6EE4Q+1NeE2NPUeKAAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="CmsCmd_マクロ変数_タブ.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -454,17 +387,6 @@
         nDcRVGbnpNsVsQAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="CmsCmd_マクロ変数_日付.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
-        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAAOJJREFUOE+lkm0K
-        RVAQhk/KD5GvopRSSgnlsCJLuEuwg7skS7KEuTOnMaHcq+utpzke8yqhKMMwhOM4rgjQNPKUrzta67Dv
-        e8A50WR9yOVO27Zz13VANE0zbecr9jvUVXVdwxNUVVXwBFWWJTATv9XP4O5r66miKOAJKs9zIPjhtyO9
-        LMuAYH870kuSBAj2JmmazpvD8xtZ8Prw80gvjmMg2Ev2Looifd6RXhAEQLCXbM73fY3nFTl8Jel5ngcE
-        exPXdd/keC44V2Th2ybScxwHCPa3Iz3btuEJyrKsGYH/sOYPIKPHX0/Y4C8AAAAASUVORK5CYII=
-</value>
-  </data>
   <data name="CmsCmd_マクロ変数_年.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
@@ -498,16 +420,15 @@
         exPXdd/keC44V2Th2ybScxwHCPa3Iz3btuEJyrKsGYH/sOYPIKPHX0/Y4C8AAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="CmsCmd_マクロ変数_時間.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="CmsCmd_マクロ変数_日付.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
-        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAAQpJREFUOE+t0tup
-        g0AQAFBRUPxQFwRFP0RBfCA+K7EEO9qSLMUStoTJzGZDjJpchDtwGHZehCTav8cwDGwcR462aZrghd5U
-        p74aPUfbtnPXdaLve9hZ92/q05xaeUfTNDOCG95HiqJgZVmKqqrgqK7r5apO87QnD+R5zhFcUf3LHuLy
-        QJqmW5ZlcIX6V3VCe/JAkiTwzZ/9OI5TBGhV+UMURQNmcawjOS8/QRiG8E0QBALzgiif+vKA7/sbgh8E
-        WlTe15/fAWOMI/jF8zyBeTnUn7+C67rMcRyB4AZBe/IAhW3bM4Ibzn9ny7Jm0zQFgp318BY0p1bOYRgG
-        Q1zX9Q3BzkZ16qtRDE17AF1v626O0WtEAAAAAElFTkSuQmCC
+        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAAOJJREFUOE+lkm0K
+        RVAQhk/KD5GvopRSSgnlsCJLuEuwg7skS7KEuTOnMaHcq+utpzke8yqhKMMwhOM4rgjQNPKUrzta67Dv
+        e8A50WR9yOVO27Zz13VANE0zbecr9jvUVXVdwxNUVVXwBFWWJTATv9XP4O5r66miKOAJKs9zIPjhtyO9
+        LMuAYH870kuSBAj2JmmazpvD8xtZ8Prw80gvjmMg2Ev2Looifd6RXhAEQLCXbM73fY3nFTl8Jel5ngcE
+        exPXdd/keC44V2Th2ybScxwHCPa3Iz3btuEJyrKsGYH/sOYPIKPHX0/Y4C8AAAAASUVORK5CYII=
 </value>
   </data>
   <data name="CmsCmd_マクロ変数_時.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
@@ -535,6 +456,18 @@
 </value>
   </data>
   <data name="CmsCmd_マクロ変数_秒.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
+        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAAQpJREFUOE+t0tup
+        g0AQAFBRUPxQFwRFP0RBfCA+K7EEO9qSLMUStoTJzGZDjJpchDtwGHZehCTav8cwDGwcR462aZrghd5U
+        p74aPUfbtnPXdaLve9hZ92/q05xaeUfTNDOCG95HiqJgZVmKqqrgqK7r5apO87QnD+R5zhFcUf3LHuLy
+        QJqmW5ZlcIX6V3VCe/JAkiTwzZ/9OI5TBGhV+UMURQNmcawjOS8/QRiG8E0QBALzgiif+vKA7/sbgh8E
+        WlTe15/fAWOMI/jF8zyBeTnUn7+C67rMcRyB4AZBe/IAhW3bM4Ibzn9ny7Jm0zQFgp318BY0p1bOYRgG
+        Q1zX9Q3BzkZ16qtRDE17AF1v626O0WtEAAAAAElFTkSuQmCC
+</value>
+  </data>
+  <data name="CmsCmd_マクロ変数_時間.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
@@ -610,6 +543,39 @@
         zHuAzlj7IqSUCuyMSUNBE9BuJD0Bvm+dBoGldeIAAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="CmsCmd_マクロ変数.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAD2SURBVDhPlZHbqYNAFEVFUfGBBkVFf3yAIio6Wokl
+        WEJKSAcpIaVYyi1hSph7DpxAfjIZFyzY7H2+ZjQZ27bdQb6ua4Vixo7m3zBgWRY+z/MDfGHGjmY5wzBU
+        IJum6RjHkaOQd+xwo7Pv9H0vZNLZd7quq0DWtu0BcnLHDjc6k1PXNWuahoMP8IUZO5p/U5blHeQVgRk7
+        muUURbGD6l/2SZZlLM9zgVJ1jSRJTlCkafqkSp0oig5QgDyO4xvVagRBcAvDkIMCPKhWx/O8p+/7Ajyp
+        Use2beY4jkBd11X/6zemaZ6gsCzr+sMhuq7/oYZhXHg4TfsHsJtJRvucc3cAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="CmsCmd_フォルダ選択.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
+        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAALJJREFUOE+lkEEK
+        hDAMRYMLUVQoKCgu3AmCVKsn8Uje0KPkCH+iqCPCzHTsg0fbnwba0MowDMs4jjiUMxthK/6i67q573vc
+        lXzRWqv92mfatmURD2VqmgYuUl3X0/6Yv3HpfVNVFVyksizhIuV5DluLophk5WtGaZrC1vXLWZYZ2fOZ
+        KaXwzW1QNySfz3qSJLB1bY6iyMRxzGcWhiFsDYJgkpWvGfm+DxfJ8zy4uA3lOUQvFjviTuZL+ZgAAAAA
+        SUVORK5CYII=
+</value>
+  </data>
+  <data name="CmsCmd_ファイル選択.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
+        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAAQJJREFUOE+NkumJ
+        hEAQhUX0hygqiuB9gaIoXhFNKJuJoRjKhtAh1JY9nrMtPQ8+WqrqPdpSYRxHc5omgsATODMLTxqGwez7
+        Hnh0Xfcc0rYtfEPTNOyQqqrgC0hd1wueP5vtVFEUwIGUZWlu4/+V5zlwWPa5LMte1HRVkiTwAEHmNE2p
+        aa/HcXwPCcMQGJAoio5r+75vXvtBEJwhnucBgxlJP2o3XNd9hziOAwzothn1GzTAsixgQL85o35g2/b7
+        BoZhAAOi6/qxAxP10T93oGkasFBVlSAzQocvvdO8SlEU4ED/g+35bl4lyzJwIJIk0dfZz5tEUSQIcFhn
+        FuR3s6EE4Q+1NeE2NPUeKAAAAABJRU5ErkJggg==
+</value>
+  </data>
   <data name="CmsCmd_コマンドをグループ化_追加.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
@@ -645,6 +611,28 @@
         XLagMFOf+cp7KRaLaaFQUGDBYP36y4+Sy+UiMPl8/o/HQnwCR3qKj8Tasf4AAAAASUVORK5CYII=
 </value>
   </data>
+  <data name="CmsCmd_コマンドをグループ化.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAADUSURBVDhPpY9NCoQwDIVLEcGFIFgUBKWCC4sLf04w
+        R/MGHmGO4BHmSB4hk4RSlIGx6oNHk7Tf04jHGsdxm6YJ7phY0fc9XPRnf4qu6+CJRdu2YIwZ7EbeIoZY
+        0TQN2NllMVvXtQvQWs/oxbanYraqKheA9UJ9WZZvO/orZouiOKyA/Uoz9OmfMJvn+SEgy7KVZujTAGbT
+        NHUBWC/UK6W8VmA2SRIXgPWM5i/jqelub360E8/iOP658BWzURTdDmA2DEMIguBlZ95CZiBWSCk3NNyz
+        3L4+/IvSDXCEZwAAAABJRU5ErkJggg==
+</value>
+  </data>
+  <data name="CmsCmd_コマンドを保存.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
+        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAARZJREFUOE+NzA2O
+        gjAQBWBCJIgQKBAT+VeIBAJR4US92R5hj+ARehSOMDtly8KiCC/5knbaN9KQpmlI27YdgiX450t8f83j
+        8SD3+x3W3G635SV1XcMWVVW9X1KW5bMoig7BBu+X5HlOrtcrQ7BGVMakaQqXy4VmWUbwzPj9E1EbkyQJ
+        cHEc0/P5TPDMhtk7ovYb3/dJGIYwCIKARlHEZ2w6n+qLnufBktPpRPliPHfzN65fcDwe4RPx5zmfc/0C
+        x3Fgieu61LZtgudu/sb1C4YQjGVZMEFN0+QzNpv/EdUxhmGAQA+HA9F1nU1mL0RtjKZpgKiqqmS/3zNx
+        XyRq/7Pb7YiiKAzBGlEZI8vyN+oQbNBJkiT9ALuG53Sqd9ooAAAAAElFTkSuQmCC
+</value>
+  </data>
   <data name="CmsCmd_コマンドを読込_再読込.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
@@ -654,6 +642,18 @@
         tVEcxxRFX8QkvRmJAYIgQOH5yv8pDENFvYH4FgvA930U3h7wUtfrFZnL5fLyCmudz+eI2P4DnueNBLqu
         O51Op90jLuKMO9zljdgAjuMoAhnbtgfLsnaHsMfZ0uONRA8dj8eeQMY0zckwjI5QQsfeknNXZlvput4T
         +IbX40WHw0FpmjYS+IeRM6l9SgA/Pt2Dmut5KacAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="CmsCmd_コマンドを読込.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
+        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAAQJJREFUOE+NkumJ
+        hEAQhUX0hygqiuB9gaIoXhFNKJuJoRjKhtAh1JY9nrMtPQ8+WqrqPdpSYRxHc5omgsATODMLTxqGwez7
+        Hnh0Xfcc0rYtfEPTNOyQqqrgC0hd1wueP5vtVFEUwIGUZWlu4/+V5zlwWPa5LMte1HRVkiTwAEHmNE2p
+        aa/HcXwPCcMQGJAoio5r+75vXvtBEJwhnucBgxlJP2o3XNd9hziOAwzothn1GzTAsixgQL85o35g2/b7
+        BoZhAAOi6/qxAxP10T93oGkasFBVlSAzQocvvdO8SlEU4ED/g+35bl4lyzJwIJIk0dfZz5tEUSQIcFhn
+        FuR3s6EE4Q+1NeE2NPUeKAAAAABJRU5ErkJggg==
 </value>
   </data>
   <metadata name="CmsTbCurDir.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
@@ -854,18 +854,6 @@
         mOFpr1WndxOM9iw5jpONRiMrMJC9En49bXjI+j0n+wS4Y5DM7PCtBwAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="CmsTextSelect_ネット検索.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
-        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAAPlJREFUOE+tkFuq
-        hDAQRMWgIChE/BAUBMUPn/hYwSzJJbgDlzRL69vVRCHCBWeYgkO66FSb1vmJlmXZ13WlT0HOGcdRT9NE
-        T5mNTu8Mw6D7vqendF03M6/TywpN09C3yIC6rgmIeSgrU5YlATFGvN/Bq2JnAd60RFamKAoCYlj8tKNt
-        WzzxfTuvIVYmyzICYlhVVeF5M7OZeoNHba7YmTRNCYhh5XlO/2Gu2JkkSQiIYaGO43hmNlNv8Pc7l9da
-        ExDDiqLoCMOQ+HzfzusfWBluoHkNgHzfPzzPoxN40xJZmSAICIh5KCvD0/GFr5ABSqnddV36FKXU/geS
-        mNUNwF0btAAAAABJRU5ErkJggg==
-</value>
-  </data>
   <data name="CmsTextSelect_ネット検索_URLを開く.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
@@ -939,6 +927,18 @@
         VQDSAPU/PXbdcrlUEIA0QP0/T91isVBiv6wy0IXYWpmiN5/PBSgoPtJsNvPYUxCMlJrZ7NBnR9x0OvVA
         wWsymTx52t5EPfN56Gg0yoCWSMbjcYRTiN0T8758/kic4XAYDQaDALTf74der5c/GbsQ3qnRY4ZZdqgX
         0+12o06nkwEtEYyyljFrtd9pt9u+1WoJ0BpCz2I2zr0BxArOq3VWZMgAAAAASUVORK5CYII=
+</value>
+  </data>
+  <data name="CmsTextSelect_ネット検索.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+    <value>
+        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
+        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
+        IEF0dHJpYnV0aW9uIE5vbi1Db21tZXJjaWFsIE5vIERlcml2YXRpdmVze92woAAAAPlJREFUOE+tkFuq
+        hDAQRMWgIChE/BAUBMUPn/hYwSzJJbgDlzRL69vVRCHCBWeYgkO66FSb1vmJlmXZ13WlT0HOGcdRT9NE
+        T5mNTu8Mw6D7vqendF03M6/TywpN09C3yIC6rgmIeSgrU5YlATFGvN/Bq2JnAd60RFamKAoCYlj8tKNt
+        WzzxfTuvIVYmyzICYlhVVeF5M7OZeoNHba7YmTRNCYhh5XlO/2Gu2JkkSQiIYaGO43hmNlNv8Pc7l9da
+        ExDDiqLoCMOQ+HzfzusfWBluoHkNgHzfPzzPoxN40xJZmSAICIh5KCvD0/GFr5ABSqnddV36FKXU/geS
+        mNUNwF0btAAAAABJRU5ErkJggg==
 </value>
   </data>
   <data name="CmsTextSelect_関連付けられたアプリケーションで開く.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
