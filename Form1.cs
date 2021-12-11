@@ -2472,7 +2472,7 @@ namespace iwm_Commandliner3
 			{
 				// Key重複回避のため一応遅延
 				Thread.Sleep(10);
-				DictResultHistory.Add(DateTime.Now.ToString("HH:mm:ss_fff"), TbResult.Text);
+				DictResultHistory.Add(DateTime.Now.ToString("HH:mm:ss.ff"), TbResult.Text);
 			}
 		}
 
@@ -3112,7 +3112,8 @@ namespace iwm_Commandliner3
 		{
 			if (CbResultHistory.Text.Length > 0)
 			{
-				TbResult.Text = DictResultHistory[CbResultHistory.Text.Substring(0, 12)];
+				// "HH:mm:ss.ff".Length => 11
+				TbResult.Text = DictResultHistory[CbResultHistory.Text.Substring(0, 11)];
 				// TbResult.SelectionStart = NUM 不可
 				TbResult.ScrollToCaret();
 			}
