@@ -166,8 +166,8 @@ namespace iwm_Commandliner3
 			"---------------------------" + NL +
 			"[←]                 最上部へ移動" + NL +
 			"[→]                 最下部へ移動" + NL +
-			"[A]..[Z]             上から下へ先頭の１文字を検索" + NL +
-			"[Shift]+[A]..[Z]     下から上へ先頭の１文字を検索" + NL +
+			"[A]..[Z]             下位へ先頭１文字を検索" + NL +
+			"[Shift]+[A]..[Z]     上位へ先頭１文字を検索" + NL +
 			NL +
 			"-----------------------------" + NL +
 			"> コマンド検索 特殊キー操作 <" + NL +
@@ -176,7 +176,7 @@ namespace iwm_Commandliner3
 			"[Ctrl]+[Space]       クリア" + NL +
 			"[Ctrl]+[Backspace]   カーソルより前方をクリア" + NL +
 			"[Ctrl]+[Delete]      カーソルより後方をクリア" + NL +
-			"[↑] or [↓]         コマンド選択へ移動" + NL +
+			"[↓]                 コマンド選択へ移動" + NL +
 			NL +
 			"-----------------------------" + NL +
 			"> コマンド選択 特殊キー操作 <" + NL +
@@ -1553,12 +1553,14 @@ namespace iwm_Commandliner3
 					break;
 
 				case Keys.PageUp:
-				case Keys.Up:
 					TbDgvCmdSearch.SelectionStart = 0;
 					break;
 
 				case Keys.PageDown:
 					TbDgvCmdSearch.SelectionStart = TbDgvCmdSearch.TextLength;
+					break;
+
+				case Keys.Up:
 					break;
 
 				case Keys.Down:
