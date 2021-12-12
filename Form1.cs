@@ -415,13 +415,7 @@ namespace iwm_Commandliner3
 
 		private void TbCurDir_MouseEnter(object sender, EventArgs e)
 		{
-			TbCurDir.BackColor = Color.Black;
 			ToolTip1.SetToolTip(TbCurDir, TbCurDir.Text.Replace("\\", NL));
-		}
-
-		private void TbCurDir_MouseLeave(object sender, EventArgs e)
-		{
-			TbCurDir.BackColor = Color.DimGray;
 		}
 
 		private void TbCurDir_DragEnter(object sender, DragEventArgs e)
@@ -727,6 +721,18 @@ namespace iwm_Commandliner3
 		// CmsCmd
 		//--------------------------------------------------------------------------------
 		private string GblCmsCmdBatch = "";
+
+		private void CmsCmd_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+		{
+			// 一度カーソルを外さないと表示が消えてしまう
+			_ = TbCurDir.Focus();
+
+			// ちらつきを防止
+			TbCurDir.Select(0, 0);
+
+			// 再フォーカス
+			_ = TbCmd.Focus();
+		}
 
 		private void CmsCmd_クリア_Click(object sender, EventArgs e)
 		{
