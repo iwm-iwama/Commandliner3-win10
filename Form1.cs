@@ -1294,8 +1294,15 @@ namespace iwm_Commandliner3
 				DgvCmd.Width = 68;
 				DgvCmd.Height = 23;
 
-				BtnDgvCmdSearch.Visible = false;
 				TbDgvCmdSearch.Visible = false;
+				BtnDgvCmdSearch.Visible = false;
+
+				using (DataGridViewCell _o1 = DgvCmd[0, 0])
+				{
+					_o1.Selected = true;
+					_o1.Style.SelectionBackColor = Color.Empty;
+					_o1.Style.SelectionForeColor = Color.Empty;
+				}
 
 				SubTbCmdFocus(GblTbCmdPos);
 			}
@@ -1315,13 +1322,20 @@ namespace iwm_Commandliner3
 
 				DgvCmd.Height = Height - 217;
 
-				BtnDgvCmdSearch.Visible = true;
 				TbDgvCmdSearch.Visible = true;
+				BtnDgvCmdSearch.Visible = true;
 
 				BtnDgvCmdSearch.BringToFront();
 				TbDgvCmdSearch.BringToFront();
 
 				_ = TbDgvCmdSearch.Focus();
+
+				using (DataGridViewCell _o1 = DgvCmd[0, 0])
+				{
+					_o1.Selected = true;
+					_o1.Style.SelectionBackColor = DgvCmd.DefaultCellStyle.BackColor;
+					_o1.Style.SelectionForeColor = DgvCmd.DefaultCellStyle.ForeColor;
+				}
 			}
 		}
 
@@ -1333,6 +1347,28 @@ namespace iwm_Commandliner3
 		private void DgvCmd_Leave(object sender, EventArgs e)
 		{
 			Lbl_F3.ForeColor = Color.Gray;
+		}
+
+		private void DgvCmd_CellEnter(object sender, DataGridViewCellEventArgs e)
+		{
+			DgvCellColor(sender, e, Color.Empty, Color.Empty);
+		}
+
+		private void DgvCmd_CellLeave(object sender, DataGridViewCellEventArgs e)
+		{
+			DgvCellColor(sender, e, DgvCmd.DefaultCellStyle.BackColor, DgvCmd.DefaultCellStyle.ForeColor);
+		}
+
+		private void DgvCellColor(object sender, DataGridViewCellEventArgs e, Color BackColor, Color ForeColor)
+		{
+			if (e.ColumnIndex >= 0 && e.RowIndex >= 0)
+			{
+				using (DataGridViewCell _o1 = ((DataGridView)sender)[e.ColumnIndex, e.RowIndex])
+				{
+					_o1.Style.SelectionBackColor = BackColor;
+					_o1.Style.SelectionForeColor = ForeColor;
+				}
+			}
 		}
 
 		private void DgvCmd_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
@@ -3180,18 +3216,6 @@ namespace iwm_Commandliner3
 				NudTbResult_CurSize = NudTbResult.Value;
 				NudTbResult.Value = NudTbResult_BaseSize;
 			}
-		}
-
-		private void NudTbResult_Enter(object sender, EventArgs e)
-		{
-			NudTbResult.ForeColor = Color.White;
-			NudTbResult.BackColor = Color.RoyalBlue;
-		}
-
-		private void NudTbResult_Leave(object sender, EventArgs e)
-		{
-			NudTbResult.ForeColor = Color.White;
-			NudTbResult.BackColor = Color.DimGray;
 		}
 
 		private void NudTbResult_ValueChanged(object sender, EventArgs e)
