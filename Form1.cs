@@ -1741,7 +1741,7 @@ namespace iwm_Commandliner3
 
 		private string RtnCmdFormat(string str)
 		{
-			Regex rgx = new Regex("(?<pattern>\"[^\"]*\"?)", RegexOptions.None);
+			Regex rgx = new Regex("(?<pattern>\"[^\"]*\"?)");
 			foreach (Match _m1 in rgx.Matches(str))
 			{
 				string _sOld = _m1.Groups["pattern"].Value;
@@ -1829,12 +1829,12 @@ namespace iwm_Commandliner3
 				string[] aOp = { "", "", "", "" };
 
 				// aOp[0] 取得
-				rgx = new Regex("^(?<pattern>\\S+?)\\s", RegexOptions.None);
+				rgx = new Regex("^(?<pattern>\\S+?)\\s");
 				match = rgx.Match(cmd);
 				aOp[0] = match.Groups["pattern"].Value;
 
 				// aOp[1..n] 取得
-				rgx = new Regex("\"(?<pattern>.*?)\"\\s", RegexOptions.None);
+				rgx = new Regex("\"(?<pattern>.*?)\"\\s");
 				i1 = 1;
 				foreach (Match _m1 in rgx.Matches(cmd))
 				{
@@ -3583,7 +3583,7 @@ namespace iwm_Commandliner3
 				cmd = Regex.Replace(cmd, "#{s}", dt.ToString("ss"), RegexOptions.IgnoreCase);
 
 				// 環境変数
-				rgx = new Regex("#{(?<pattern>\\S+?)}", RegexOptions.None);
+				rgx = new Regex("#{(?<pattern>\\S+?)}");
 				match = rgx.Match(cmd);
 				string s1 = match.Groups["pattern"].Value;
 				string s2 = Environment.GetEnvironmentVariable(s1);
