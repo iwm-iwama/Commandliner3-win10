@@ -722,14 +722,18 @@ namespace iwm_Commandliner3
 		//--------------------------------------------------------------------------------
 		private string GblCmsCmdBatch = "";
 
+		private void CmsCmd_Opened(object sender, EventArgs e)
+		{
+			_ = TbCmd.Focus();
+		}
+
 		private void CmsCmd_Closed(object sender, ToolStripDropDownClosedEventArgs e)
 		{
+			// [Ctrl]+[↓] で開くため、以下の小技で補正
 			// 一度カーソルを外さないと表示が消えてしまう
 			_ = TbCurDir.Focus();
-
 			// ちらつきを防止
 			TbCurDir.Select(0, 0);
-
 			// 再フォーカス
 			_ = TbCmd.Focus();
 		}
@@ -996,6 +1000,7 @@ namespace iwm_Commandliner3
 		private void RtbCmdMemo_Leave(object sender, EventArgs e)
 		{
 			LblCmdMemo.Visible = false;
+			SubRtbCmdMemoResize(false);
 		}
 
 		private void RtbCmdMemo_MouseUp(object sender, MouseEventArgs e)
@@ -1006,6 +1011,11 @@ namespace iwm_Commandliner3
 		//--------------------------------------------------------------------------------
 		// CmsCmdMemo
 		//--------------------------------------------------------------------------------
+		private void CmsCmdMemo_Opened(object sender, EventArgs e)
+		{
+			_ = RtbCmdMemo.Focus();
+		}
+
 		private void CmsCmdMemo_クリア_Click(object sender, EventArgs e)
 		{
 			RtbCmdMemo.Text = "";
@@ -1624,6 +1634,11 @@ namespace iwm_Commandliner3
 		//--------------------------------------------------------------------------------
 		// CmsTbDgvCmdSearch
 		//--------------------------------------------------------------------------------
+		private void CmsTbDgvCmdSearch_Opened(object sender, EventArgs e)
+		{
+			_ = TbDgvCmdSearch.Focus();
+		}
+
 		private void CmsTbDgvCmdSearch_クリア_Click(object sender, EventArgs e)
 		{
 			DgvCmd.Enabled = false;
@@ -2636,6 +2651,11 @@ namespace iwm_Commandliner3
 		//--------------------------------------------------------------------------------
 		// CmsResult
 		//--------------------------------------------------------------------------------
+		private void CmsResult_Opened(object sender, EventArgs e)
+		{
+			_ = TbResult.Focus();
+		}
+
 		private void CmsResult_全選択_Click(object sender, EventArgs e)
 		{
 			TbResult.SelectAll();
