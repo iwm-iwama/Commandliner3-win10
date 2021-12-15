@@ -4283,8 +4283,8 @@ namespace iwm_Commandliner3
 		//--------------------------------------------------------------------------------
 		// File Read/Write
 		//--------------------------------------------------------------------------------
-		private const string CMD_FILTER = "Command (*.iwmcmd)|*.iwmcmd|All files (*.*)|*.*";
-		private const string TEXT_FILTER = "Text (*.txt)|*.txt|TSV (*.tsv)|*.tsv|CSV (*.csv)|*.csv|HTML (*.html,*.htm)|*.html,*.htm|All files (*.*)|*.*";
+		private const string CMD_FILTER = "All files (*.*)|*.*|Command (*.iwmcmd)|*.iwmcmd";
+		private const string TEXT_FILTER = "All files (*.*)|*.*|Text (*.txt)|*.txt|TSV (*.tsv)|*.tsv|CSV (*.csv)|*.csv|HTML (*.html,*.htm)|*.html,*.htm";
 
 		private (string, string) RtnTextFileRead(string fn, bool bGuiOn, string filter) // return(ファイル名, データ)
 		{
