@@ -729,7 +729,6 @@ namespace iwm_Commandliner3
 
 		private void CmsCmd_Closed(object sender, ToolStripDropDownClosedEventArgs e)
 		{
-			// [Ctrl]+[↓] で開くため、以下の小技で補正
 			// 一度カーソルを外さないと表示が消えてしまう
 			_ = TbCurDir.Focus();
 			// ちらつきを防止
@@ -933,26 +932,31 @@ namespace iwm_Commandliner3
 			GblCmsCmdBatch = CmsCmd_コマンドをグループ化_追加.ToolTipText = CmsCmd_コマンドをグループ化_出力.ToolTipText = "";
 		}
 
+		private string GblCmsCmdFn = null;
+
 		private void CmsCmd_コマンドを保存_Click(object sender, EventArgs e)
 		{
-			_ = RtnTextFileWrite(RtnCmdFormat(TbCmd.Text).Trim().TrimEnd(';') + ";" + NL, 932, DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".iwmcmd", true, CMD_FILTER);
+			string fn = (GblCmsCmdFn == null ? "" : Path.GetDirectoryName(GblCmsCmdFn) + "\\") + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".iwmcmd";
+			if (RtnTextFileWrite(RtnCmdFormat(TbCmd.Text).Trim().TrimEnd(';') + ";" + NL, 932, fn, true, CMD_FILTER))
+			{
+				GblCmsCmdFn = fn;
+			}
 		}
-
-		private string GblCmsCmdInputFn = "";
 
 		private void CmsCmd_コマンドを読込_Click(object sender, EventArgs e)
 		{
 			CmsCmd.Close();
 
-			(string fn, string data) = RtnTextFileRead("", true, CMD_FILTER);
+			(string fn, string data) = RtnTextFileRead(GblCmsCmdFn, true, CMD_FILTER);
 			if (fn.Length > 0)
 			{
-				GblCmsCmdInputFn = fn;
+				GblCmsCmdFn = fn;
+
 				TbCmd.Text = Regex.Replace(data, RgxCmdNL, "; ");
 				SubTbCmdFocus(-1);
 
 				string s1 = "";
-				foreach (string _s1 in GblCmsCmdInputFn.Split('\\'))
+				foreach (string _s1 in GblCmsCmdFn.Split('\\'))
 				{
 					s1 += $"{_s1}{NL}";
 				}
@@ -962,9 +966,9 @@ namespace iwm_Commandliner3
 
 		private void CmsCmd_コマンドを読込_再読込_Click(object sender, EventArgs e)
 		{
-			if (GblCmsCmdInputFn.Length > 0)
+			if (GblCmsCmdFn.Length > 0)
 			{
-				(_, string data) = RtnTextFileRead(GblCmsCmdInputFn, false, "");
+				(_, string data) = RtnTextFileRead(GblCmsCmdFn, false, "");
 				TbCmd.Text = Regex.Replace(data, RgxCmdNL, "; ");
 				SubTbCmdFocus(-1);
 			}
@@ -2493,6 +2497,16 @@ namespace iwm_Commandliner3
 		private string TbResultUndo = "";
 		private string TbResultRedo = "";
 
+		private void CmsResult_Closed(object sender, ToolStripDropDownClosedEventArgs e)
+		{
+			// 一度カーソルを外さないと表示が消えてしまう
+			_ = TbCurDir.Focus();
+			// ちらつきを防止
+			TbCurDir.Select(0, 0);
+			// 再フォーカス
+			_ = TbResult.Focus();
+		}
+
 		private void TbResult_Enter(object sender, EventArgs e)
 		{
 			LblResult.Visible = true;
@@ -2574,6 +2588,16 @@ namespace iwm_Commandliner3
 			if (e.KeyData == (Keys.Control | Keys.Down))
 			{
 				TbResult.Select(TbResult.SelectionStart, TbResult.TextLength);
+				return;
+			}
+
+			// [Ctrl]+[S]
+			if (e.KeyData == (Keys.Control | Keys.S))
+			{
+				Cursor.Position = new Point(Left + (Width / 3), Top + SystemInformation.CaptionHeight + TbResult.Location.Y + (TbResult.Height / 3));
+				CmsResult.Show(Cursor.Position);
+				CmsResult_名前を付けて保存.Select();
+				SendKeys.Send("{RIGHT}");
 				return;
 			}
 
@@ -2741,12 +2765,23 @@ namespace iwm_Commandliner3
 
 		private void CmsResult_名前を付けて保存_SJIS_Click(object sender, EventArgs e)
 		{
-			_ = RtnTextFileWrite(TbResult.Text, 932, DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".txt", true, TEXT_FILTER);
+			SubCmsResult_名前を付けて保存(932);
 		}
 
 		private void CmsResult_名前を付けて保存_UTF8N_Click(object sender, EventArgs e)
 		{
-			_ = RtnTextFileWrite(TbResult.Text, 65001, DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".txt", true, TEXT_FILTER);
+			SubCmsResult_名前を付けて保存(65001);
+		}
+
+		private string GblCmsResultFn = null;
+
+		private void SubCmsResult_名前を付けて保存(int encode)
+		{
+			string fn = (GblCmsResultFn == null ? "" : Path.GetDirectoryName(GblCmsResultFn) + "\\") + DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".txt";
+			if (RtnTextFileWrite(TbResult.Text, encode, fn, true, TEXT_FILTER))
+			{
+				GblCmsResultFn = fn;
+			}
 		}
 
 		private void SubTbResultCnt()
@@ -4286,19 +4321,19 @@ namespace iwm_Commandliner3
 		private const string CMD_FILTER = "All files (*.*)|*.*|Command (*.iwmcmd)|*.iwmcmd";
 		private const string TEXT_FILTER = "All files (*.*)|*.*|Text (*.txt)|*.txt|TSV (*.tsv)|*.tsv|CSV (*.csv)|*.csv|HTML (*.html,*.htm)|*.html,*.htm";
 
-		private (string, string) RtnTextFileRead(string fn, bool bGuiOn, string filter) // return(ファイル名, データ)
+		private (string, string) RtnTextFileRead(string path, bool bGuiOn, string filter) // return(ファイル名, データ)
 		{
-			if (bGuiOn || fn.Length == 0)
+			if (bGuiOn || path.Length == 0)
 			{
 				OpenFileDialog ofd = new OpenFileDialog
 				{
 					Filter = filter,
-					InitialDirectory = Environment.CurrentDirectory
+					InitialDirectory = path == null ? Environment.CurrentDirectory : Path.GetDirectoryName(path)
 				};
 
 				if (ofd.ShowDialog() == DialogResult.OK)
 				{
-					fn = ofd.FileName;
+					path = ofd.FileName;
 				}
 				else
 				{
@@ -4306,31 +4341,31 @@ namespace iwm_Commandliner3
 				}
 			}
 
-			if (File.Exists(fn) && RtnIsTextFile(fn))
+			if (File.Exists(path) && RtnIsTextFile(path))
 			{
 				// UTF-8(CP65001) でないときは Shift_JIS(CP932) で読込
-				return (fn, File.ReadAllText(fn, Encoding.GetEncoding(RtnIsFileEncCp65001(fn) ? 65001 : 932)));
+				return (path, File.ReadAllText(path, Encoding.GetEncoding(RtnIsFileEncCp65001(path) ? 65001 : 932)));
 			}
 
 			// Err
 			return ("", "");
 		}
 
-		private bool RtnTextFileWrite(string str, int encode, string fn, bool bGuiOn, string filter)
+		private bool RtnTextFileWrite(string str, int encode, string path, bool bGuiOn, string filter)
 		{
-			if (bGuiOn || fn.Length == 0)
+			if (bGuiOn || path.Length == 0)
 			{
 				SaveFileDialog sfd = new SaveFileDialog
 				{
-					FileName = fn,
+					FileName = Path.GetFileName(path),
 					Filter = filter,
 					FilterIndex = 1,
-					InitialDirectory = Environment.CurrentDirectory
+					InitialDirectory = path.Length == 0 ? Environment.CurrentDirectory : Path.GetDirectoryName(path)
 				};
 
 				if (sfd.ShowDialog() == DialogResult.OK)
 				{
-					fn = sfd.FileName;
+					path = sfd.FileName;
 				}
 				else
 				{
@@ -4343,11 +4378,11 @@ namespace iwm_Commandliner3
 			{
 				case 65001:
 					// UTF-8N(BOMなし)
-					File.WriteAllText(fn, str, new UTF8Encoding(false));
+					File.WriteAllText(path, str, new UTF8Encoding(false));
 					break;
 
 				default:
-					File.WriteAllText(fn, str, Encoding.GetEncoding(932));
+					File.WriteAllText(path, str, Encoding.GetEncoding(932));
 					break;
 			}
 
