@@ -531,8 +531,9 @@ namespace iwm_Commandliner3
 			// [Ctrl]+[↓]
 			if (e.KeyData == (Keys.Control | Keys.Down))
 			{
-				Cursor.Position = new Point(Left + (Width / 3), Top + SystemInformation.CaptionHeight + RtbCmdMemo.Location.Y);
+				Cursor.Position = new Point(Left + ((Width - CmsCmd.Width) / 2), Top + SystemInformation.CaptionHeight + RtbCmdMemo.Location.Y);
 				CmsCmd.Show(Cursor.Position);
+				CmsCmd_フォルダ選択.Select();
 				return;
 			}
 
@@ -2559,6 +2560,15 @@ namespace iwm_Commandliner3
 			}
 		}
 
+		private void TbResult_KeyPress(object sender, KeyPressEventArgs e)
+		{
+			// ビープ音抑制
+			if ((ModifierKeys & Keys.Control) == Keys.Control)
+			{
+				e.Handled = true;
+			}
+		}
+
 		private void TbResult_KeyUp(object sender, KeyEventArgs e)
 		{
 			// [Ctrl]+[PgUp]
@@ -2594,7 +2604,7 @@ namespace iwm_Commandliner3
 			// [Ctrl]+[S]
 			if (e.KeyData == (Keys.Control | Keys.S))
 			{
-				Cursor.Position = new Point(Left + (Width / 3), Top + SystemInformation.CaptionHeight + TbResult.Location.Y + (TbResult.Height / 3));
+				Cursor.Position = new Point(Left + ((Width - CmsResult.Width) / 2), Top + SystemInformation.CaptionHeight + (TbResult.Location.Y + TbResult.Height - CmsResult.Height) / 2);
 				CmsResult.Show(Cursor.Position);
 				CmsResult_名前を付けて保存.Select();
 				SendKeys.Send("{RIGHT}");

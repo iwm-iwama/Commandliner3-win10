@@ -264,7 +264,7 @@
             this.toolStripMenuItem1,
             this.CmsResult_名前を付けて保存});
 			this.CmsResult.Name = "CmsResult";
-			this.CmsResult.Size = new System.Drawing.Size(181, 226);
+			this.CmsResult.Size = new System.Drawing.Size(171, 204);
 			this.CmsResult.Closed += new System.Windows.Forms.ToolStripDropDownClosedEventHandler(this.CmsResult_Closed);
 			this.CmsResult.Opened += new System.EventHandler(this.CmsResult_Opened);
 			// 
@@ -272,20 +272,20 @@
 			// 
 			this.CmsResult_全選択.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_全選択.Image")));
 			this.CmsResult_全選択.Name = "CmsResult_全選択";
-			this.CmsResult_全選択.Size = new System.Drawing.Size(180, 22);
+			this.CmsResult_全選択.Size = new System.Drawing.Size(170, 22);
 			this.CmsResult_全選択.Text = "全選択";
 			this.CmsResult_全選択.Click += new System.EventHandler(this.CmsResult_全選択_Click);
 			// 
 			// toolStripSeparator8
 			// 
 			this.toolStripSeparator8.Name = "toolStripSeparator8";
-			this.toolStripSeparator8.Size = new System.Drawing.Size(177, 6);
+			this.toolStripSeparator8.Size = new System.Drawing.Size(167, 6);
 			// 
 			// CmsResult_クリア
 			// 
 			this.CmsResult_クリア.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_クリア.Image")));
 			this.CmsResult_クリア.Name = "CmsResult_クリア";
-			this.CmsResult_クリア.Size = new System.Drawing.Size(180, 22);
+			this.CmsResult_クリア.Size = new System.Drawing.Size(170, 22);
 			this.CmsResult_クリア.Text = "クリア";
 			this.CmsResult_クリア.Click += new System.EventHandler(this.CmsResult_クリア_Click);
 			// 
@@ -293,7 +293,7 @@
 			// 
 			this.CmsResult_全コピー.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_全コピー.Image")));
 			this.CmsResult_全コピー.Name = "CmsResult_全コピー";
-			this.CmsResult_全コピー.Size = new System.Drawing.Size(180, 22);
+			this.CmsResult_全コピー.Size = new System.Drawing.Size(170, 22);
 			this.CmsResult_全コピー.Text = "全コピー";
 			this.CmsResult_全コピー.Click += new System.EventHandler(this.CmsResult_全コピー_Click);
 			// 
@@ -301,20 +301,20 @@
 			// 
 			this.CmsResult_上書き.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_上書き.Image")));
 			this.CmsResult_上書き.Name = "CmsResult_上書き";
-			this.CmsResult_上書き.Size = new System.Drawing.Size(180, 22);
+			this.CmsResult_上書き.Size = new System.Drawing.Size(170, 22);
 			this.CmsResult_上書き.Text = "上書き";
 			this.CmsResult_上書き.Click += new System.EventHandler(this.CmsResult_上書き_Click);
 			// 
 			// CmsResult_L3
 			// 
 			this.CmsResult_L3.Name = "CmsResult_L3";
-			this.CmsResult_L3.Size = new System.Drawing.Size(177, 6);
+			this.CmsResult_L3.Size = new System.Drawing.Size(167, 6);
 			// 
 			// CmsResult_貼り付け
 			// 
 			this.CmsResult_貼り付け.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_貼り付け.Image")));
 			this.CmsResult_貼り付け.Name = "CmsResult_貼り付け";
-			this.CmsResult_貼り付け.Size = new System.Drawing.Size(180, 22);
+			this.CmsResult_貼り付け.Size = new System.Drawing.Size(170, 22);
 			this.CmsResult_貼り付け.Text = "貼り付け";
 			this.CmsResult_貼り付け.Click += new System.EventHandler(this.CmsResult_貼り付け_Click);
 			// 
@@ -322,14 +322,14 @@
 			// 
 			this.CmsResult_ファイル名を貼り付け.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_ファイル名を貼り付け.Image")));
 			this.CmsResult_ファイル名を貼り付け.Name = "CmsResult_ファイル名を貼り付け";
-			this.CmsResult_ファイル名を貼り付け.Size = new System.Drawing.Size(180, 22);
+			this.CmsResult_ファイル名を貼り付け.Size = new System.Drawing.Size(170, 22);
 			this.CmsResult_ファイル名を貼り付け.Text = "ファイル名を貼り付け";
 			this.CmsResult_ファイル名を貼り付け.Click += new System.EventHandler(this.CmsResult_ファイル名を貼り付け_Click);
 			// 
 			// toolStripSeparator11
 			// 
 			this.toolStripSeparator11.Name = "toolStripSeparator11";
-			this.toolStripSeparator11.Size = new System.Drawing.Size(177, 6);
+			this.toolStripSeparator11.Size = new System.Drawing.Size(167, 6);
 			// 
 			// CmsResult_出力画面へコピー
 			// 
@@ -341,7 +341,7 @@
             this.CmsResult_出力画面へコピー_5});
 			this.CmsResult_出力画面へコピー.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_出力画面へコピー.Image")));
 			this.CmsResult_出力画面へコピー.Name = "CmsResult_出力画面へコピー";
-			this.CmsResult_出力画面へコピー.Size = new System.Drawing.Size(180, 22);
+			this.CmsResult_出力画面へコピー.Size = new System.Drawing.Size(170, 22);
 			this.CmsResult_出力画面へコピー.Text = "出力画面へコピー";
 			// 
 			// CmsResult_出力画面へコピー_1
@@ -387,7 +387,7 @@
 			// toolStripMenuItem1
 			// 
 			this.toolStripMenuItem1.Name = "toolStripMenuItem1";
-			this.toolStripMenuItem1.Size = new System.Drawing.Size(177, 6);
+			this.toolStripMenuItem1.Size = new System.Drawing.Size(167, 6);
 			// 
 			// CmsResult_名前を付けて保存
 			// 
@@ -397,7 +397,7 @@
 			this.CmsResult_名前を付けて保存.ForeColor = System.Drawing.SystemColors.ControlText;
 			this.CmsResult_名前を付けて保存.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_名前を付けて保存.Image")));
 			this.CmsResult_名前を付けて保存.Name = "CmsResult_名前を付けて保存";
-			this.CmsResult_名前を付けて保存.Size = new System.Drawing.Size(180, 22);
+			this.CmsResult_名前を付けて保存.Size = new System.Drawing.Size(170, 22);
 			this.CmsResult_名前を付けて保存.Text = "名前を付けて保存";
 			// 
 			// CmsResult_名前を付けて保存_SJIS
@@ -1191,6 +1191,7 @@
 			this.TbResult.DragEnter += new System.Windows.Forms.DragEventHandler(this.TbResult_DragEnter);
 			this.TbResult.Enter += new System.EventHandler(this.TbResult_Enter);
 			this.TbResult.KeyDown += new System.Windows.Forms.KeyEventHandler(this.TbResult_KeyDown);
+			this.TbResult.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.TbResult_KeyPress);
 			this.TbResult.KeyUp += new System.Windows.Forms.KeyEventHandler(this.TbResult_KeyUp);
 			this.TbResult.Leave += new System.EventHandler(this.TbResult_Leave);
 			this.TbResult.MouseUp += new System.Windows.Forms.MouseEventHandler(this.TbResult_MouseUp);
