@@ -533,7 +533,7 @@ namespace iwm_Commandliner3
 			{
 				Cursor.Position = new Point(Left + ((Width - CmsCmd.Width) / 2), Top + SystemInformation.CaptionHeight + RtbCmdMemo.Location.Y);
 				CmsCmd.Show(Cursor.Position);
-				CmsCmd_フォルダ選択.Select();
+				CmsCmd_マクロ変数.Select();
 				return;
 			}
 
@@ -541,6 +541,8 @@ namespace iwm_Commandliner3
 			if (e.KeyData == (Keys.Control | Keys.Space))
 			{
 				TbCmd.Text = "";
+				// 文字位置を再設定しないと SendMessage で不具合
+				TbCmd.SelectionStart = 0;
 				return;
 			}
 
@@ -548,6 +550,8 @@ namespace iwm_Commandliner3
 			if (e.KeyData == (Keys.Control | Keys.Back))
 			{
 				TbCmd.Text = TbCmd.Text.Substring(TbCmd.SelectionStart);
+				// 文字位置を再設定しないと SendMessage で不具合
+				TbCmd.SelectionStart = 0;
 				return;
 			}
 
@@ -555,7 +559,8 @@ namespace iwm_Commandliner3
 			if (e.KeyData == (Keys.Control | Keys.Delete))
 			{
 				TbCmd.Text = TbCmd.Text.Substring(0, TbCmd.SelectionStart);
-				SubTbCmdFocus(-1);
+				// 文字位置を再設定しないと SendMessage で不具合
+				TbCmd.SelectionStart = TbCmd.TextLength;
 				return;
 			}
 
@@ -726,6 +731,34 @@ namespace iwm_Commandliner3
 		private void CmsCmd_Opened(object sender, EventArgs e)
 		{
 			_ = TbCmd.Focus();
+
+			// #{%[キー]} のメニュー作成
+			if (DictHash.Count == 0)
+			{
+				CmsCmd_マクロ変数_一時変数.Enabled = false;
+			}
+			else
+			{
+				CmsCmd_マクロ変数_一時変数.DropDownItems.Clear();
+
+				foreach (KeyValuePair<string, string> _kv1 in DictHash)
+				{
+					ToolStripMenuItem _tsi = new ToolStripMenuItem
+					{
+						Text = "#{%" + _kv1.Key + "} " + _kv1.Value
+					};
+					_tsi.Click += CmsCmd_マクロ変数_一時変数_SubMenuClick;
+					_ = CmsCmd_マクロ変数_一時変数.DropDownItems.Add(_tsi);
+				}
+
+				CmsCmd_マクロ変数_一時変数.Enabled = true;
+			}
+		}
+
+		private void CmsCmd_マクロ変数_一時変数_SubMenuClick(object sender, EventArgs e)
+		{
+			ToolStripMenuItem tsmi = (ToolStripMenuItem)sender;
+			SubSendMessage(TbCmd.Handle, Regex.Replace(tsmi.Text, @"^(#\{%.+\}).+", "$1"));
 		}
 
 		private void CmsCmd_Closed(object sender, ToolStripDropDownClosedEventArgs e)
@@ -856,11 +889,6 @@ namespace iwm_Commandliner3
 		private void CmsCmd_マクロ変数_出力のデータ_Click(object sender, EventArgs e)
 		{
 			SubSendMessage(TbCmd.Handle, "#{result,}");
-		}
-
-		private void CmsCmd_マクロ変数_一時変数_Click(object sender, EventArgs e)
-		{
-			SubSendMessage(TbCmd.Handle, "#{%}");
 		}
 
 		private void CmsCmd_フォルダ選択_Click(object sender, EventArgs e)
@@ -1558,6 +1586,8 @@ namespace iwm_Commandliner3
 			if (e.KeyData == (Keys.Control | Keys.Space))
 			{
 				TbDgvCmdSearch.Text = "";
+				// 文字位置を再設定しないと SendMessage で不具合
+				TbDgvCmdSearch.SelectionStart = 0;
 				bReload = true;
 			}
 
@@ -1565,6 +1595,8 @@ namespace iwm_Commandliner3
 			if (e.KeyData == (Keys.Control | Keys.Back))
 			{
 				TbDgvCmdSearch.Text = TbDgvCmdSearch.Text.Substring(TbDgvCmdSearch.SelectionStart);
+				// 文字位置を再設定しないと SendMessage で不具合
+				TbDgvCmdSearch.SelectionStart = 0;
 				bReload = true;
 			}
 
@@ -1572,6 +1604,8 @@ namespace iwm_Commandliner3
 			if (e.KeyData == (Keys.Control | Keys.Delete))
 			{
 				TbDgvCmdSearch.Text = TbDgvCmdSearch.Text.Substring(0, TbDgvCmdSearch.SelectionStart);
+				// 文字位置を再設定しないと SendMessage で不具合
+				TbDgvCmdSearch.SelectionStart = TbDgvCmdSearch.TextLength;
 				bReload = true;
 			}
 
