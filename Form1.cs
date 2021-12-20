@@ -4315,7 +4315,7 @@ namespace iwm_Commandliner3
 		{
 			byte[] bs = File.ReadAllBytes(fn);
 
-			for (int _i1 = 1; _i1 < bs.Length; _i1++)
+			for (int _i1 = 0; _i1 < bs.Length; _i1++)
 			{
 				// 1byte
 				if (bs[_i1] >= 0x00 && bs[_i1] <= 0x7F)
@@ -4325,7 +4325,7 @@ namespace iwm_Commandliner3
 				else if (bs[_i1] >= 0xC2 && bs[_i1] <= 0xDF)
 				{
 					++_i1;
-					if (bs[_i1] < 0x80 || bs[_i1] > 0xBF)
+					if (_i1 < bs.Length && (bs[_i1] < 0x80 || bs[_i1] > 0xBF))
 					{
 						return false;
 					}
@@ -4334,26 +4334,24 @@ namespace iwm_Commandliner3
 				else if (bs[_i1] >= 0xE0 && bs[_i1] <= 0xEF)
 				{
 					++_i1;
-					for (int _i2 = 0; _i2 < 1 && _i1 < bs.Length; _i2++)
+					for (int _i2 = 0; _i1 < bs.Length && _i2 < 1; _i1++, _i2++)
 					{
 						if (bs[_i1] < 0x80 || bs[_i1] > 0xBF)
 						{
 							return false;
 						}
-						++_i1;
 					}
 				}
 				// 4byte
 				else if (bs[_i1] >= 0xF0 && bs[_i1] <= 0xF7)
 				{
 					++_i1;
-					for (int _i2 = 0; _i2 < 2 && _i1 < bs.Length; _i2++)
+					for (int _i2 = 0; _i1 < bs.Length && _i2 < 2; _i1++, _i2++)
 					{
 						if (bs[_i1] < 0x80 || bs[_i1] > 0xBF)
 						{
 							return false;
 						}
-						++_i1;
 					}
 				}
 				// Shift_JIS
