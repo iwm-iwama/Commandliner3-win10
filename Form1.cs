@@ -758,7 +758,7 @@ namespace iwm_Commandliner3
 		private void CmsCmd_マクロ変数_一時変数_SubMenuClick(object sender, EventArgs e)
 		{
 			ToolStripMenuItem tsmi = (ToolStripMenuItem)sender;
-			SubSendMessage(TbCmd.Handle, Regex.Replace(tsmi.Text, @"^(#\{%.+\}).+", "$1"));
+			SubSendMessage(TbCmd.Handle, Regex.Replace(tsmi.Text, @"^(#\{%.+?\}).+", "$1"));
 		}
 
 		private void CmsCmd_Closed(object sender, ToolStripDropDownClosedEventArgs e)
@@ -4305,10 +4305,11 @@ namespace iwm_Commandliner3
 
 		//--------------------------------------------------------------------------------
 		// UTF-8 判定
-		//   1byte: [0]0x00..0x7F
-		//   2byte: [0]0xC2..0xDF  [1]0x80..0xBF
-		//   3byte: [0]0xE0..0xEF  [1]0x80..0xBF  [2]0x80..0xBF
-		//   4byte: [0]0xF0..0xF7  [1]0x80..0xBF  [2]0x80..0xBF	[3]0x80..0xBF
+		//   1byte:  [0]0x00..0x7F
+		//   2byte:  [0]0xC2..0xDF  [1]0x80..0xBF
+		//   3byte:  [0]0xE0..0xEF  [1]0x80..0xBF  [2]0x80..0xBF
+		//   4byte:  [0]0xF0..0xF7  [1]0x80..0xBF  [2]0x80..0xBF	[3]0x80..0xBF
+		//   Shift_JIS: ([0] & 0xE0) == 0x80 || ([0] & 0xE0) == 0xE0
 		//--------------------------------------------------------------------------------
 		private bool RtnIsFileEncCp65001(string fn)
 		{
@@ -4333,7 +4334,7 @@ namespace iwm_Commandliner3
 				else if (bs[_i1] >= 0xE0 && bs[_i1] <= 0xEF)
 				{
 					++_i1;
-					for (int _i2 = 0; _i2 < 2 && _i1 < bs.Length; _i2++)
+					for (int _i2 = 0; _i2 < 1 && _i1 < bs.Length; _i2++)
 					{
 						if (bs[_i1] < 0x80 || bs[_i1] > 0xBF)
 						{
@@ -4346,7 +4347,7 @@ namespace iwm_Commandliner3
 				else if (bs[_i1] >= 0xF0 && bs[_i1] <= 0xF7)
 				{
 					++_i1;
-					for (int _i2 = 0; _i2 < 3 && _i1 < bs.Length; _i2++)
+					for (int _i2 = 0; _i2 < 2 && _i1 < bs.Length; _i2++)
 					{
 						if (bs[_i1] < 0x80 || bs[_i1] > 0xBF)
 						{
@@ -4354,6 +4355,11 @@ namespace iwm_Commandliner3
 						}
 						++_i1;
 					}
+				}
+				// Shift_JIS
+				else if ((bs[_i1] & 0xE0) == 0x80 || (bs[_i1] & 0xE0) == 0xE0)
+				{
+					return false;
 				}
 			}
 			return true;
