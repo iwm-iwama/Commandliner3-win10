@@ -313,10 +313,12 @@ namespace iwm_Commandliner3
 			}
 
 			// コマンドライン引数によるバッチ処理
-			if (Let.args.Length > 0)
+			//x			if (Let.args.Length > 0)
+			if (ARGS.Length > 0)
 			{
 				TbCmd.Text = "";
-				foreach (string _s1 in Let.args)
+				//x				foreach (string _s1 in Let.args)
+				foreach (string _s1 in ARGS)
 				{
 					(string _fn, string _data) = RtnTextFileRead(_s1, false, "");
 					if (_fn.Length > 0)
@@ -4115,35 +4117,35 @@ namespace iwm_Commandliner3
 		//--------------------------------------------------------------------------------
 		// 全角 <=> 半角
 		//--------------------------------------------------------------------------------
-		private static string RtnZenNum(string str)
+		private string RtnZenNum(string str)
 		{
 			return Regex.Replace(str, @"\d+", RtnReplacerWide);
 		}
 
-		private static string RtnHanNum(string str)
+		private string RtnHanNum(string str)
 		{
 			// Unicode 全角０-９
 			return Regex.Replace(str, @"[\uff10-\uff19]+", RtnReplacerNarrow);
 		}
 
-		private static string RtnZenKana(string str)
+		private string RtnZenKana(string str)
 		{
 			// Unicode 半角カナ
 			return Regex.Replace(str, @"[\uff61-\uFF9f]+", RtnReplacerWide);
 		}
 
-		private static string RtnHanKana(string str)
+		private string RtnHanKana(string str)
 		{
 			// Unicode 全角カナ
 			return Regex.Replace(str, @"[\u30A1-\u30F6]+", RtnReplacerNarrow);
 		}
 
-		private static string RtnReplacerWide(Match m)
+		private string RtnReplacerWide(Match m)
 		{
 			return Strings.StrConv(m.Value, VbStrConv.Wide, 0x411);
 		}
 
-		private static string RtnReplacerNarrow(Match m)
+		private string RtnReplacerNarrow(Match m)
 		{
 			return Strings.StrConv(m.Value, VbStrConv.Narrow, 0x411);
 		}
@@ -4315,7 +4317,7 @@ namespace iwm_Commandliner3
 		{
 			byte[] bs = File.ReadAllBytes(fn);
 
-			for (int _i1 = 0; _i1 < bs.Length; _i1++)
+			for (int _iCnt = bs.Length, _i1 = 0; _i1 < _iCnt; _i1++)
 			{
 				// 1byte
 				if (bs[_i1] >= 0x00 && bs[_i1] <= 0x7F)
@@ -4325,7 +4327,7 @@ namespace iwm_Commandliner3
 				else if (bs[_i1] >= 0xC2 && bs[_i1] <= 0xDF)
 				{
 					++_i1;
-					if (_i1 < bs.Length && (bs[_i1] < 0x80 || bs[_i1] > 0xBF))
+					if (_i1 >= _iCnt || bs[_i1] < 0x80 || bs[_i1] > 0xBF)
 					{
 						return false;
 					}
@@ -4333,10 +4335,10 @@ namespace iwm_Commandliner3
 				// 3byte
 				else if (bs[_i1] >= 0xE0 && bs[_i1] <= 0xEF)
 				{
-					++_i1;
-					for (int _i2 = 0; _i1 < bs.Length && _i2 < 1; _i1++, _i2++)
+					for (int _i2 = 2; _i2 > 0; _i2--)
 					{
-						if (bs[_i1] < 0x80 || bs[_i1] > 0xBF)
+						++_i1;
+						if (_i1 >= _iCnt || bs[_i1] < 0x80 || bs[_i1] > 0xBF)
 						{
 							return false;
 						}
@@ -4345,10 +4347,10 @@ namespace iwm_Commandliner3
 				// 4byte
 				else if (bs[_i1] >= 0xF0 && bs[_i1] <= 0xF7)
 				{
-					++_i1;
-					for (int _i2 = 0; _i1 < bs.Length && _i2 < 2; _i1++, _i2++)
+					for (int _i2 = 3; _i2 > 0; _i2--)
 					{
-						if (bs[_i1] < 0x80 || bs[_i1] > 0xBF)
+						++_i1;
+						if (_i1 >= _iCnt || bs[_i1] < 0x80 || bs[_i1] > 0xBF)
 						{
 							return false;
 						}
@@ -4565,20 +4567,18 @@ namespace iwm_Commandliner3
 		//--------------------------------------------------------------------------------
 		// Main()
 		//--------------------------------------------------------------------------------
-		public class Let
-		{
-			public static string[] args;
-		}
+		public static string[] ARGS;
 
 		private static class Program
 		{
 			[STAThread]
-			private static void Main(string[] ARGS)
+			private static void Main(string[] args)
 			{
 				Application.EnableVisualStyles();
 				Application.SetCompatibleTextRenderingDefault(false);
 
-				Let.args = ARGS;
+				//x				Let.args = ARGS;
+				ARGS = args;
 
 				Application.Run(new Form1());
 			}
