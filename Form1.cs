@@ -265,7 +265,6 @@ namespace iwm_Commandliner3
 
 			// TbCmd 入力例
 			TbCmd.Text = "dir";
-			TbCmd_Enter(sender, e);
 
 			// RtbCmdMemo
 			GblRtbCmdMemoHeightDefault = RtbCmdMemo.Height;
@@ -283,14 +282,8 @@ namespace iwm_Commandliner3
 			// SplitContainerResult
 			SplitContainerResult.Visible = false;
 
-			// TbInfo
-			SubTbResultCnt();
-
 			// フォントサイズ
 			NudTbResult.Value = (int)Math.Round(TbResult.Font.Size);
-
-			// 初フォーカス
-			SubTbCmdFocus(-1);
 
 			// 設定ファイルが存在するとき
 			if (File.Exists(ConfigFn))
@@ -316,6 +309,9 @@ namespace iwm_Commandliner3
 				BtnCmdExec_Click(sender, e);
 				TbCmd.Text = "";
 			}
+
+			// 開始時フォーカス
+			SubTbCmdFocus(-1);
 		}
 
 		private void Form1_Resize(object sender, EventArgs e)
@@ -2739,7 +2735,10 @@ namespace iwm_Commandliner3
 			foreach (string _s1 in Clipboard.GetFileDropList())
 			{
 				_ = sb.Append(_s1);
-				_ = sb.Append((Directory.Exists(_s1) ? @"\" : ""));
+				if (Directory.Exists(_s1))
+				{
+					_ = sb.Append(@"\");
+				}
 				_ = sb.Append(NL);
 			}
 			TbResult.Paste(sb.ToString());
@@ -2806,40 +2805,31 @@ namespace iwm_Commandliner3
 
 		private void SubTbResultCnt()
 		{
-			int iWord = 0;
-			int iLine = 1;
+			int iSelectRow = 0;
+			int iSelectNL = 0;
+			int iSelectWord = TbResult.SelectionLength;
 
-			int i1 = TbResult.SelectionStart;
-			char[] ca1 = TbResult.Text.Substring(0, i1).ToCharArray();
-
-			for (int _i1 = 0; _i1 < i1; _i1++)
+			if (iSelectWord > 0)
 			{
-				++iWord;
-				if (ca1[_i1] == '\n')
+				// 速度重視
+				foreach (string _s1 in TbResult.SelectedText.Split('\n'))
 				{
-					++iLine;
-					iWord = 0;
-				}
-			}
-
-			int iNL = 0;
-			int iRow = 0;
-			int iCnt = TbResult.SelectedText.Length;
-
-			if (iCnt > 0)
-			{
-				foreach (string _s1 in Regex.Split(TbResult.SelectedText, NL))
-				{
-					++iNL;
-					if (_s1.Length > 0)
+					++iSelectNL;
+					// _s1 = str + "\r" なので "\r".Length = 1 だけ考慮すればよい
+					if (_s1.Length > 1)
 					{
-						++iRow;
+						++iSelectRow;
 					}
 				}
-				iCnt -= (iNL - 1) * NL.Length;
-			}
+				iSelectWord -= (iSelectNL - 1) * NL.Length;
 
-			TbInfo.Text = string.Format("({0}行){1}字  (有効{2}行／全{3}行){4}字 選択", iLine, iWord, iRow, iNL, iCnt);
+				TbInfo.Text = string.Format("(全{0}行／有効{1}行) {2}文字", iSelectNL, iSelectRow, iSelectWord);
+				TbInfo.Visible = true;
+			}
+			else
+			{
+				TbInfo.Visible = false;
+			}
 		}
 
 		private void BtnResult1_Click(object sender, EventArgs e)
@@ -2987,7 +2977,10 @@ namespace iwm_Commandliner3
 			foreach (string _s1 in (string[])e.Data.GetData(DataFormats.FileDrop))
 			{
 				_ = sb.Append(_s1);
-				_ = sb.Append(Directory.Exists(_s1) ? @"\" : "");
+				if (Directory.Exists(_s1))
+				{
+					_ = sb.Append(@"\");
+				}
 				_ = sb.Append(NL);
 			}
 			TbResult.Paste(sb.ToString());
@@ -3848,6 +3841,7 @@ namespace iwm_Commandliner3
 				{
 					++iCnt;
 				}
+
 				_ = sb.Append(_s2);
 				_ = sb.Append(NL);
 			}

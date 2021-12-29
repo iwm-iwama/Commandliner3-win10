@@ -1293,11 +1293,11 @@
 			this.TbInfo.ContextMenuStrip = this.CmsNull;
 			this.TbInfo.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.TbInfo.ForeColor = System.Drawing.Color.Gainsboro;
-			this.TbInfo.Location = new System.Drawing.Point(95, 424);
+			this.TbInfo.Location = new System.Drawing.Point(112, 424);
 			this.TbInfo.Margin = new System.Windows.Forms.Padding(0);
 			this.TbInfo.Name = "TbInfo";
 			this.TbInfo.ReadOnly = true;
-			this.TbInfo.Size = new System.Drawing.Size(330, 12);
+			this.TbInfo.Size = new System.Drawing.Size(295, 12);
 			this.TbInfo.TabIndex = 0;
 			this.TbInfo.TabStop = false;
 			this.TbInfo.Text = "TbInfo";
