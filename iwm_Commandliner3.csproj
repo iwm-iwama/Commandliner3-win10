@@ -88,6 +88,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="iwm_Commandliner3.ico" />
+    <None Include="Resources\CmsCmd2_時間.Image.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
