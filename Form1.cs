@@ -21,7 +21,7 @@ namespace iwm_Commandliner3
 		// 大域定数
 		//--------------------------------------------------------------------------------
 		private const string ProgramID = "iwm_Commandliner3.7";
-		private const string VERSION = "Ver.20220121 'A-29' (C)2018-2022 iwm-iwama";
+		private const string VERSION = "Ver.20220206 'A-29' (C)2018-2022 iwm-iwama";
 
 		// 最初に読み込まれる設定ファイル
 		private const string ConfigFn = "config.iwmcmd";
@@ -322,36 +322,7 @@ namespace iwm_Commandliner3
 
 		private void SubFormStartPosition()
 		{
-			int WorkingAreaW = Screen.PrimaryScreen.WorkingArea.Width;
-			int WorkingAreaH = Screen.PrimaryScreen.WorkingArea.Height;
-
-			int WorkingAreaX = Screen.PrimaryScreen.WorkingArea.X;
-			int WorkingAreaY = Screen.PrimaryScreen.WorkingArea.Y;
-
-			int MouseX = Cursor.Position.X;
-			int MouseY = Cursor.Position.Y;
-
-			// X = Width
-			if (WorkingAreaW < MouseX + Size.Width)
-			{
-				MouseX -= Size.Width;
-				if (MouseX < 0)
-				{
-					MouseX = WorkingAreaX + 10;
-				}
-			}
-
-			// Y = Height
-			if (WorkingAreaH < MouseY + Size.Height)
-			{
-				MouseY -= Size.Height;
-				if (MouseY < 0)
-				{
-					MouseY = WorkingAreaY + 10;
-				}
-			}
-
-			Location = new Point(MouseX, MouseY);
+			Location = new Point(Cursor.Position.X - (Width / 2), Cursor.Position.Y - (SystemInformation.CaptionHeight / 2));
 		}
 
 		//--------------------------------------------------------------------------------
