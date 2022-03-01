@@ -21,15 +21,18 @@ namespace iwm_Commandliner3
 		// 大域定数
 		//--------------------------------------------------------------------------------
 		private const string ProgramID = "iwm_Commandliner3.7";
-		private const string VERSION = "Ver.20220206 'A-29' (C)2018-2022 iwm-iwama";
+		private const string VERSION = "Ver.20220301 'A-29' (C)2018-2022 iwm-iwama";
 
 		// 最初に読み込まれる設定ファイル
 		private const string ConfigFn = "config.iwmcmd";
 
 		// TextBox, RichTextBox 内のテキスト処理(複数行)に使用 ※改行コード長 NL.Length = 2
 		private const string NL = "\r\n";
-		// 汎用テキスト処理(単一行)に使用
-		private const string RgxNL = "\r??\n";
+
+		// "\r\n" "\r" "\n" の３パターンに対応
+		private const string RgxNL = "(\r\n|\r|\n)";
+
+		// 設定ファイルの行末尾
 		private const string RgxCmdNL = "(;|\\s)*\n";
 
 		private readonly object[] AryDgvMacro = {
@@ -2213,6 +2216,8 @@ namespace iwm_Commandliner3
 							i1 = -1;
 						}
 
+						sb.Clear();
+
 						BtnCmdExecStream.Visible = true;
 
 						int iStreamBgn = RtbCmdLog.TextLength;
@@ -2247,21 +2252,11 @@ namespace iwm_Commandliner3
 									// Stdin 入力要求を回避
 									PS.StandardInput.Close();
 									// Stdout + Stderr
-									string _s3 = Regex.Replace(PS.StandardOutput.ReadToEnd(), RgxNL, NL) + Regex.Replace(PS.StandardError.ReadToEnd(), RgxNL, NL);
+									string _s3 = Regex.Replace(PS.StandardOutput.ReadToEnd(), RgxNL, NL) + Regex.Replace(PS.StandardError.ReadToEnd(), RgxNL, NL).TrimEnd() + NL;
 
 									// ログ
-									RtbCmdLog.AppendText(_s3.TrimEnd() + NL);
-
-									// 出力[n]
-									if (i1 >= 0)
-									{
-										GblAryResultBuf[i1] += _s3;
-										GblAryResultStartIndex[i1] += _s3.Length;
-										if (GblAryResultStartIndex[i1] > 0)
-										{
-											Controls[GblAryResultBtn[i1]].BackColor = Color.Maroon;
-										}
-									}
+									RtbCmdLog.AppendText(_s3);
+									_ = sb.Append(_s3);
 
 									// RtbCmdLog の着色・スクロール
 									int iStreamEnd = RtbCmdLog.TextLength;
@@ -2292,6 +2287,17 @@ namespace iwm_Commandliner3
 						}
 
 						PS.Close();
+
+						// 出力[n]
+						if (i1 >= 0)
+						{
+							GblAryResultBuf[i1] = sb.ToString();
+							GblAryResultStartIndex[i1] = GblAryResultBuf[i1].Length;
+							if (GblAryResultStartIndex[i1] > 0)
+							{
+								Controls[GblAryResultBtn[i1]].BackColor = Color.Maroon;
+							}
+						}
 
 						BtnCmdExecStream.Visible = false;
 						break;
