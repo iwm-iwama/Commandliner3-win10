@@ -29,8 +29,8 @@ namespace iwm_Commandliner3
 		// TextBox, RichTextBox 内のテキスト処理(複数行)に使用 ※改行コード長 NL.Length = 2
 		private const string NL = "\r\n";
 
-		// "\r\n" "\r" "\n" の３パターンに対応
-		private const string RgxNL = "(\r\n|\r|\n)";
+		// "\r\n" "\n" の２パターンに対応
+		private const string RgxNL = "\r?\n";
 
 		// 設定ファイルの行末尾
 		private const string RgxCmdNL = "(;|\\s)*\n";
