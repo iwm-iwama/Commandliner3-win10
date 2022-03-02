@@ -21,7 +21,7 @@ namespace iwm_Commandliner3
 		// 大域定数
 		//--------------------------------------------------------------------------------
 		private const string ProgramID = "iwm_Commandliner3.7";
-		private const string VERSION = "Ver.20220301 'A-29' (C)2018-2022 iwm-iwama";
+		private const string VERSION = "Ver.20220302 'A-29' (C)2018-2022 iwm-iwama";
 
 		// 最初に読み込まれる設定ファイル
 		private const string ConfigFn = "config.iwmcmd";
@@ -2251,8 +2251,8 @@ namespace iwm_Commandliner3
 									_ = PS.Start();
 									// Stdin 入力要求を回避
 									PS.StandardInput.Close();
-									// Stdout + Stderr
-									string _s3 = Regex.Replace(PS.StandardOutput.ReadToEnd(), RgxNL, NL) + Regex.Replace(PS.StandardError.ReadToEnd(), RgxNL, NL).TrimEnd() + NL;
+									// Stdout
+									string _s3 = Regex.Replace(PS.StandardOutput.ReadToEnd(), RgxNL, NL).TrimEnd() + NL;
 
 									// ログ
 									RtbCmdLog.AppendText(_s3);
