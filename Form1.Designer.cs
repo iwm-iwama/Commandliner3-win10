@@ -486,7 +486,7 @@
 			this.CbCmdHistory.ContextMenuStrip = this.CmsNull;
 			this.CbCmdHistory.DropDownHeight = 120;
 			this.CbCmdHistory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.CbCmdHistory.DropDownWidth = 482;
+			this.CbCmdHistory.DropDownWidth = 490;
 			this.CbCmdHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.CbCmdHistory.Font = new System.Drawing.Font("ＭＳ ゴシック", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.CbCmdHistory.ForeColor = System.Drawing.Color.Black;
@@ -514,7 +514,7 @@
 			this.CbResultHistory.ContextMenuStrip = this.CmsNull;
 			this.CbResultHistory.DropDownHeight = 140;
 			this.CbResultHistory.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-			this.CbResultHistory.DropDownWidth = 486;
+			this.CbResultHistory.DropDownWidth = 490;
 			this.CbResultHistory.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.CbResultHistory.Font = new System.Drawing.Font("ＭＳ ゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.CbResultHistory.ForeColor = System.Drawing.Color.Black;

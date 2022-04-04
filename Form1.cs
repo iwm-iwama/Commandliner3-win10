@@ -20,8 +20,8 @@ namespace iwm_Commandliner3
 		//--------------------------------------------------------------------------------
 		// 大域定数
 		//--------------------------------------------------------------------------------
-		private const string ProgramID = "iwm_Commandliner3.8";
-		private const string VERSION = "Ver.20220310 'A-29' (C)2018-2022 iwm-iwama";
+		private const string ProgramID = "iwm_Commandliner3.9";
+		private const string VERSION = "Ver.20220404 'A-29' (C)2018-2022 iwm-iwama";
 
 		// 最初に読み込まれる設定ファイル
 		private const string ConfigFn = "config.iwmcmd";
@@ -52,6 +52,7 @@ namespace iwm_Commandliner3
 			"#grep",         "検索                    #grep \"\\d{4}\"   ※\"正規表現\"",                                                            1,
 			"#except",       "不一致検索              #except \"\\d{4}\" ※\"正規表現\"",                                                            1,
 			"#greps",        "検索（合致数指定）      #greps \"\\\\\" \"1,4\" ※\"正規表現\" \"以上,以下\"",                                         2,
+			"#extract",      "抽出                    #extract \"http.+?\\.(jpg|png)\" ※\"正規表現\"",                                              1,
 			"#replace",      "置換                    #replace \"^(\\d{2})(\\d{2})\" \"$1+$2\" ※\"正規表現\" \"[$1..$9]\"",                         2,
 			"#split",        "分割                    #split \"#{tab}\" \"[0]#{tab}[1]\" ※\"正規表現\" \"[0..n]分割列\"",                           2,
 			"#sort",         "ソート(昇順)",                                                                                                         0,
@@ -615,9 +616,8 @@ namespace iwm_Commandliner3
 			{
 				// (例) "#grep "（末尾は半角スペース）
 				// "#"以降は最短一致
-				Regex rgx = new Regex(@".*(?<macro>#\S+?)\s+$", RegexOptions.IgnoreCase);
+				Regex rgx = new Regex(".*(?<macro>#\\S+?)\\s+$", RegexOptions.IgnoreCase);
 				Match match = rgx.Match(TbCmd.Text);
-
 				if (match.Success)
 				{
 					string macro = match.Groups["macro"].Value;
@@ -659,7 +659,7 @@ namespace iwm_Commandliner3
 
 		private void TbCmd_MouseEnter(object sender, EventArgs e)
 		{
-			ToolTip.SetToolTip(TbCmd, RtnCmdFormat(TbCmd.Text));
+			///ToolTip.SetToolTip(TbCmd, RtnCmdFormat(TbCmd.Text));
 		}
 
 		private void TbCmd_MouseUp(object sender, MouseEventArgs e)
@@ -2032,6 +2032,11 @@ namespace iwm_Commandliner3
 						TbResult.Text = RtnTextGreps(TbResult.Text, aOp[1], aOp[2]);
 						break;
 
+					// 抽出
+					case "#extract":
+						TbResult.Text = RtnTextExtract(TbResult.Text, aOp[1]);
+						break;
+
 					// 置換
 					case "#replace":
 						TbResult.Text = RtnTextReplace(TbResult.Text, aOp[1], aOp[2]);
@@ -2184,6 +2189,10 @@ namespace iwm_Commandliner3
 							break;
 						}
 						aOp[1] = RtnCnvMacroVar(aOp[1], 0, "");
+						if (aOp[2].Length == 0)
+						{
+							aOp[2] = ".";
+						}
 						_ = sb.Clear();
 						i1 = 0;
 						for (int _i1 = 2, _i2 = aOp.Length; _i1 < _i2; _i1++)
@@ -3297,7 +3306,7 @@ namespace iwm_Commandliner3
 			foreach (KeyValuePair<string, string> _dict in GblDictResultHistory)
 			{
 				string _s1 = _dict.Value.Substring(0, _dict.Value.Length < 80 ? _dict.Value.Length : 80).TrimStart();
-				_ = CbResultHistory.Items.Add(string.Format("{0}  {1}", _dict.Key, _s1.Replace(NL, "␤")));
+				_ = CbResultHistory.Items.Add(string.Format("{0}  {1}", _dict.Key, _s1.Replace(NL, "　")));
 			}
 
 			CbResultHistory.SelectedIndex = 0;
@@ -3846,6 +3855,30 @@ namespace iwm_Commandliner3
 			{
 				SubCmdLogAddRem($"{iCnt}行 該当", Color.Cyan);
 				return sb.ToString();
+			}
+		}
+
+		//--------------------------------------------------------------------------------
+		// 正規表現による抽出
+		//--------------------------------------------------------------------------------
+		private string RtnTextExtract(string str, string sSearch)
+		{
+			// 正規表現文法エラーはないか？
+			try
+			{
+				Regex rgx = new Regex("(?<pattern>" + sSearch.Trim() + ")", RegexOptions.IgnoreCase);
+				StringBuilder sb = new StringBuilder();
+				foreach (Match _m1 in rgx.Matches(str))
+				{
+					_ = sb.Append(_m1.Groups["pattern"].Value.Trim());
+					_ = sb.Append(NL);
+				}
+				return sb.ToString();
+			}
+			catch
+			{
+				SubCmdLogAddRem("文法エラー？", Color.Red);
+				return str;
 			}
 		}
 
