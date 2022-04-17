@@ -123,22 +123,10 @@
   <metadata name="ToolTip.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>961, 20</value>
   </metadata>
-  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
-  <data name="BtnDgvCmdSearch.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
-    <value>
-        iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
-        dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAAAfdEVYdENvcHlyaWdodABST1lBTFRZIEZSRUUgTElD
-        RU5TRSDe2YtpAAABMklEQVQ4T42SC26CUBBFDUbjBwGRjwaijQmJxA+FFXQJLKk76BJcgkt5S3lLmM7F
-        seFVSj3JyWPunUcMcdBHWZY1q6qqooeYkcvK31wul8+iKEhU7E3OJkMvq88cj8f6dDoRq8/n84fEDZiR
-        o8eexCaHw0GxlOe5cfkBcvTYk8gkyzJiu0sBPfZkNNnv98ReZewEPfZkNNntdrTdbnt/AXrsyWiSpqli
-        KUmSzm+AHD32JDLZbDY1S+v1WsdxbLwEM3L02JP4ThAEXhiGV/YWRdEXnyQqZHI2Gffm/2C5XHq+7yuW
-        RLVarepf2U8u1+44juO5rqtYait1P7PZ7H0+nyvbtqmlXiwWnR/wiclkoqfTKbXUeKnU/zMajRRLoh6P
-        x69fBsPh0LMsS0F+fpP4RQaDb8l3cQ+WTMimAAAAAElFTkSuQmCC
-</value>
-  </data>
   <metadata name="CmsCmd.TrayLocation" type="System.Drawing.Point, System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
     <value>232, 20</value>
   </metadata>
+  <assembly alias="System.Drawing" name="System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a" />
   <data name="CmsCmd_クリア.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
@@ -641,7 +629,7 @@
         K3ccvc9/Y61WC0Dq9Xrl8HdF0S9/6X2l+d6x/gAAAABJRU5ErkJggg==
 </value>
   </data>
-  <data name="CmsResult_出力画面へコピー_1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="CmsResult_出力へコピー_1.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
@@ -651,7 +639,7 @@
         w8d+u/HZd6y1dYtf8um/MOYF0deQjk6Od4kAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="CmsResult_出力画面へコピー_2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="CmsResult_出力へコピー_2.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
@@ -661,7 +649,7 @@
         w8d+u/HZd6y1dYtf8um/MOYF0deQjk6Od4kAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="CmsResult_出力画面へコピー_3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="CmsResult_出力へコピー_3.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
@@ -671,7 +659,7 @@
         w8d+u/HZd6y1dYtf8um/MOYF0deQjk6Od4kAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="CmsResult_出力画面へコピー_4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="CmsResult_出力へコピー_4.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
@@ -681,7 +669,7 @@
         w8d+u/HZd6y1dYtf8um/MOYF0deQjk6Od4kAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="CmsResult_出力画面へコピー_5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="CmsResult_出力へコピー_5.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z
@@ -691,7 +679,7 @@
         w8d+u/HZd6y1dYtf8um/MOYF0deQjk6Od4kAAAAASUVORK5CYII=
 </value>
   </data>
-  <data name="CmsResult_出力画面へコピー.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+  <data name="CmsResult_出力へコピー.Image" type="System.Drawing.Bitmap, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
     <value>
         iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABGdBTUEAALGPC/xhBQAAABl0RVh0U29m
         dHdhcmUAQWRvYmUgSW1hZ2VSZWFkeXHJZTwAAABEdEVYdENvcHlyaWdodABDcmVhdGl2ZSBDb21tb25z

@@ -36,7 +36,7 @@
 			this.BtnCmdExecStream = new System.Windows.Forms.Button();
 			this.BtnCmdExecUndo = new System.Windows.Forms.Button();
 			this.BtnDgvCmd = new System.Windows.Forms.Button();
-			this.BtnDgvCmdSearch = new System.Windows.Forms.Button();
+			this.BtnDgvSearch = new System.Windows.Forms.Button();
 			this.BtnDgvMacro = new System.Windows.Forms.Button();
 			this.BtnPasteFilename = new System.Windows.Forms.Button();
 			this.BtnPasteTextfile = new System.Windows.Forms.Button();
@@ -107,12 +107,12 @@
 			this.CmsResult_貼り付け = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsResult_ファイル名を貼り付け = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsResult_tss03 = new System.Windows.Forms.ToolStripSeparator();
-			this.CmsResult_出力画面へコピー = new System.Windows.Forms.ToolStripMenuItem();
-			this.CmsResult_出力画面へコピー_1 = new System.Windows.Forms.ToolStripMenuItem();
-			this.CmsResult_出力画面へコピー_2 = new System.Windows.Forms.ToolStripMenuItem();
-			this.CmsResult_出力画面へコピー_3 = new System.Windows.Forms.ToolStripMenuItem();
-			this.CmsResult_出力画面へコピー_4 = new System.Windows.Forms.ToolStripMenuItem();
-			this.CmsResult_出力画面へコピー_5 = new System.Windows.Forms.ToolStripMenuItem();
+			this.CmsResult_出力へコピー = new System.Windows.Forms.ToolStripMenuItem();
+			this.CmsResult_出力へコピー_1 = new System.Windows.Forms.ToolStripMenuItem();
+			this.CmsResult_出力へコピー_2 = new System.Windows.Forms.ToolStripMenuItem();
+			this.CmsResult_出力へコピー_3 = new System.Windows.Forms.ToolStripMenuItem();
+			this.CmsResult_出力へコピー_4 = new System.Windows.Forms.ToolStripMenuItem();
+			this.CmsResult_出力へコピー_5 = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsResult_tss04 = new System.Windows.Forms.ToolStripSeparator();
 			this.CmsResult_名前を付けて保存 = new System.Windows.Forms.ToolStripMenuItem();
 			this.CmsResult_名前を付けて保存_SJIS = new System.Windows.Forms.ToolStripMenuItem();
@@ -299,25 +299,24 @@
 			this.BtnDgvCmd.UseVisualStyleBackColor = false;
 			this.BtnDgvCmd.Click += new System.EventHandler(this.BtnDgvCmd_Click);
 			// 
-			// BtnDgvCmdSearch
+			// BtnDgvSearch
 			// 
-			this.BtnDgvCmdSearch.BackColor = System.Drawing.SystemColors.Window;
-			this.BtnDgvCmdSearch.FlatAppearance.BorderColor = System.Drawing.Color.White;
-			this.BtnDgvCmdSearch.FlatAppearance.BorderSize = 0;
-			this.BtnDgvCmdSearch.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
-			this.BtnDgvCmdSearch.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
-			this.BtnDgvCmdSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-			this.BtnDgvCmdSearch.ForeColor = System.Drawing.Color.White;
-			this.BtnDgvCmdSearch.Image = ((System.Drawing.Image)(resources.GetObject("BtnDgvCmdSearch.Image")));
-			this.BtnDgvCmdSearch.Location = new System.Drawing.Point(360, 135);
-			this.BtnDgvCmdSearch.Margin = new System.Windows.Forms.Padding(0);
-			this.BtnDgvCmdSearch.Name = "BtnDgvCmdSearch";
-			this.BtnDgvCmdSearch.Size = new System.Drawing.Size(19, 17);
-			this.BtnDgvCmdSearch.TabIndex = 0;
-			this.BtnDgvCmdSearch.TabStop = false;
-			this.ToolTip.SetToolTip(this.BtnDgvCmdSearch, "検索開始");
-			this.BtnDgvCmdSearch.UseVisualStyleBackColor = false;
-			this.BtnDgvCmdSearch.Click += new System.EventHandler(this.BtnDgvCmdSearch_Click);
+			this.BtnDgvSearch.BackColor = System.Drawing.SystemColors.Window;
+			this.BtnDgvSearch.FlatAppearance.BorderColor = System.Drawing.Color.White;
+			this.BtnDgvSearch.FlatAppearance.BorderSize = 0;
+			this.BtnDgvSearch.FlatAppearance.MouseDownBackColor = System.Drawing.Color.White;
+			this.BtnDgvSearch.FlatAppearance.MouseOverBackColor = System.Drawing.Color.White;
+			this.BtnDgvSearch.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+			this.BtnDgvSearch.ForeColor = System.Drawing.Color.White;
+			this.BtnDgvSearch.Location = new System.Drawing.Point(360, 135);
+			this.BtnDgvSearch.Margin = new System.Windows.Forms.Padding(0);
+			this.BtnDgvSearch.Name = "BtnDgvSearch";
+			this.BtnDgvSearch.Size = new System.Drawing.Size(19, 17);
+			this.BtnDgvSearch.TabIndex = 0;
+			this.BtnDgvSearch.TabStop = false;
+			this.ToolTip.SetToolTip(this.BtnDgvSearch, "検索開始");
+			this.BtnDgvSearch.UseVisualStyleBackColor = false;
+			this.BtnDgvSearch.Click += new System.EventHandler(this.BtnDgvSearch_Click);
 			// 
 			// BtnDgvMacro
 			// 
@@ -353,10 +352,10 @@
 			this.BtnPasteFilename.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnPasteFilename.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.BtnPasteFilename.ForeColor = System.Drawing.Color.White;
-			this.BtnPasteFilename.Location = new System.Drawing.Point(21, 21);
+			this.BtnPasteFilename.Location = new System.Drawing.Point(21, 23);
 			this.BtnPasteFilename.Margin = new System.Windows.Forms.Padding(0);
 			this.BtnPasteFilename.Name = "BtnPasteFilename";
-			this.BtnPasteFilename.Size = new System.Drawing.Size(259, 303);
+			this.BtnPasteFilename.Size = new System.Drawing.Size(260, 300);
 			this.BtnPasteFilename.TabIndex = 2;
 			this.BtnPasteFilename.TabStop = false;
 			this.BtnPasteFilename.Text = "ファイル名";
@@ -378,10 +377,10 @@
 			this.BtnPasteTextfile.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnPasteTextfile.Font = new System.Drawing.Font("メイリオ", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.BtnPasteTextfile.ForeColor = System.Drawing.Color.White;
-			this.BtnPasteTextfile.Location = new System.Drawing.Point(21, 21);
+			this.BtnPasteTextfile.Location = new System.Drawing.Point(21, 23);
 			this.BtnPasteTextfile.Margin = new System.Windows.Forms.Padding(0);
 			this.BtnPasteTextfile.Name = "BtnPasteTextfile";
-			this.BtnPasteTextfile.Size = new System.Drawing.Size(261, 303);
+			this.BtnPasteTextfile.Size = new System.Drawing.Size(260, 300);
 			this.BtnPasteTextfile.TabIndex = 3;
 			this.BtnPasteTextfile.TabStop = false;
 			this.BtnPasteTextfile.Text = "テキスト";
@@ -398,7 +397,7 @@
 			this.BtnResult1.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnResult1.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BtnResult1.ForeColor = System.Drawing.Color.White;
-			this.BtnResult1.Location = new System.Drawing.Point(172, 522);
+			this.BtnResult1.Location = new System.Drawing.Point(164, 522);
 			this.BtnResult1.Margin = new System.Windows.Forms.Padding(0);
 			this.BtnResult1.Name = "BtnResult1";
 			this.BtnResult1.Size = new System.Drawing.Size(60, 18);
@@ -416,7 +415,7 @@
 			this.BtnResult2.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnResult2.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BtnResult2.ForeColor = System.Drawing.Color.White;
-			this.BtnResult2.Location = new System.Drawing.Point(231, 522);
+			this.BtnResult2.Location = new System.Drawing.Point(223, 522);
 			this.BtnResult2.Margin = new System.Windows.Forms.Padding(0);
 			this.BtnResult2.Name = "BtnResult2";
 			this.BtnResult2.Size = new System.Drawing.Size(60, 18);
@@ -434,7 +433,7 @@
 			this.BtnResult3.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnResult3.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BtnResult3.ForeColor = System.Drawing.Color.White;
-			this.BtnResult3.Location = new System.Drawing.Point(290, 522);
+			this.BtnResult3.Location = new System.Drawing.Point(282, 522);
 			this.BtnResult3.Margin = new System.Windows.Forms.Padding(0);
 			this.BtnResult3.Name = "BtnResult3";
 			this.BtnResult3.Size = new System.Drawing.Size(60, 18);
@@ -452,7 +451,7 @@
 			this.BtnResult4.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnResult4.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BtnResult4.ForeColor = System.Drawing.Color.White;
-			this.BtnResult4.Location = new System.Drawing.Point(349, 522);
+			this.BtnResult4.Location = new System.Drawing.Point(341, 522);
 			this.BtnResult4.Margin = new System.Windows.Forms.Padding(0);
 			this.BtnResult4.Name = "BtnResult4";
 			this.BtnResult4.Size = new System.Drawing.Size(60, 18);
@@ -470,7 +469,7 @@
 			this.BtnResult5.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.BtnResult5.Font = new System.Drawing.Font("ＭＳ ゴシック", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.BtnResult5.ForeColor = System.Drawing.Color.White;
-			this.BtnResult5.Location = new System.Drawing.Point(408, 522);
+			this.BtnResult5.Location = new System.Drawing.Point(400, 522);
 			this.BtnResult5.Margin = new System.Windows.Forms.Padding(0);
 			this.BtnResult5.Name = "BtnResult5";
 			this.BtnResult5.Size = new System.Drawing.Size(60, 18);
@@ -964,7 +963,7 @@
             this.CmsResult_貼り付け,
             this.CmsResult_ファイル名を貼り付け,
             this.CmsResult_tss03,
-            this.CmsResult_出力画面へコピー,
+            this.CmsResult_出力へコピー,
             this.CmsResult_tss04,
             this.CmsResult_名前を付けて保存});
 			this.CmsResult.Name = "CmsResult";
@@ -1035,58 +1034,58 @@
 			this.CmsResult_tss03.Name = "CmsResult_tss03";
 			this.CmsResult_tss03.Size = new System.Drawing.Size(167, 6);
 			// 
-			// CmsResult_出力画面へコピー
+			// CmsResult_出力へコピー
 			// 
-			this.CmsResult_出力画面へコピー.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.CmsResult_出力画面へコピー_1,
-            this.CmsResult_出力画面へコピー_2,
-            this.CmsResult_出力画面へコピー_3,
-            this.CmsResult_出力画面へコピー_4,
-            this.CmsResult_出力画面へコピー_5});
-			this.CmsResult_出力画面へコピー.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_出力画面へコピー.Image")));
-			this.CmsResult_出力画面へコピー.Name = "CmsResult_出力画面へコピー";
-			this.CmsResult_出力画面へコピー.Size = new System.Drawing.Size(170, 22);
-			this.CmsResult_出力画面へコピー.Text = "出力画面へコピー";
+			this.CmsResult_出力へコピー.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.CmsResult_出力へコピー_1,
+            this.CmsResult_出力へコピー_2,
+            this.CmsResult_出力へコピー_3,
+            this.CmsResult_出力へコピー_4,
+            this.CmsResult_出力へコピー_5});
+			this.CmsResult_出力へコピー.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_出力へコピー.Image")));
+			this.CmsResult_出力へコピー.Name = "CmsResult_出力へコピー";
+			this.CmsResult_出力へコピー.Size = new System.Drawing.Size(170, 22);
+			this.CmsResult_出力へコピー.Text = "出力へコピー";
 			// 
-			// CmsResult_出力画面へコピー_1
+			// CmsResult_出力へコピー_1
 			// 
-			this.CmsResult_出力画面へコピー_1.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_出力画面へコピー_1.Image")));
-			this.CmsResult_出力画面へコピー_1.Name = "CmsResult_出力画面へコピー_1";
-			this.CmsResult_出力画面へコピー_1.Size = new System.Drawing.Size(80, 22);
-			this.CmsResult_出力画面へコピー_1.Text = "1";
-			this.CmsResult_出力画面へコピー_1.Click += new System.EventHandler(this.CmsResult_出力画面へコピー_1_Click);
+			this.CmsResult_出力へコピー_1.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_出力へコピー_1.Image")));
+			this.CmsResult_出力へコピー_1.Name = "CmsResult_出力へコピー_1";
+			this.CmsResult_出力へコピー_1.Size = new System.Drawing.Size(80, 22);
+			this.CmsResult_出力へコピー_1.Text = "1";
+			this.CmsResult_出力へコピー_1.Click += new System.EventHandler(this.CmsResult_出力へコピー_1_Click);
 			// 
-			// CmsResult_出力画面へコピー_2
+			// CmsResult_出力へコピー_2
 			// 
-			this.CmsResult_出力画面へコピー_2.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_出力画面へコピー_2.Image")));
-			this.CmsResult_出力画面へコピー_2.Name = "CmsResult_出力画面へコピー_2";
-			this.CmsResult_出力画面へコピー_2.Size = new System.Drawing.Size(80, 22);
-			this.CmsResult_出力画面へコピー_2.Text = "2";
-			this.CmsResult_出力画面へコピー_2.Click += new System.EventHandler(this.CmsResult_出力画面へコピー_2_Click);
+			this.CmsResult_出力へコピー_2.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_出力へコピー_2.Image")));
+			this.CmsResult_出力へコピー_2.Name = "CmsResult_出力へコピー_2";
+			this.CmsResult_出力へコピー_2.Size = new System.Drawing.Size(80, 22);
+			this.CmsResult_出力へコピー_2.Text = "2";
+			this.CmsResult_出力へコピー_2.Click += new System.EventHandler(this.CmsResult_出力へコピー_2_Click);
 			// 
-			// CmsResult_出力画面へコピー_3
+			// CmsResult_出力へコピー_3
 			// 
-			this.CmsResult_出力画面へコピー_3.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_出力画面へコピー_3.Image")));
-			this.CmsResult_出力画面へコピー_3.Name = "CmsResult_出力画面へコピー_3";
-			this.CmsResult_出力画面へコピー_3.Size = new System.Drawing.Size(80, 22);
-			this.CmsResult_出力画面へコピー_3.Text = "3";
-			this.CmsResult_出力画面へコピー_3.Click += new System.EventHandler(this.CmsResult_出力画面へコピー_3_Click);
+			this.CmsResult_出力へコピー_3.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_出力へコピー_3.Image")));
+			this.CmsResult_出力へコピー_3.Name = "CmsResult_出力へコピー_3";
+			this.CmsResult_出力へコピー_3.Size = new System.Drawing.Size(80, 22);
+			this.CmsResult_出力へコピー_3.Text = "3";
+			this.CmsResult_出力へコピー_3.Click += new System.EventHandler(this.CmsResult_出力へコピー_3_Click);
 			// 
-			// CmsResult_出力画面へコピー_4
+			// CmsResult_出力へコピー_4
 			// 
-			this.CmsResult_出力画面へコピー_4.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_出力画面へコピー_4.Image")));
-			this.CmsResult_出力画面へコピー_4.Name = "CmsResult_出力画面へコピー_4";
-			this.CmsResult_出力画面へコピー_4.Size = new System.Drawing.Size(80, 22);
-			this.CmsResult_出力画面へコピー_4.Text = "4";
-			this.CmsResult_出力画面へコピー_4.Click += new System.EventHandler(this.CmsResult_出力画面へコピー_4_Click);
+			this.CmsResult_出力へコピー_4.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_出力へコピー_4.Image")));
+			this.CmsResult_出力へコピー_4.Name = "CmsResult_出力へコピー_4";
+			this.CmsResult_出力へコピー_4.Size = new System.Drawing.Size(80, 22);
+			this.CmsResult_出力へコピー_4.Text = "4";
+			this.CmsResult_出力へコピー_4.Click += new System.EventHandler(this.CmsResult_出力へコピー_4_Click);
 			// 
-			// CmsResult_出力画面へコピー_5
+			// CmsResult_出力へコピー_5
 			// 
-			this.CmsResult_出力画面へコピー_5.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_出力画面へコピー_5.Image")));
-			this.CmsResult_出力画面へコピー_5.Name = "CmsResult_出力画面へコピー_5";
-			this.CmsResult_出力画面へコピー_5.Size = new System.Drawing.Size(80, 22);
-			this.CmsResult_出力画面へコピー_5.Text = "5";
-			this.CmsResult_出力画面へコピー_5.Click += new System.EventHandler(this.CmsResult_出力画面へコピー_5_Click);
+			this.CmsResult_出力へコピー_5.Image = ((System.Drawing.Image)(resources.GetObject("CmsResult_出力へコピー_5.Image")));
+			this.CmsResult_出力へコピー_5.Name = "CmsResult_出力へコピー_5";
+			this.CmsResult_出力へコピー_5.Size = new System.Drawing.Size(80, 22);
+			this.CmsResult_出力へコピー_5.Text = "5";
+			this.CmsResult_出力へコピー_5.Click += new System.EventHandler(this.CmsResult_出力へコピー_5_Click);
 			// 
 			// CmsResult_tss04
 			// 
@@ -1706,7 +1705,7 @@
 			this.ScrTbResult.Panel2.Click += new System.EventHandler(this.ScrTbResult_Panel2_Click);
 			this.ScrTbResult.Panel2.DragLeave += new System.EventHandler(this.ScrTbResult_Panel2_DragLeave);
 			this.ScrTbResult.Size = new System.Drawing.Size(610, 346);
-			this.ScrTbResult.SplitterDistance = 302;
+			this.ScrTbResult.SplitterDistance = 303;
 			this.ScrTbResult.TabIndex = 0;
 			this.ScrTbResult.TabStop = false;
 			// 
@@ -1794,7 +1793,7 @@
 			this.TbInfo.ContextMenuStrip = this.CmsNull;
 			this.TbInfo.Font = new System.Drawing.Font("ＭＳ Ｐゴシック", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(128)));
 			this.TbInfo.ForeColor = System.Drawing.Color.Gainsboro;
-			this.TbInfo.Location = new System.Drawing.Point(112, 545);
+			this.TbInfo.Location = new System.Drawing.Point(105, 545);
 			this.TbInfo.Margin = new System.Windows.Forms.Padding(0);
 			this.TbInfo.Name = "TbInfo";
 			this.TbInfo.ReadOnly = true;
@@ -1879,7 +1878,7 @@
 			this.Controls.Add(this.LblCmdLog);
 			this.Controls.Add(this.CbCmdHistory);
 			this.Controls.Add(this.TbDgvSearch);
-			this.Controls.Add(this.BtnDgvCmdSearch);
+			this.Controls.Add(this.BtnDgvSearch);
 			this.Controls.Add(this.BtnDgvMacro);
 			this.Controls.Add(this.DgvMacro);
 			this.Controls.Add(this.BtnDgvCmd);
@@ -1943,7 +1942,7 @@
 		private System.Windows.Forms.Button BtnCmdExecStream;
 		private System.Windows.Forms.Button BtnCmdExecUndo;
 		private System.Windows.Forms.Button BtnDgvCmd;
-		private System.Windows.Forms.Button BtnDgvCmdSearch;
+		private System.Windows.Forms.Button BtnDgvSearch;
 		private System.Windows.Forms.Button BtnDgvMacro;
 		private System.Windows.Forms.Button BtnPasteFilename;
 		private System.Windows.Forms.Button BtnPasteTextfile;
@@ -2028,12 +2027,12 @@
 		private System.Windows.Forms.ToolStripMenuItem CmsCmdLog_貼り付け;
 		private System.Windows.Forms.ToolStripMenuItem CmsResult_クリア;
 		private System.Windows.Forms.ToolStripMenuItem CmsResult_ファイル名を貼り付け;
-		private System.Windows.Forms.ToolStripMenuItem CmsResult_出力画面へコピー;
-		private System.Windows.Forms.ToolStripMenuItem CmsResult_出力画面へコピー_1;
-		private System.Windows.Forms.ToolStripMenuItem CmsResult_出力画面へコピー_2;
-		private System.Windows.Forms.ToolStripMenuItem CmsResult_出力画面へコピー_3;
-		private System.Windows.Forms.ToolStripMenuItem CmsResult_出力画面へコピー_4;
-		private System.Windows.Forms.ToolStripMenuItem CmsResult_出力画面へコピー_5;
+		private System.Windows.Forms.ToolStripMenuItem CmsResult_出力へコピー;
+		private System.Windows.Forms.ToolStripMenuItem CmsResult_出力へコピー_1;
+		private System.Windows.Forms.ToolStripMenuItem CmsResult_出力へコピー_2;
+		private System.Windows.Forms.ToolStripMenuItem CmsResult_出力へコピー_3;
+		private System.Windows.Forms.ToolStripMenuItem CmsResult_出力へコピー_4;
+		private System.Windows.Forms.ToolStripMenuItem CmsResult_出力へコピー_5;
 		private System.Windows.Forms.ToolStripMenuItem CmsResult_上書き;
 		private System.Windows.Forms.ToolStripMenuItem CmsResult_全コピー;
 		private System.Windows.Forms.ToolStripMenuItem CmsResult_全選択;

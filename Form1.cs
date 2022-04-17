@@ -20,8 +20,8 @@ namespace iwm_Commandliner3
 		//--------------------------------------------------------------------------------
 		// 大域定数
 		//--------------------------------------------------------------------------------
-		private const string ProgramID = "iwm_Commandliner3.9";
-		private const string VERSION = "Ver.20220404 'A-29' (C)2018-2022 iwm-iwama";
+		private const string ProgramID = "iwm_Commandliner3.10";
+		private const string VERSION = "Ver.20220416 'A-29' (C)2018-2022 iwm-iwama";
 
 		// 最初に読み込まれる設定ファイル
 		private const string ConfigFn = "config.iwmcmd";
@@ -115,7 +115,7 @@ namespace iwm_Commandliner3
 			"> マクロ入力 <" + NL +
 			"--------------" + NL +
 			"(例) #cd \"..\"" + NL +
-			"          ↑引数はダブルクォーテーションで囲む。" + NL +
+			"         ↑引数はダブルクォーテーションで囲む。" + NL +
 			NL +
 			"----------------" + NL +
 			"> コマンド入力 <" + NL +
@@ -126,7 +126,7 @@ namespace iwm_Commandliner3
 			"--------------------------------" + NL +
 			"> 複数のマクロ・コマンドを入力 <" + NL +
 			"--------------------------------" + NL +
-			"(例) #cls; dir; #cd \"#{ymd}_#{hns}\"; dir" + NL +
+			"(例) #cls; dir; #grep \"^20\"; #replace \"^20(\\d+)\" \"'$1\"" + NL +
 			"         ↑セミコロンで区切る。" + NL +
 			NL +
 			"-------------------------------------" + NL +
@@ -154,7 +154,7 @@ namespace iwm_Commandliner3
 			"[F6]  出力を実行前に戻す" + NL +
 			"[F7]  出力をクリア" + NL +
 			"[F8]  出力履歴" + NL +
-			"[F9]  マクロ・コマンド入力 → 出力 → マクロ・コマンド入力の順にフォーカス移動" + NL +
+			"[F9]  マクロ・コマンド入力 ～ 出力 間をフォーカス移動" + NL +
 			"[F10] (システムメニュー)" + NL +
 			"[F11] 出力変更（前へ）" + NL +
 			"[F12] 出力変更（次へ）" + NL +
@@ -175,9 +175,9 @@ namespace iwm_Commandliner3
 			"[Ctrl]+[PgUp]        カーソルを最上部へ移動" + NL +
 			"[Ctrl]+[PgDn]        カーソルを最下部へ移動" + NL +
 			NL +
-			"-------------------------" + NL +
-			"> 結果出力 特殊キー操作 <" + NL +
-			"-------------------------" + NL +
+			"---------------------" + NL +
+			"> 出力 特殊キー操作 <" + NL +
+			"---------------------" + NL +
 			"[Ctrl]+[PgUp]        カーソルを最上部へ移動" + NL +
 			"[Ctrl]+[PgDn]        カーソルを最下部へ移動" + NL +
 			"[Ctrl]+[↑]          カーソル位置から上位を選択" + NL +
@@ -222,17 +222,15 @@ namespace iwm_Commandliner3
 			"  ・文頭が // の行（単一行コメント）" + NL +
 			"  ・文頭 /* から 文頭 */ で囲まれた行（複数行コメント）" + NL +
 			NL +
-			"◇行末に ; を記述" + NL +
-			NL +
 			"◇ファイル記述例" + NL +
 			"  // 単一行コメント" + NL +
 			"  /*" + NL +
 			"     複数行コメント" + NL +
 			"  */" + NL +
-			"  #cls;" + NL +
-			"  dir;" + NL +
-			"  #grep \"^20\";" + NL +
-			"  #replace \"^20(\\d+)\" \"'$1\";" + NL
+			"  #cls" + NL +
+			"  dir" + NL +
+			"  #grep \"^20\"" + NL +
+			"  #replace \"^20(\\d+)\" \"'$1\"" + NL
 		;
 
 		//--------------------------------------------------------------------------------
@@ -262,11 +260,13 @@ namespace iwm_Commandliner3
 			// RtbCmdLog
 			GblRtbCmdLogHeightDefault = RtbCmdLog.Height;
 
-			// DgvMacro／DgvCmd 表示
+			// DgvMacro
 			for (int _i1 = 0; _i1 < AryDgvMacro.Length; _i1 += 3)
 			{
 				_ = DgvMacro.Rows.Add(AryDgvMacro[_i1], AryDgvMacro[_i1 + 1]);
 			}
+
+			// DgvCmd
 			SubDgvCmdLoad();
 
 			// TbResult
@@ -275,13 +275,16 @@ namespace iwm_Commandliner3
 			// ScrTbResult
 			ScrTbResult.Visible = false;
 
+			// TbInfo
+			TbInfo.Text = "";
+
 			// フォントサイズ
 			NudFontSize.Value = (int)Math.Round(TbResult.Font.Size);
 
 			// 設定ファイルが存在するとき
 			if (File.Exists(ConfigFn))
 			{
-				(_, string _data) = RtnTextFileRead(ConfigFn, false, "");
+				(_, string _data) = RtnTextFread(ConfigFn, false, "");
 				TbCmd.Text = Regex.Replace(_data, RgxCmdNL, ";");
 				BtnCmdExec_Click(sender, e);
 				TbCmd.Text = "";
@@ -293,7 +296,7 @@ namespace iwm_Commandliner3
 				TbCmd.Text = "";
 				foreach (string _s1 in ARGS)
 				{
-					(string _fn, string _data) = RtnTextFileRead(_s1, false, "");
+					(string _fn, string _data) = RtnTextFread(_s1, false, "");
 					if (_fn.Length > 0)
 					{
 						TbCmd.Paste(Regex.Replace(_data, RgxCmdNL, ";"));
@@ -809,7 +812,7 @@ namespace iwm_Commandliner3
 		{
 			CmsCmd.Close();
 
-			(string fn, string data) = RtnTextFileRead(GblCmsCmdFn, true, CMD_FILTER);
+			(string fn, string data) = RtnTextFread(GblCmsCmdFn, true, CMD_FILTER);
 			if (fn.Length > 0)
 			{
 				GblCmsCmdFn = fn;
@@ -830,7 +833,7 @@ namespace iwm_Commandliner3
 		{
 			if (GblCmsCmdFn.Length > 0)
 			{
-				(_, string data) = RtnTextFileRead(GblCmsCmdFn, false, "");
+				(_, string data) = RtnTextFread(GblCmsCmdFn, false, "");
 				TbCmd.Text = Regex.Replace(data, RgxCmdNL, "; ");
 				SubTbCmdFocus(-1);
 			}
@@ -1092,7 +1095,7 @@ namespace iwm_Commandliner3
 				DgvMacro.Height = 23;
 
 				TbDgvSearch.Visible = false;
-				BtnDgvCmdSearch.Visible = false;
+				BtnDgvSearch.Visible = false;
 
 				SubTbCmdFocus(GblTbCmdPos);
 			}
@@ -1113,13 +1116,13 @@ namespace iwm_Commandliner3
 				DgvMacro.Height = Height - 217;
 
 				TbDgvSearch.Left = DgvMacro.Left + 60;
-				BtnDgvCmdSearch.Left = TbDgvSearch.Left + 100;
+				BtnDgvSearch.Left = TbDgvSearch.Left + 100;
 
 				TbDgvSearch.BringToFront();
-				BtnDgvCmdSearch.BringToFront();
+				BtnDgvSearch.BringToFront();
 
 				TbDgvSearch.Visible = true;
-				BtnDgvCmdSearch.Visible = true;
+				BtnDgvSearch.Visible = true;
 
 				_ = TbDgvSearch.Focus();
 
@@ -1290,7 +1293,7 @@ namespace iwm_Commandliner3
 				DgvCmd.Height = 23;
 
 				TbDgvSearch.Visible = false;
-				BtnDgvCmdSearch.Visible = false;
+				BtnDgvSearch.Visible = false;
 
 				using (DataGridViewCell _o1 = DgvCmd[0, 0])
 				{
@@ -1318,13 +1321,13 @@ namespace iwm_Commandliner3
 				DgvCmd.Height = Height - 217;
 
 				TbDgvSearch.Left = DgvCmd.Left + 70;
-				BtnDgvCmdSearch.Left = TbDgvSearch.Left + 100;
+				BtnDgvSearch.Left = TbDgvSearch.Left + 100;
 
 				TbDgvSearch.BringToFront();
-				BtnDgvCmdSearch.BringToFront();
+				BtnDgvSearch.BringToFront();
 
 				TbDgvSearch.Visible = true;
-				BtnDgvCmdSearch.Visible = true;
+				BtnDgvSearch.Visible = true;
 
 				_ = TbDgvSearch.Focus();
 
@@ -1462,7 +1465,7 @@ namespace iwm_Commandliner3
 
 		private void SubDgvCmdLoad()
 		{
-			BtnDgvCmdSearch.Visible = false;
+			BtnDgvSearch.Visible = false;
 			TbDgvSearch.Visible = false;
 
 			List<string> lst1 = new List<string>();
@@ -1598,7 +1601,7 @@ namespace iwm_Commandliner3
 					break;
 
 				case Keys.Enter:
-					BtnDgvCmdSearch_Click(sender, e);
+					BtnDgvSearch_Click(sender, e);
 					break;
 
 				case Keys.PageUp:
@@ -1625,7 +1628,7 @@ namespace iwm_Commandliner3
 			}
 		}
 
-		private void BtnDgvCmdSearch_Click(object sender, EventArgs e)
+		private void BtnDgvSearch_Click(object sender, EventArgs e)
 		{
 			if (GblDgvMacroOpen)
 			{
@@ -2124,7 +2127,6 @@ namespace iwm_Commandliner3
 
 					// テキストファイル取得(UTF-8)
 					case "#wread":
-					{
 						using (WebClient wc = new WebClient())
 						{
 							try
@@ -2143,12 +2145,11 @@ namespace iwm_Commandliner3
 								);
 							}
 						}
-					}
-					break;
+						break;
 
 					// テキストファイル読込
 					case "#fread":
-						(s1, s2) = RtnTextFileRead(aOp[1], false, "");
+						(s1, s2) = RtnTextFread(aOp[1], false, "");
 						if (s1.Length > 0)
 						{
 							TbResult.Paste(Regex.Replace(s2, RgxNL, NL));
@@ -2759,7 +2760,7 @@ namespace iwm_Commandliner3
 			// [Ctrl]+[PgUp]
 			if (e.KeyData == (Keys.Control | Keys.PageUp))
 			{
-				TbResult.Select(0, 0);
+				TbResult.SelectionStart = 0;
 				TbResult.ScrollToCaret();
 				return;
 			}
@@ -2767,7 +2768,7 @@ namespace iwm_Commandliner3
 			// [Ctrl]+[PgDn]
 			if (e.KeyData == (Keys.Control | Keys.PageDown))
 			{
-				TbResult.Select(TbResult.TextLength, 0);
+				TbResult.SelectionStart = TbResult.TextLength;
 				TbResult.ScrollToCaret();
 				return;
 			}
@@ -2904,27 +2905,27 @@ namespace iwm_Commandliner3
 			TbResult.Paste(sb.ToString());
 		}
 
-		private void CmsResult_出力画面へコピー_1_Click(object sender, EventArgs e)
+		private void CmsResult_出力へコピー_1_Click(object sender, EventArgs e)
 		{
 			SubCmsResultCopyTo(0);
 		}
 
-		private void CmsResult_出力画面へコピー_2_Click(object sender, EventArgs e)
+		private void CmsResult_出力へコピー_2_Click(object sender, EventArgs e)
 		{
 			SubCmsResultCopyTo(1);
 		}
 
-		private void CmsResult_出力画面へコピー_3_Click(object sender, EventArgs e)
+		private void CmsResult_出力へコピー_3_Click(object sender, EventArgs e)
 		{
 			SubCmsResultCopyTo(2);
 		}
 
-		private void CmsResult_出力画面へコピー_4_Click(object sender, EventArgs e)
+		private void CmsResult_出力へコピー_4_Click(object sender, EventArgs e)
 		{
 			SubCmsResultCopyTo(3);
 		}
 
-		private void CmsResult_出力画面へコピー_5_Click(object sender, EventArgs e)
+		private void CmsResult_出力へコピー_5_Click(object sender, EventArgs e)
 		{
 			SubCmsResultCopyTo(4);
 		}
@@ -3168,7 +3169,7 @@ namespace iwm_Commandliner3
 
 			foreach (string _s1 in (string[])e.Data.GetData(DataFormats.FileDrop))
 			{
-				(string _s2, string _s3) = RtnTextFileRead(_s1, false, "");
+				(string _s2, string _s3) = RtnTextFread(_s1, false, "");
 				if (_s2.Length > 0)
 				{
 					_ = sb.Append(_s3);
@@ -4318,7 +4319,7 @@ namespace iwm_Commandliner3
 		private const string CMD_FILTER = "All files (*.*)|*.*|Command (*.iwmcmd)|*.iwmcmd";
 		private const string TEXT_FILTER = "All files (*.*)|*.*|Text (*.txt)|*.txt|TSV (*.tsv)|*.tsv|CSV (*.csv)|*.csv|HTML (*.html,*.htm)|*.html,*.htm";
 
-		private (string, string) RtnTextFileRead(string path, bool bGuiOn, string filter) // return(ファイル名, データ)
+		private (string, string) RtnTextFread(string path, bool bGuiOn, string filter) // return(ファイル名, データ)
 		{
 			if (bGuiOn || path.Length == 0)
 			{
