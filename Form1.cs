@@ -20,8 +20,8 @@ namespace iwm_Commandliner3
 		//--------------------------------------------------------------------------------
 		// 大域定数
 		//--------------------------------------------------------------------------------
-		private const string ProgramID = "iwm_Commandliner3.10";
-		private const string VERSION = "Ver.20220416 'A-29' (C)2018-2022 iwm-iwama";
+		private const string ProgramID = "iwm_Commandliner3.12";
+		private const string VERSION = "Ver.20220430 'A-29' (C)2018-2022 iwm-iwama";
 
 		// 最初に読み込まれる設定ファイル
 		private const string ConfigFn = "config.iwmcmd";
@@ -239,6 +239,9 @@ namespace iwm_Commandliner3
 		public Form1()
 		{
 			InitializeComponent();
+
+			// MouseWhell イベント追加
+			TbCmd.MouseWheel += new MouseEventHandler(TbCmd_MouseWheel);
 		}
 
 		private void Form1_Load(object sender, EventArgs e)
@@ -670,6 +673,20 @@ namespace iwm_Commandliner3
 			CmsTextSelect_Open(e, TbCmd);
 		}
 
+		private void TbCmd_MouseWheel(object sender, MouseEventArgs e)
+		{
+			// 上回転 +120
+			if (e.Delta > 0)
+			{
+				SubTbCmdHistory_Get(true);
+			}
+			// 下回転 -120
+			else if (e.Delta < 0)
+			{
+				SubTbCmdHistory_Get(false);
+			}
+		}
+
 		private void TbCmd_DragEnter(object sender, DragEventArgs e)
 		{
 			e.Effect = e.Data.GetDataPresent(DataFormats.FileDrop) ? DragDropEffects.Copy : DragDropEffects.None;
@@ -681,7 +698,7 @@ namespace iwm_Commandliner3
 			foreach (string _s1 in (string[])e.Data.GetData(DataFormats.FileDrop))
 			{
 				// " で囲む
-				// Dir のとき \ 付与
+				// Dir のとき \ 付与（rmdir 対応／rm -r 不対応）
 				s1 += Directory.Exists(_s1) ? $"\"{_s1.TrimEnd('\\')}\\\" " : $"\"{_s1}\" ";
 			}
 			// 末尾の空白をクリア
@@ -2166,7 +2183,6 @@ namespace iwm_Commandliner3
 					case "#dflist":
 					case "#dlist":
 					case "#flist":
-						aOp[1] = aOp[1].Length > 0 ? RtnCnvMacroVar(aOp[1], 0, "") : ".";
 						switch (aOp[0].ToLower())
 						{
 							case "#dflist":
@@ -2179,7 +2195,19 @@ namespace iwm_Commandliner3
 								i1 = 2;
 								break;
 						}
-						TbResult.AppendText(RtnDirFileList(aOp[1], i1, true) + NL);
+						_ = sb.Clear();
+						for (int _i1 = 1, _i2 = aOp.Length; _i1 < _i2; _i1++)
+						{
+							if (aOp[_i1].Length > 0)
+							{
+								if (Directory.Exists(aOp[_i1]))
+								{
+									_ = sb.Append(RtnDirFileList(aOp[_i1], i1, true));
+									_ = sb.Append(NL);
+								}
+							}
+						}
+						TbResult.AppendText(sb.ToString());
 						TbResult.ScrollToCaret();
 						break;
 
